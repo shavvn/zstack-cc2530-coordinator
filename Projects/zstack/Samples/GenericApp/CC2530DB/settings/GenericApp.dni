@@ -1,8 +1,7 @@
 [DebugChecksum]
 Checksum=651856513
 [DisAssemblyWindow]
-NumStates=_ 1
-State 1=_ 1
+NumStates=_ 0
 [InstructionProfiling]
 Enabled=_ 0
 [CodeCoverage]
