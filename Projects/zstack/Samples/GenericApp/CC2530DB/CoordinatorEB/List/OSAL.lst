@@ -1,0 +1,3692 @@
+###############################################################################
+#                                                                             #
+# IAR C/C++ Compiler V7.60.1.40026 for 8051             08/Apr/2014  21:42:37 #
+# Copyright (C) 2004-2010 IAR Systems AB.                                     #
+#                                                                             #
+#    Core               =  plain                                              #
+#    Code model         =  banked                                             #
+#    Data model         =  large                                              #
+#    Calling convention =  xdata reentrant                                    #
+#    Constant location  =  data_rom                                           #
+#    Dptr setup         =  1,16                                               #
+#    Source file        =  D:\zigbee\projects\zstack-cc2530-coordinator\Compo #
+#                          nents\osal\common\OSAL.c                           #
+#    Command line       =  -f D:\zigbee\projects\zstack-cc2530-coordinator\Pr #
+#                          ojects\zstack\Samples\GenericApp\CC2530DB\..\..\.. #
+#                          \Tools\CC2530DB\f8wCoord.cfg (-DCPU32MHZ           #
+#                          -DROOT=__near_func -DMAC_CFG_APP_PENDING_QUEUE=TRU #
+#                          E -DMAC_CFG_TX_DATA_MAX=5 -DMAC_CFG_TX_MAX=8       #
+#                          -DMAC_CFG_RX_MAX=5 -DZDO_COORDINATOR -DRTR_NWK)    #
+#                          -f D:\zigbee\projects\zstack-cc2530-coordinator\Pr #
+#                          ojects\zstack\Samples\GenericApp\CC2530DB\..\..\.. #
+#                          \Tools\CC2530DB\f8wConfig.cfg (-DZIGBEEPRO         #
+#                          -DSECURE=0 -DZG_SECURE_DYNAMIC=0 -DREFLECTOR       #
+#                          -DDEFAULT_CHANLIST=0x00000800                      #
+#                          -DZDAPP_CONFIG_PAN_ID=0x1111                       #
+#                          -DNWK_START_DELAY=100 -DEXTENDED_JOINING_RANDOM_MA #
+#                          SK=0x007F -DBEACON_REQUEST_DELAY=100               #
+#                          -DBEACON_REQ_DELAY_MASK=0x00FF                     #
+#                          -DLINK_STATUS_JITTER_MASK=0x007F                   #
+#                          -DROUTE_EXPIRY_TIME=30 -DAPSC_ACK_WAIT_DURATION_PO #
+#                          LLED=3000 -DNWK_INDIRECT_MSG_TIMEOUT=7             #
+#                          -DMAX_RREQ_ENTRIES=8 -DAPSC_MAX_FRAME_RETRIES=3    #
+#                          -DNWK_MAX_DATA_RETRIES=2                           #
+#                          -DMAX_POLL_FAILURE_RETRIES=2 -DMAX_BCAST=9         #
+#                          -DAPS_MAX_GROUPS=16 -DMAX_RTG_ENTRIES=40           #
+#                          -DNWK_MAX_BINDING_ENTRIES=4                        #
+#                          -DMAX_BINDING_CLUSTER_IDS=4 "-DDEFAULT_KEY={0x01,  #
+#                          0x03, 0x05, 0x07, 0x09, 0x0B, 0x0D, 0x0F, 0x00,    #
+#                          0x02, 0x04, 0x06, 0x08, 0x0A, 0x0C, 0x0D}"         #
+#                          -DMAC_MAX_FRAME_SIZE=116                           #
+#                          -DZDNWKMGR_MIN_TRANSMISSIONS=20 "-DCONST=const     #
+#                          __code" -DGENERIC=__generic                        #
+#                          -DRFD_RCVC_ALWAYS_ON=FALSE -DPOLL_RATE=1000        #
+#                          -DQUEUED_POLL_RATE=100 -DRESPONSE_POLL_RATE=100)   #
+#                          -DREJOIN_POLL_RATE=440 D:\zigbee\projects\zstack-c #
+#                          c2530-coordinator\Components\osal\common\OSAL.c    #
+#                          -D ZAPP_P1 -D MT_TASK -D MT_SYS_FUNC -D            #
+#                          MT_ZDO_FUNC -D LCD_SUPPORTED=DEBUG -lC             #
+#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\Coordinator #
+#                          EB\List\ -lA D:\zigbee\projects\zstack-cc2530-coor #
+#                          dinator\Projects\zstack\Samples\GenericApp\CC2530D #
+#                          B\CoordinatorEB\List\ --diag_suppress Pe001,Pa010  #
+#                          -o D:\zigbee\projects\zstack-cc2530-coordinator\Pr #
+#                          ojects\zstack\Samples\GenericApp\CC2530DB\Coordina #
+#                          torEB\Obj\ -e --require_prototypes                 #
+#                          --no_code_motion --debug --core=plain --dptr=16,1  #
+#                          --data_model=large --code_model=banked             #
+#                          --calling_convention=xdata_reentrant               #
+#                          --place_constants=data_rom --nr_virtual_regs 16    #
+#                          -I D:\zigbee\projects\zstack-cc2530-coordinator\Pr #
+#                          ojects\zstack\Samples\GenericApp\CC2530DB\ -I      #
+#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\..\Source\  #
+#                          -I D:\zigbee\projects\zstack-cc2530-coordinator\Pr #
+#                          ojects\zstack\Samples\GenericApp\CC2530DB\..\..\.. #
+#                          \ZMain\TI2530DB\ -I D:\zigbee\projects\zstack-cc25 #
+#                          30-coordinator\Projects\zstack\Samples\GenericApp\ #
+#                          CC2530DB\..\..\..\..\..\Components\hal\include\    #
+#                          -I D:\zigbee\projects\zstack-cc2530-coordinator\Pr #
+#                          ojects\zstack\Samples\GenericApp\CC2530DB\..\..\.. #
+#                          \..\..\Components\hal\target\CC2530EB\ -I          #
+#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\..\..\..\.. #
+#                          \..\Components\mac\include\ -I                     #
+#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\..\..\..\.. #
+#                          \..\Components\mac\high_level\ -I                  #
+#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\..\..\..\.. #
+#                          \..\Components\mac\low_level\srf04\ -I             #
+#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\..\..\..\.. #
+#                          \..\Components\mac\low_level\srf04\single_chip\    #
+#                          -I D:\zigbee\projects\zstack-cc2530-coordinator\Pr #
+#                          ojects\zstack\Samples\GenericApp\CC2530DB\..\..\.. #
+#                          \..\..\Components\mt\ -I                           #
+#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\..\..\..\.. #
+#                          \..\Components\osal\include\ -I                    #
+#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\..\..\..\.. #
+#                          \..\Components\osal\mcu\ccsoc\ -I                  #
+#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\..\..\..\.. #
+#                          \..\Components\services\saddr\ -I                  #
+#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\..\..\..\.. #
+#                          \..\Components\services\sdata\ -I                  #
+#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\..\..\..\.. #
+#                          \..\Components\stack\af\ -I                        #
+#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\..\..\..\.. #
+#                          \..\Components\stack\nwk\ -I                       #
+#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\..\..\..\.. #
+#                          \..\Components\stack\sapi\ -I                      #
+#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\..\..\..\.. #
+#                          \..\Components\stack\sec\ -I                       #
+#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\..\..\..\.. #
+#                          \..\Components\stack\sys\ -I                       #
+#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\..\..\..\.. #
+#                          \..\Components\stack\zdo\ -I                       #
+#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\..\..\..\.. #
+#                          \..\Components\zmac\ -I D:\zigbee\projects\zstack- #
+#                          cc2530-coordinator\Projects\zstack\Samples\Generic #
+#                          App\CC2530DB\..\..\..\..\..\Components\zmac\f8w\   #
+#                          -I "C:\Program Files (x86)\IAR Systems\Embedded    #
+#                          Workbench 5.4\8051\INC\" -I "C:\Program Files      #
+#                          (x86)\IAR Systems\Embedded Workbench               #
+#                          5.4\8051\INC\CLIB\" -Ohz                           #
+#    List file          =  D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\Coordinator #
+#                          EB\List\OSAL.lst                                   #
+#    Object file        =  D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\Coordinator #
+#                          EB\Obj\OSAL.r51                                    #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+D:\zigbee\projects\zstack-cc2530-coordinator\Components\osal\common\OSAL.c
+      1          /**************************************************************************************************
+      2            Filename:       OSAL.c
+      3            Revised:        $Date: 2010-09-20 14:09:47 -0700 (Mon, 20 Sep 2010) $
+      4            Revision:       $Revision: 23845 $
+      5          
+      6            Description:    This API allows the software components in the Z-stack to be written
+      7                            independently of the specifics of the operating system, kernel or tasking
+      8                            environment (including control loops or connect-to-interrupt systems).
+      9          
+     10          
+     11            Copyright 2004-2010 Texas Instruments Incorporated. All rights reserved.
+     12          
+     13            IMPORTANT: Your use of this Software is limited to those specific rights
+     14            granted under the terms of a software license agreement between the user
+     15            who downloaded the software, his/her employer (which must be your employer)
+     16            and Texas Instruments Incorporated (the "License").  You may not use this
+     17            Software unless you agree to abide by the terms of the License. The License
+     18            limits your use, and you acknowledge, that the Software may not be modified,
+     19            copied or distributed unless embedded on a Texas Instruments microcontroller
+     20            or used solely and exclusively in conjunction with a Texas Instruments radio
+     21            frequency transceiver, which is integrated into your product.  Other than for
+     22            the foregoing purpose, you may not use, reproduce, copy, prepare derivative
+     23            works of, modify, distribute, perform, display or sell this Software and/or
+     24            its documentation for any purpose.
+     25          
+     26            YOU FURTHER ACKNOWLEDGE AND AGREE THAT THE SOFTWARE AND DOCUMENTATION ARE
+     27            PROVIDED “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+     28            INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE,
+     29            NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL
+     30            TEXAS INSTRUMENTS OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER CONTRACT,
+     31            NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION, BREACH OF WARRANTY, OR OTHER
+     32            LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT DAMAGES OR EXPENSES
+     33            INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE
+     34            OR CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT
+     35            OF SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
+     36            (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
+     37          
+     38            Should you have any questions regarding your right to use this Software,
+     39            contact Texas Instruments Incorporated at www.TI.com.
+     40          **************************************************************************************************/
+     41          
+     42          /*********************************************************************
+     43           * INCLUDES
+     44           */
+     45          
+     46          #include <string.h>
+     47          
+     48          #include "comdef.h"
+     49          #include "OSAL.h"
+     50          #include "OSAL_Tasks.h"
+     51          #include "OSAL_Memory.h"
+     52          #include "OSAL_PwrMgr.h"
+     53          #include "OSAL_Clock.h"
+     54          
+     55          #include "OnBoard.h"
+
+   \                                 In  segment SFR_AN, at 0xa8
+   \   union <unnamed> volatile __sfr _A_IEN0
+   \                     _A_IEN0:
+   \   000000                DS 1
+     56          
+     57          /* HAL */
+     58          #include "hal_drivers.h"
+     59          
+     60          #ifdef IAR_ARMCM3_LM
+     61            #include "FreeRTOSConfig.h"
+     62            #include "osal_task.h"
+     63          #endif
+     64          
+     65          /*********************************************************************
+     66           * MACROS
+     67           */
+     68          
+     69          /*********************************************************************
+     70           * CONSTANTS
+     71           */
+     72          
+     73          /*********************************************************************
+     74           * TYPEDEFS
+     75           */
+     76          
+     77          /*********************************************************************
+     78           * GLOBAL VARIABLES
+     79           */
+     80          
+     81          // Message Pool Definitions
+
+   \                                 In  segment XDATA_Z, align 1, keep-with-next
+     82          osal_msg_q_t osal_qHead;
+   \                     osal_qHead:
+   \   000000                DS 2
+   \   000002                REQUIRE __INIT_XDATA_Z
+     83          
+     84          /*********************************************************************
+     85           * EXTERNAL VARIABLES
+     86           */
+     87          
+     88          /*********************************************************************
+     89           * EXTERNAL FUNCTIONS
+     90           */
+     91          
+     92          /*********************************************************************
+     93           * LOCAL VARIABLES
+     94           */
+     95          
+     96          /*********************************************************************
+     97           * LOCAL FUNCTION PROTOTYPES
+     98           */
+     99          
+    100          /*********************************************************************
+    101           * HELPER FUNCTIONS
+    102           */
+    103          /* very ugly stub so Keil can compile */
+    104          #ifdef __KEIL__
+    105          char *  itoa ( int value, char * buffer, int radix )
+    106          {
+    107            return(buffer);
+    108          }
+    109          #endif
+    110          
+    111          /*********************************************************************
+    112           * @fn      osal_strlen
+    113           *
+    114           * @brief
+    115           *
+    116           *   Calculates the length of a string.  The string must be null
+    117           *   terminated.
+    118           *
+    119           * @param   char *pString - pointer to text string
+    120           *
+    121           * @return  int - number of characters
+    122           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    123          int osal_strlen( char *pString )
+   \                     osal_strlen:
+    124          {
+   \   000000   C082         PUSH    DPL
+   \   000002   C083         PUSH    DPH
+   \   000004                ; Saved register size: 2
+   \   000004                ; Auto size: 0
+    125            return (int)( strlen( pString ) );
+   \   000004                ; Setup parameters for call to function strlen
+   \   000004   12....       LCALL   ??strlen?relay
+   \   000007   02....       LJMP    ?Subroutine0 & 0xFFFF
+    126          }
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine0:
+   \   000000   D083         POP     DPH
+   \   000002   D082         POP     DPL
+   \   000004   02....       LJMP    ?BRET
+    127          
+    128          /*********************************************************************
+    129           * @fn      osal_memcpy
+    130           *
+    131           * @brief
+    132           *
+    133           *   Generic memory copy.
+    134           *
+    135           *   Note: This function differs from the standard memcpy(), since
+    136           *         it returns the pointer to the next destination uint8. The
+    137           *         standard memcpy() returns the original destination address.
+    138           *
+    139           * @param   dst - destination address
+    140           * @param   src - source address
+    141           * @param   len - number of bytes to copy
+    142           *
+    143           * @return  pointer to end of destination buffer
+    144           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    145          void *osal_memcpy( void *dst, const void GENERIC *src, unsigned int len )
+   \                     osal_memcpy:
+    146          {
+   \   000000   74F5         MOV     A,#-0xb
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 11
+   \   000005                ; Auto size: 0
+   \   000005   EA           MOV     A,R2
+   \   000006   FE           MOV     R6,A
+   \   000007   EB           MOV     A,R3
+   \   000008   FF           MOV     R7,A
+   \   000009   740B         MOV     A,#0xb
+   \   00000B   12....       LCALL   ?XSTACK_DISP0_8
+   \   00000E   E0           MOVX    A,@DPTR
+   \   00000F   F5..         MOV     ?V0 + 0,A
+   \   000011   A3           INC     DPTR
+   \   000012   E0           MOVX    A,@DPTR
+   \   000013   F5..         MOV     ?V0 + 1,A
+   \   000015   A3           INC     DPTR
+   \   000016   E0           MOVX    A,@DPTR
+    147            uint8 *pDst;
+    148            const uint8 GENERIC *pSrc;
+    149          
+    150            pSrc = src;
+   \   000017   A9..         MOV     R1,?V0 + 0
+   \   000019   AA..         MOV     R2,?V0 + 1
+   \   00001B   FB           MOV     R3,A
+    151            pDst = dst;
+   \   00001C   8E82         MOV     DPL,R6
+   \   00001E   8F83         MOV     DPH,R7
+   \   000020   800D         SJMP    ??osal_memcpy_0
+    152          
+    153            while ( len-- )
+    154              *pDst++ = *pSrc++;
+   \                     ??osal_memcpy_1:
+   \   000022   12....       LCALL   ?C_GPTR_LOAD
+   \   000025   F0           MOVX    @DPTR,A
+   \   000026   E9           MOV     A,R1
+   \   000027   2401         ADD     A,#0x1
+   \   000029   09           INC     R1
+   \   00002A   EA           MOV     A,R2
+   \   00002B   3400         ADDC    A,#0x0
+   \   00002D   FA           MOV     R2,A
+   \   00002E   A3           INC     DPTR
+   \                     ??osal_memcpy_0:
+   \   00002F   EC           MOV     A,R4
+   \   000030   FE           MOV     R6,A
+   \   000031   ED           MOV     A,R5
+   \   000032   FF           MOV     R7,A
+   \   000033   74FF         MOV     A,#-0x1
+   \   000035   2E           ADD     A,R6
+   \   000036   1C           DEC     R4
+   \   000037   74FF         MOV     A,#-0x1
+   \   000039   3F           ADDC    A,R7
+   \   00003A   FD           MOV     R5,A
+   \   00003B   EE           MOV     A,R6
+   \   00003C   7001         JNZ     ??osal_memcpy_2
+   \   00003E   EF           MOV     A,R7
+   \                     ??osal_memcpy_2:
+   \   00003F   70E1         JNZ     ??osal_memcpy_1
+    155          
+    156            return ( pDst );
+   \   000041   AA82         MOV     R2,DPL
+   \   000043   AB83         MOV     R3,DPH
+   \   000045   7F03         MOV     R7,#0x3
+   \   000047   02....       LJMP    ?BANKED_LEAVE_XDATA
+    157          }
+    158          
+    159          /*********************************************************************
+    160           * @fn      osal_revmemcpy
+    161           *
+    162           * @brief   Generic reverse memory copy.  Starts at the end of the
+    163           *   source buffer, by taking the source address pointer and moving
+    164           *   pointer ahead "len" bytes, then decrementing the pointer.
+    165           *
+    166           *   Note: This function differs from the standard memcpy(), since
+    167           *         it returns the pointer to the next destination uint8. The
+    168           *         standard memcpy() returns the original destination address.
+    169           *
+    170           * @param   dst - destination address
+    171           * @param   src - source address
+    172           * @param   len - number of bytes to copy
+    173           *
+    174           * @return  pointer to end of destination buffer
+    175           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    176          void *osal_revmemcpy( void *dst, const void GENERIC *src, unsigned int len )
+   \                     osal_revmemcpy:
+    177          {
+   \   000000   74F7         MOV     A,#-0x9
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 9
+   \   000005                ; Auto size: 0
+   \   000005   EA           MOV     A,R2
+   \   000006   FE           MOV     R6,A
+   \   000007   EB           MOV     A,R3
+   \   000008   FF           MOV     R7,A
+   \   000009   7409         MOV     A,#0x9
+   \   00000B   12....       LCALL   ?XSTACK_DISP0_8
+   \   00000E   E0           MOVX    A,@DPTR
+   \   00000F   F9           MOV     R1,A
+   \   000010   A3           INC     DPTR
+   \   000011   12....       LCALL   ?Subroutine11 & 0xFFFF
+    178            uint8 *pDst;
+    179            const uint8 GENERIC *pSrc;
+    180          
+    181            pSrc = src;
+    182            pSrc += (len-1);
+   \                     ??CrossCallReturnLabel_13:
+   \   000014   E9           MOV     A,R1
+   \   000015   2C           ADD     A,R4
+   \   000016   F9           MOV     R1,A
+   \   000017   EA           MOV     A,R2
+   \   000018   3D           ADDC    A,R5
+   \   000019   FA           MOV     R2,A
+   \   00001A   E9           MOV     A,R1
+   \   00001B   24FF         ADD     A,#-0x1
+   \   00001D   19           DEC     R1
+   \   00001E   EA           MOV     A,R2
+   \   00001F   34FF         ADDC    A,#-0x1
+   \   000021   FA           MOV     R2,A
+    183            pDst = dst;
+   \   000022   8E82         MOV     DPL,R6
+   \   000024   8F83         MOV     DPH,R7
+   \   000026   800D         SJMP    ??osal_revmemcpy_0
+    184          
+    185            while ( len-- )
+    186              *pDst++ = *pSrc--;
+   \                     ??osal_revmemcpy_1:
+   \   000028   12....       LCALL   ?C_GPTR_LOAD
+   \   00002B   F0           MOVX    @DPTR,A
+   \   00002C   E9           MOV     A,R1
+   \   00002D   24FF         ADD     A,#-0x1
+   \   00002F   19           DEC     R1
+   \   000030   EA           MOV     A,R2
+   \   000031   34FF         ADDC    A,#-0x1
+   \   000033   FA           MOV     R2,A
+   \   000034   A3           INC     DPTR
+   \                     ??osal_revmemcpy_0:
+   \   000035   EC           MOV     A,R4
+   \   000036   FE           MOV     R6,A
+   \   000037   ED           MOV     A,R5
+   \   000038   FF           MOV     R7,A
+   \   000039   74FF         MOV     A,#-0x1
+   \   00003B   2E           ADD     A,R6
+   \   00003C   1C           DEC     R4
+   \   00003D   74FF         MOV     A,#-0x1
+   \   00003F   3F           ADDC    A,R7
+   \   000040   FD           MOV     R5,A
+   \   000041   EE           MOV     A,R6
+   \   000042   7001         JNZ     ??osal_revmemcpy_2
+   \   000044   EF           MOV     A,R7
+   \                     ??osal_revmemcpy_2:
+   \   000045   70E1         JNZ     ??osal_revmemcpy_1
+    187          
+    188            return ( pDst );
+   \   000047   02....       LJMP    ?Subroutine1 & 0xFFFF
+    189          }
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine11:
+   \   000000   E0           MOVX    A,@DPTR
+   \   000001   FA           MOV     R2,A
+   \   000002   A3           INC     DPTR
+   \   000003   E0           MOVX    A,@DPTR
+   \   000004   FB           MOV     R3,A
+   \   000005   22           RET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine1:
+   \   000000   AA82         MOV     R2,DPL
+   \   000002   AB83         MOV     R3,DPH
+   \   000004                REQUIRE ??Subroutine26_0
+   \   000004                ; // Fall through to label ??Subroutine26_0
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ??Subroutine26_0:
+   \   000000   7F01         MOV     R7,#0x1
+   \   000002   02....       LJMP    ?BANKED_LEAVE_XDATA
+    190          
+    191          /*********************************************************************
+    192           * @fn      osal_memdup
+    193           *
+    194           * @brief   Allocates a buffer [with osal_mem_alloc()] and copies
+    195           *          the src buffer into the newly allocated space.
+    196           *
+    197           * @param   src - source address
+    198           * @param   len - number of bytes to copy
+    199           *
+    200           * @return  pointer to the new allocated buffer, or NULL if
+    201           *          allocation problem.
+    202           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    203          void *osal_memdup( const void GENERIC *src, unsigned int len )
+   \                     osal_memdup:
+    204          {
+   \   000000   74F1         MOV     A,#-0xf
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 15
+   \   000005                ; Auto size: 0
+   \   000005   89..         MOV     ?V0 + 4,R1
+   \   000007   8A..         MOV     ?V0 + 5,R2
+   \   000009   8B..         MOV     ?V0 + 6,R3
+   \   00000B   EC           MOV     A,R4
+   \   00000C   FE           MOV     R6,A
+   \   00000D   ED           MOV     A,R5
+   \   00000E   FF           MOV     R7,A
+    205            uint8 *pDst;
+    206          
+    207            pDst = osal_mem_alloc( len );
+   \   00000F                ; Setup parameters for call to function osal_mem_alloc
+   \   00000F   EE           MOV     A,R6
+   \   000010   FA           MOV     R2,A
+   \   000011   EF           MOV     A,R7
+   \   000012   FB           MOV     R3,A
+   \   000013   12....       LCALL   ??osal_mem_alloc?relay
+   \   000016   8A..         MOV     ?V0 + 0,R2
+   \   000018   8B..         MOV     ?V0 + 1,R3
+    208            if ( pDst )
+   \   00001A   EA           MOV     A,R2
+   \   00001B   7001         JNZ     ??osal_memdup_0
+   \   00001D   EB           MOV     A,R3
+   \                     ??osal_memdup_0:
+   \   00001E   6011         JZ      ??osal_memdup_1
+    209            {
+    210              VOID osal_memcpy( pDst, src, len );
+   \   000020                ; Setup parameters for call to function osal_memcpy
+   \   000020   78..         MOV     R0,#?V0 + 4
+   \   000022   12....       LCALL   ?PUSH_XSTACK_I_THREE
+   \   000025   EE           MOV     A,R6
+   \   000026   FC           MOV     R4,A
+   \   000027   EF           MOV     A,R7
+   \   000028   FD           MOV     R5,A
+   \   000029   12....       LCALL   ??osal_memcpy?relay
+   \   00002C   7403         MOV     A,#0x3
+   \   00002E   12....       LCALL   ?DEALLOC_XSTACK8
+    211            }
+    212          
+    213            return ( (void *)pDst );
+   \                     ??osal_memdup_1:
+   \   000031   AA..         MOV     R2,?V0 + 0
+   \   000033   AB..         MOV     R3,?V0 + 1
+   \   000035   7F07         MOV     R7,#0x7
+   \   000037   02....       LJMP    ?BANKED_LEAVE_XDATA
+    214          }
+    215          
+    216          /*********************************************************************
+    217           * @fn      osal_memcmp
+    218           *
+    219           * @brief
+    220           *
+    221           *   Generic memory compare.
+    222           *
+    223           * @param   src1 - source 1 addrexx
+    224           * @param   src2 - source 2 address
+    225           * @param   len - number of bytes to compare
+    226           *
+    227           * @return  TRUE - same, FALSE - different
+    228           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    229          uint8 osal_memcmp( const void GENERIC *src1, const void GENERIC *src2, unsigned int len )
+   \                     osal_memcmp:
+    230          {
+   \   000000   74ED         MOV     A,#-0x13
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 19
+   \   000005                ; Auto size: 0
+   \   000005   7413         MOV     A,#0x13
+   \   000007   12....       LCALL   ?XSTACK_DISP0_8
+   \   00000A   E0           MOVX    A,@DPTR
+   \   00000B   F5..         MOV     ?V0 + 8,A
+   \   00000D   A3           INC     DPTR
+   \   00000E   E0           MOVX    A,@DPTR
+   \   00000F   F5..         MOV     ?V0 + 9,A
+   \   000011   A3           INC     DPTR
+   \   000012   E0           MOVX    A,@DPTR
+   \   000013   F5..         MOV     ?V0 + 10,A
+    231            const uint8 GENERIC *pSrc1;
+    232            const uint8 GENERIC *pSrc2;
+    233          
+    234            pSrc1 = src1;
+   \   000015   89..         MOV     ?V0 + 0,R1
+   \   000017   8A..         MOV     ?V0 + 1,R2
+   \   000019   8B..         MOV     ?V0 + 2,R3
+    235            pSrc2 = src2;
+   \   00001B   85....       MOV     ?V0 + 4,?V0 + 8
+   \   00001E   85....       MOV     ?V0 + 5,?V0 + 9
+    236          
+    237            while ( len-- )
+   \                     ??osal_memcmp_0:
+   \   000021   EC           MOV     A,R4
+   \   000022   F8           MOV     R0,A
+   \   000023   ED           MOV     A,R5
+   \   000024   F9           MOV     R1,A
+   \   000025   74FF         MOV     A,#-0x1
+   \   000027   28           ADD     A,R0
+   \   000028   1C           DEC     R4
+   \   000029   74FF         MOV     A,#-0x1
+   \   00002B   39           ADDC    A,R1
+   \   00002C   FD           MOV     R5,A
+   \   00002D   E8           MOV     A,R0
+   \   00002E   7001         JNZ     ??osal_memcmp_1
+   \   000030   E9           MOV     A,R1
+   \                     ??osal_memcmp_1:
+   \   000031   6036         JZ      ??osal_memcmp_2
+    238            {
+    239              if( *pSrc1++ != *pSrc2++ )
+   \   000033   A9..         MOV     R1,?V0 + 0
+   \   000035   AA..         MOV     R2,?V0 + 1
+   \   000037   AB..         MOV     R3,?V0 + 2
+   \   000039   E9           MOV     A,R1
+   \   00003A   2401         ADD     A,#0x1
+   \   00003C   F5..         MOV     ?V0 + 0,A
+   \   00003E   EA           MOV     A,R2
+   \   00003F   3400         ADDC    A,#0x0
+   \   000041   F5..         MOV     ?V0 + 1,A
+   \   000043   85....       MOV     ?V0 + 8,?V0 + 4
+   \   000046   85....       MOV     ?V0 + 9,?V0 + 5
+   \   000049   E5..         MOV     A,?V0 + 4
+   \   00004B   2401         ADD     A,#0x1
+   \   00004D   F5..         MOV     ?V0 + 4,A
+   \   00004F   E5..         MOV     A,?V0 + 5
+   \   000051   3400         ADDC    A,#0x0
+   \   000053   F5..         MOV     ?V0 + 5,A
+   \   000055   12....       LCALL   ?C_GPTR_LOAD
+   \   000058   FE           MOV     R6,A
+   \   000059   A9..         MOV     R1,?V0 + 8
+   \   00005B   AA..         MOV     R2,?V0 + 9
+   \   00005D   AB..         MOV     R3,?V0 + 10
+   \   00005F   12....       LCALL   ?C_GPTR_LOAD
+   \   000062   6E           XRL     A,R6
+   \   000063   60BC         JZ      ??osal_memcmp_0
+    240                return FALSE;
+   \   000065   7900         MOV     R1,#0x0
+   \   000067   8002         SJMP    ??osal_memcmp_3
+    241            }
+    242            return TRUE;
+   \                     ??osal_memcmp_2:
+   \   000069   7901         MOV     R1,#0x1
+   \                     ??osal_memcmp_3:
+   \   00006B   7F0B         MOV     R7,#0xb
+   \   00006D   02....       LJMP    ?BANKED_LEAVE_XDATA
+    243          }
+    244          
+    245          
+    246          /*********************************************************************
+    247           * @fn      osal_memset
+    248           *
+    249           * @brief
+    250           *
+    251           *   Set memory buffer to value.
+    252           *
+    253           * @param   dest - pointer to buffer
+    254           * @param   value - what to set each uint8 of the message
+    255           * @param   size - how big
+    256           *
+    257           * @return  value of next widget, 0 if no widget found
+    258           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    259          void *osal_memset( void *dest, uint8 value, int len )
+   \                     osal_memset:
+    260          {
+   \   000000   74F6         MOV     A,#-0xa
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 10
+   \   000005                ; Auto size: 0
+   \   000005   E9           MOV     A,R1
+   \   000006   FE           MOV     R6,A
+    261            return memset( dest, value, len );
+   \   000007                ; Setup parameters for call to function memset
+   \   000007   8C..         MOV     ?V0 + 0,R4
+   \   000009   8D..         MOV     ?V0 + 1,R5
+   \   00000B   78..         MOV     R0,#?V0 + 0
+   \   00000D   12....       LCALL   ?PUSH_XSTACK_I_TWO
+   \   000010   EE           MOV     A,R6
+   \   000011   FC           MOV     R4,A
+   \   000012   7D00         MOV     R5,#0x0
+   \   000014   12....       LCALL   ??memset?relay
+   \   000017   7402         MOV     A,#0x2
+   \   000019   12....       LCALL   ?DEALLOC_XSTACK8
+   \   00001C   02....       LJMP    ?Subroutine2 & 0xFFFF
+    262          }
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine2:
+   \   000000   7F02         MOV     R7,#0x2
+   \   000002   02....       LJMP    ?BANKED_LEAVE_XDATA
+    263          
+    264          /*********************************************************************
+    265           * @fn      osal_build_uint16
+    266           *
+    267           * @brief
+    268           *
+    269           *   Build a uint16 out of 2 bytes (0 then 1).
+    270           *
+    271           * @param   swapped - 0 then 1
+    272           *
+    273           * @return  uint16
+    274           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    275          uint16 osal_build_uint16( uint8 *swapped )
+   \                     osal_build_uint16:
+    276          {
+   \   000000   74F7         MOV     A,#-0x9
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 9
+   \   000005                ; Auto size: 0
+    277            return ( BUILD_UINT16( swapped[0], swapped[1] ) );
+   \   000005   8A82         MOV     DPL,R2
+   \   000007   8B83         MOV     DPH,R3
+   \   000009   E0           MOVX    A,@DPTR
+   \   00000A   FC           MOV     R4,A
+   \   00000B   A3           INC     DPTR
+   \   00000C   E0           MOVX    A,@DPTR
+   \   00000D   F9           MOV     R1,A
+   \   00000E   EC           MOV     A,R4
+   \   00000F   FA           MOV     R2,A
+   \   000010   E9           MOV     A,R1
+   \   000011   FB           MOV     R3,A
+   \   000012   02....       LJMP    ??Subroutine26_0 & 0xFFFF
+    278          }
+    279          
+    280          /*********************************************************************
+    281           * @fn      osal_build_uint32
+    282           *
+    283           * @brief
+    284           *
+    285           *   Build a uint32 out of sequential bytes.
+    286           *
+    287           * @param   swapped - sequential bytes
+    288           * @param   len - number of bytes in the uint8 array
+    289           *
+    290           * @return  uint32
+    291           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    292          uint32 osal_build_uint32( uint8 *swapped, uint8 len )
+   \                     osal_build_uint32:
+    293          {
+   \   000000   74F0         MOV     A,#-0x10
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 16
+   \   000005                ; Auto size: 0
+   \   000005   E9           MOV     A,R1
+   \   000006   FE           MOV     R6,A
+    294            if ( len == 2 )
+   \   000007   7402         MOV     A,#0x2
+   \   000009   6E           XRL     A,R6
+   \   00000A   701D         JNZ     ??osal_build_uint32_0
+    295              return ( BUILD_UINT32( swapped[0], swapped[1], 0L, 0L ) );
+   \   00000C   8A82         MOV     DPL,R2
+   \   00000E   8B83         MOV     DPH,R3
+   \   000010   12....       LCALL   ?Subroutine22 & 0xFFFF
+   \                     ??CrossCallReturnLabel_45:
+   \   000013   78..         MOV     R0,#?V0 + 4
+   \   000015   12....       LCALL   ?L_SHL
+   \   000018   78..         MOV     R0,#?V0 + 0
+   \   00001A   79..         MOV     R1,#?V0 + 4
+   \   00001C   12....       LCALL   ?L_ADD
+   \   00001F   AA..         MOV     R2,?V0 + 0
+   \   000021   AB..         MOV     R3,?V0 + 1
+   \   000023   AC..         MOV     R4,?V0 + 2
+   \   000025   AD..         MOV     R5,?V0 + 3
+   \   000027   8059         SJMP    ??osal_build_uint32_1
+    296            else if ( len == 3 )
+   \                     ??osal_build_uint32_0:
+   \   000029   7403         MOV     A,#0x3
+   \   00002B   6E           XRL     A,R6
+   \   00002C   7016         JNZ     ??osal_build_uint32_2
+    297              return ( BUILD_UINT32( swapped[0], swapped[1], swapped[2], 0L ) );
+   \   00002E   8A82         MOV     DPL,R2
+   \   000030   8B83         MOV     DPH,R3
+   \   000032   12....       LCALL   ?Subroutine6 & 0xFFFF
+   \                     ??CrossCallReturnLabel_2:
+   \   000035   12....       LCALL   ?L_SHL
+   \   000038   78..         MOV     R0,#?V0 + 0
+   \   00003A   79..         MOV     R1,#?V0 + 4
+   \   00003C   12....       LCALL   ?L_ADD
+   \   00003F   12....       LCALL   ?Subroutine12 & 0xFFFF
+   \                     ??CrossCallReturnLabel_20:
+   \   000042   80CF         SJMP    ??CrossCallReturnLabel_45
+    298            else if ( len == 4 )
+   \                     ??osal_build_uint32_2:
+   \   000044   7404         MOV     A,#0x4
+   \   000046   6E           XRL     A,R6
+   \   000047   8A82         MOV     DPL,R2
+   \   000049   8B83         MOV     DPH,R3
+   \   00004B   702D         JNZ     ??osal_build_uint32_3
+    299              return ( BUILD_UINT32( swapped[0], swapped[1], swapped[2], swapped[3] ) );
+   \   00004D   12....       LCALL   ?Subroutine6 & 0xFFFF
+   \                     ??CrossCallReturnLabel_3:
+   \   000050   12....       LCALL   ?L_SHL
+   \   000053   78..         MOV     R0,#?V0 + 0
+   \   000055   79..         MOV     R1,#?V0 + 4
+   \   000057   12....       LCALL   ?L_ADD
+   \   00005A   12....       LCALL   ?Subroutine12 & 0xFFFF
+   \                     ??CrossCallReturnLabel_21:
+   \   00005D   78..         MOV     R0,#?V0 + 4
+   \   00005F   12....       LCALL   ?L_SHL
+   \   000062   78..         MOV     R0,#?V0 + 0
+   \   000064   79..         MOV     R1,#?V0 + 4
+   \   000066   12....       LCALL   ?L_ADD
+   \   000069   8A82         MOV     DPL,R2
+   \   00006B   8B83         MOV     DPH,R3
+   \   00006D   A3           INC     DPTR
+   \   00006E   A3           INC     DPTR
+   \   00006F   A3           INC     DPTR
+   \   000070   E0           MOVX    A,@DPTR
+   \   000071   F5..         MOV     ?V0 + 4,A
+   \   000073   75..00       MOV     ?V0 + 6,#0x0
+   \   000076   7418         MOV     A,#0x18
+   \   000078   8099         SJMP    ??CrossCallReturnLabel_45
+    300            else
+    301              return ( (uint32)swapped[0] );
+   \                     ??osal_build_uint32_3:
+   \   00007A   E0           MOVX    A,@DPTR
+   \   00007B   FA           MOV     R2,A
+   \   00007C   7B00         MOV     R3,#0x0
+   \   00007E   7C00         MOV     R4,#0x0
+   \   000080   7D00         MOV     R5,#0x0
+   \                     ??osal_build_uint32_1:
+   \   000082   02....       LJMP    ??Subroutine30_0 & 0xFFFF
+    302          }
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine12:
+   \   000000   8A82         MOV     DPL,R2
+   \   000002   8B83         MOV     DPH,R3
+   \   000004   A3           INC     DPTR
+   \   000005   A3           INC     DPTR
+   \   000006   E0           MOVX    A,@DPTR
+   \   000007   F5..         MOV     ?V0 + 4,A
+   \   000009   75..00       MOV     ?V0 + 5,#0x0
+   \   00000C   7410         MOV     A,#0x10
+   \   00000E   22           RET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine6:
+   \   000000   12....       LCALL   ?Subroutine22 & 0xFFFF
+   \                     ??CrossCallReturnLabel_46:
+   \   000003   78..         MOV     R0,#?V0 + 4
+   \   000005   22           RET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine22:
+   \   000000   E0           MOVX    A,@DPTR
+   \   000001   F5..         MOV     ?V0 + 0,A
+   \   000003   75..00       MOV     ?V0 + 1,#0x0
+   \   000006   75..00       MOV     ?V0 + 2,#0x0
+   \   000009   75..00       MOV     ?V0 + 3,#0x0
+   \   00000C   A3           INC     DPTR
+   \   00000D   E0           MOVX    A,@DPTR
+   \   00000E   F5..         MOV     ?V0 + 4,A
+   \   000010   75..00       MOV     ?V0 + 5,#0x0
+   \   000013   75..00       MOV     ?V0 + 6,#0x0
+   \   000016   75..00       MOV     ?V0 + 7,#0x0
+   \   000019   7408         MOV     A,#0x8
+   \   00001B   22           RET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ??Subroutine30_0:
+   \   000000   7F08         MOV     R7,#0x8
+   \   000002   02....       LJMP    ?BANKED_LEAVE_XDATA
+    303          
+    304          #if !defined ( ZBIT ) && !defined ( ZBIT2 ) && !defined (UBIT)
+    305          /*********************************************************************
+    306           * @fn      _ltoa
+    307           *
+    308           * @brief
+    309           *
+    310           *   convert a long unsigned int to a string.
+    311           *
+    312           * @param  l - long to convert
+    313           * @param  buf - buffer to convert to
+    314           * @param  radix - 10 dec, 16 hex
+    315           *
+    316           * @return  pointer to buffer
+    317           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    318          unsigned char * _ltoa(unsigned long l, unsigned char *buf, unsigned char radix)
+   \                     _ltoa:
+    319          {
+   \   000000   74E8         MOV     A,#-0x18
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 24
+   \   000005                ; Auto size: 31
+   \   000005   74E1         MOV     A,#-0x1f
+   \   000007   12....       LCALL   ?ALLOC_XSTACK8
+   \   00000A   E9           MOV     A,R1
+   \   00000B   85..82       MOV     DPL,?XSP + 0
+   \   00000E   85..83       MOV     DPH,?XSP + 1
+   \   000011   F0           MOVX    @DPTR,A
+   \   000012   8A..         MOV     ?V0 + 8,R2
+   \   000014   8B..         MOV     ?V0 + 9,R3
+   \   000016   8C..         MOV     ?V0 + 10,R4
+   \   000018   8D..         MOV     ?V0 + 11,R5
+    320          #if defined( __GNUC__ )
+    321            return ( (char*)ltoa( l, buf, radix ) );
+    322          #else
+    323            unsigned char tmp1[10] = "", tmp2[10] = "", tmp3[10] = "";
+   \   00001A   7401         MOV     A,#0x1
+   \   00001C   12....       LCALL   ?XSTACK_DISP0_8
+   \   00001F   AC82         MOV     R4,DPL
+   \   000021   AD83         MOV     R5,DPH
+   \   000023   7583..       MOV     DPH,#((`?<Constant "">` >> 8) & 0xff)
+   \   000026   7582..       MOV     DPL,#(`?<Constant "">` & 0xff)
+   \   000029   740A         MOV     A,#0xa
+   \   00002B   12....       LCALL   ?MOVE_LONG8_XDATA_XDATA
+   \   00002E   7583..       MOV     DPH,#((`?<Constant "">_1` >> 8) & 0xff)
+   \   000031   7582..       MOV     DPL,#(`?<Constant "">_1` & 0xff)
+   \   000034   740A         MOV     A,#0xa
+   \   000036   12....       LCALL   ?MOVE_LONG8_XDATA_XDATA
+   \   000039   7583..       MOV     DPH,#((`?<Constant "">_2` >> 8) & 0xff)
+   \   00003C   7582..       MOV     DPL,#(`?<Constant "">_2` & 0xff)
+   \   00003F   740A         MOV     A,#0xa
+   \   000041   12....       LCALL   ?MOVE_LONG8_XDATA_XDATA
+    324            unsigned short num1, num2, num3;
+    325            unsigned char i;
+    326          
+    327            buf[0] = '\0';
+   \   000044   7437         MOV     A,#0x37
+   \   000046   12....       LCALL   ?XSTACK_DISP0_8
+   \   000049   12....       LCALL   ?Subroutine13 & 0xFFFF
+   \                     ??CrossCallReturnLabel_22:
+   \   00004C   E4           CLR     A
+   \   00004D   F0           MOVX    @DPTR,A
+    328          
+    329            if ( radix == 10 )
+   \   00004E   85..82       MOV     DPL,?XSP + 0
+   \   000051   85..83       MOV     DPH,?XSP + 1
+   \   000054   E0           MOVX    A,@DPTR
+   \   000055   640A         XRL     A,#0xa
+   \   000057   6003         JZ      $+5
+   \   000059   02....       LJMP    ??_ltoa_0 & 0xFFFF
+    330            {
+    331              num1 = l % 10000;
+   \   00005C   8A..         MOV     ?V0 + 0,R2
+   \   00005E   8B..         MOV     ?V0 + 1,R3
+   \   000060   85....       MOV     ?V0 + 2,?V0 + 10
+   \   000063   85....       MOV     ?V0 + 3,?V0 + 11
+   \   000066   90....       MOV     DPTR,#__Constant_2710
+   \   000069   78..         MOV     R0,#?V0 + 4
+   \   00006B   12....       LCALL   ?L_MOV_X
+   \   00006E   78..         MOV     R0,#?V0 + 0
+   \   000070   79..         MOV     R1,#?V0 + 4
+   \   000072   12....       LCALL   ?UL_DIV_MOD
+   \   000075   85....       MOV     ?V0 + 0,?V0 + 4
+   \   000078   85....       MOV     ?V0 + 1,?V0 + 5
+    332              num2 = (l / 10000) % 10000;
+   \   00007B   8A..         MOV     ?V0 + 4,R2
+   \   00007D   8B..         MOV     ?V0 + 5,R3
+   \   00007F   85....       MOV     ?V0 + 6,?V0 + 10
+   \   000082   85....       MOV     ?V0 + 7,?V0 + 11
+   \   000085   90....       MOV     DPTR,#__Constant_2710
+   \   000088   78..         MOV     R0,#?V0 + 12
+   \   00008A   12....       LCALL   ?L_MOV_X
+   \   00008D   78..         MOV     R0,#?V0 + 4
+   \   00008F   79..         MOV     R1,#?V0 + 12
+   \   000091   12....       LCALL   ?UL_DIV_MOD
+   \   000094   90....       MOV     DPTR,#__Constant_2710
+   \   000097   78..         MOV     R0,#?V0 + 12
+   \   000099   12....       LCALL   ?L_MOV_X
+   \   00009C   78..         MOV     R0,#?V0 + 4
+   \   00009E   79..         MOV     R1,#?V0 + 12
+   \   0000A0   12....       LCALL   ?UL_DIV_MOD
+   \   0000A3   AE..         MOV     R6,?V0 + 12
+   \   0000A5   AF..         MOV     R7,?V0 + 13
+    333              num3 = (unsigned short)(l / 100000000);
+   \   0000A7   90....       MOV     DPTR,#__Constant_5f5e100
+   \   0000AA   78..         MOV     R0,#?V0 + 4
+   \   0000AC   12....       LCALL   ?L_MOV_X
+   \   0000AF   78..         MOV     R0,#?V0 + 8
+   \   0000B1   79..         MOV     R1,#?V0 + 4
+   \   0000B3   12....       LCALL   ?UL_DIV_MOD
+   \   0000B6   85....       MOV     ?V0 + 2,?V0 + 8
+   \   0000B9   85....       MOV     ?V0 + 3,?V0 + 9
+    334          
+    335              if (num3) _itoa(num3, tmp3, 10);
+   \   0000BC   E5..         MOV     A,?V0 + 2
+   \   0000BE   7002         JNZ     ??_ltoa_1
+   \   0000C0   E5..         MOV     A,?V0 + 3
+   \                     ??_ltoa_1:
+   \   0000C2   6012         JZ      ??_ltoa_2
+   \   0000C4                ; Setup parameters for call to function _itoa
+   \   0000C4   790A         MOV     R1,#0xa
+   \   0000C6   7415         MOV     A,#0x15
+   \   0000C8   12....       LCALL   ?XSTACK_DISP0_8
+   \   0000CB   AC82         MOV     R4,DPL
+   \   0000CD   AD83         MOV     R5,DPH
+   \   0000CF   AA..         MOV     R2,?V0 + 2
+   \   0000D1   AB..         MOV     R3,?V0 + 3
+   \   0000D3   12....       LCALL   ??_itoa?relay
+    336              if (num2) _itoa(num2, tmp2, 10);
+   \                     ??_ltoa_2:
+   \   0000D6   EE           MOV     A,R6
+   \   0000D7   7001         JNZ     ??_ltoa_3
+   \   0000D9   EF           MOV     A,R7
+   \                     ??_ltoa_3:
+   \   0000DA   6012         JZ      ??_ltoa_4
+   \   0000DC                ; Setup parameters for call to function _itoa
+   \   0000DC   790A         MOV     R1,#0xa
+   \   0000DE   740B         MOV     A,#0xb
+   \   0000E0   12....       LCALL   ?XSTACK_DISP0_8
+   \   0000E3   AC82         MOV     R4,DPL
+   \   0000E5   AD83         MOV     R5,DPH
+   \   0000E7   EE           MOV     A,R6
+   \   0000E8   FA           MOV     R2,A
+   \   0000E9   EF           MOV     A,R7
+   \   0000EA   FB           MOV     R3,A
+   \   0000EB   12....       LCALL   ??_itoa?relay
+    337              if (num1) _itoa(num1, tmp1, 10);
+   \                     ??_ltoa_4:
+   \   0000EE   E5..         MOV     A,?V0 + 0
+   \   0000F0   7002         JNZ     ??_ltoa_5
+   \   0000F2   E5..         MOV     A,?V0 + 1
+   \                     ??_ltoa_5:
+   \   0000F4   6012         JZ      ??_ltoa_6
+   \   0000F6                ; Setup parameters for call to function _itoa
+   \   0000F6   790A         MOV     R1,#0xa
+   \   0000F8   7401         MOV     A,#0x1
+   \   0000FA   12....       LCALL   ?XSTACK_DISP0_8
+   \   0000FD   AC82         MOV     R4,DPL
+   \   0000FF   AD83         MOV     R5,DPH
+   \   000101   AA..         MOV     R2,?V0 + 0
+   \   000103   AB..         MOV     R3,?V0 + 1
+   \   000105   12....       LCALL   ??_itoa?relay
+    338          
+    339              if (num3)
+   \                     ??_ltoa_6:
+   \   000108   E5..         MOV     A,?V0 + 2
+   \   00010A   7002         JNZ     ??_ltoa_7
+   \   00010C   E5..         MOV     A,?V0 + 3
+   \                     ??_ltoa_7:
+   \   00010E   602C         JZ      ??_ltoa_8
+    340              {
+    341                strcpy((char*)buf, (char const*)tmp3);
+   \   000110                ; Setup parameters for call to function strcpy
+   \   000110   7415         MOV     A,#0x15
+   \   000112   12....       LCALL   ?XSTACK_DISP0_8
+   \   000115   AC82         MOV     R4,DPL
+   \   000117   AD83         MOV     R5,DPH
+   \   000119   7437         MOV     A,#0x37
+   \   00011B   12....       LCALL   ?XSTACK_DISP0_8
+   \   00011E   12....       LCALL   ?Subroutine8 & 0xFFFF
+    342                for (i = 0; i < 4 - strlen((char const*)tmp2); i++)
+   \                     ??CrossCallReturnLabel_7:
+   \   000121   800C         SJMP    ??CrossCallReturnLabel_4
+    343                  strcat((char*)buf, "0");
+   \                     ??_ltoa_9:
+   \   000123                ; Setup parameters for call to function strcat
+   \   000123   7C..         MOV     R4,#(`?<Constant "0">` & 0xff)
+   \   000125   7D..         MOV     R5,#((`?<Constant "0">` >> 8) & 0xff)
+   \   000127   7437         MOV     A,#0x37
+   \   000129   12....       LCALL   ?XSTACK_DISP0_8
+   \   00012C   12....       LCALL   ?Subroutine7 & 0xFFFF
+   \                     ??CrossCallReturnLabel_4:
+   \   00012F   85....       MOV     ?V0 + 6,?V0 + 4
+   \   000132                ; Setup parameters for call to function strlen
+   \   000132   740B         MOV     A,#0xb
+   \   000134   12....       LCALL   ?XSTACK_DISP0_8
+   \   000137   12....       LCALL   ?Subroutine5 & 0xFFFF
+    344              }
+   \                     ??CrossCallReturnLabel_0:
+   \   00013A   40E7         JC      ??_ltoa_9
+    345              strcat((char*)buf, (char const*)tmp2);
+   \                     ??_ltoa_8:
+   \   00013C                ; Setup parameters for call to function strcat
+   \   00013C   740B         MOV     A,#0xb
+   \   00013E   12....       LCALL   ?XSTACK_DISP0_8
+   \   000141   AC82         MOV     R4,DPL
+   \   000143   AD83         MOV     R5,DPH
+   \   000145   7437         MOV     A,#0x37
+   \   000147   12....       LCALL   ?XSTACK_DISP0_8
+   \   00014A   12....       LCALL   ?Subroutine10 & 0xFFFF
+    346              if (num3 || num2)
+   \                     ??CrossCallReturnLabel_11:
+   \   00014D   7002         JNZ     ??_ltoa_10
+   \   00014F   E5..         MOV     A,?V0 + 3
+   \                     ??_ltoa_10:
+   \   000151   7006         JNZ     ??_ltoa_11
+   \   000153   EE           MOV     A,R6
+   \   000154   7001         JNZ     ??_ltoa_12
+   \   000156   EF           MOV     A,R7
+   \                     ??_ltoa_12:
+   \   000157   601E         JZ      ??_ltoa_13
+    347              {
+    348                for (i = 0; i < 4 - strlen((char const*)tmp1); i++)
+   \                     ??_ltoa_11:
+   \   000159   75..00       MOV     ?V0 + 4,#0x0
+   \   00015C   800C         SJMP    ??CrossCallReturnLabel_5
+    349                  strcat((char*)buf, "0");
+   \                     ??_ltoa_14:
+   \   00015E                ; Setup parameters for call to function strcat
+   \   00015E   7C..         MOV     R4,#(`?<Constant "0">` & 0xff)
+   \   000160   7D..         MOV     R5,#((`?<Constant "0">` >> 8) & 0xff)
+   \   000162   7437         MOV     A,#0x37
+   \   000164   12....       LCALL   ?XSTACK_DISP0_8
+   \   000167   12....       LCALL   ?Subroutine7 & 0xFFFF
+   \                     ??CrossCallReturnLabel_5:
+   \   00016A   85....       MOV     ?V0 + 6,?V0 + 4
+   \   00016D                ; Setup parameters for call to function strlen
+   \   00016D   7401         MOV     A,#0x1
+   \   00016F   12....       LCALL   ?XSTACK_DISP0_8
+   \   000172   12....       LCALL   ?Subroutine5 & 0xFFFF
+    350              }
+   \                     ??CrossCallReturnLabel_1:
+   \   000175   40E7         JC      ??_ltoa_14
+    351              strcat((char*)buf, (char const*)tmp1);
+   \                     ??_ltoa_13:
+   \   000177                ; Setup parameters for call to function strcat
+   \   000177   7401         MOV     A,#0x1
+   \   000179   12....       LCALL   ?XSTACK_DISP0_8
+   \   00017C   AC82         MOV     R4,DPL
+   \   00017E   AD83         MOV     R5,DPH
+   \   000180   7437         MOV     A,#0x37
+   \   000182   12....       LCALL   ?XSTACK_DISP0_8
+   \   000185   12....       LCALL   ?Subroutine10 & 0xFFFF
+    352              if (!num3 && !num2 && !num1)
+   \                     ??CrossCallReturnLabel_12:
+   \   000188   7002         JNZ     ??_ltoa_15
+   \   00018A   E5..         MOV     A,?V0 + 3
+   \                     ??_ltoa_15:
+   \   00018C   701D         JNZ     ??_ltoa_16
+   \   00018E   EE           MOV     A,R6
+   \   00018F   7001         JNZ     ??_ltoa_17
+   \   000191   EF           MOV     A,R7
+   \                     ??_ltoa_17:
+   \   000192   7017         JNZ     ??_ltoa_16
+   \                     ??_ltoa_18:
+   \   000194   E5..         MOV     A,?V0 + 0
+   \   000196   7002         JNZ     ??_ltoa_19
+   \   000198   E5..         MOV     A,?V0 + 1
+   \                     ??_ltoa_19:
+   \   00019A   700F         JNZ     ??_ltoa_16
+    353                strcpy((char*)buf, "0");
+   \   00019C                ; Setup parameters for call to function strcpy
+   \   00019C   7C..         MOV     R4,#(`?<Constant "0">` & 0xff)
+   \   00019E   7D..         MOV     R5,#((`?<Constant "0">` >> 8) & 0xff)
+   \   0001A0   7437         MOV     A,#0x37
+   \   0001A2   12....       LCALL   ?XSTACK_DISP0_8
+   \   0001A5   12....       LCALL   ?Subroutine11 & 0xFFFF
+    354            }
+   \                     ??CrossCallReturnLabel_14:
+   \   0001A8   12....       LCALL   ??strcpy?relay
+    355            else if ( radix == 16 )
+    356            {
+    357              num1 = l & 0x0000FFFF;
+    358              num2 = l >> 16;
+    359          
+    360              if (num2) _itoa(num2, tmp2, 16);
+    361              if (num1) _itoa(num1, tmp1, 16);
+    362          
+    363              if (num2)
+    364              {
+    365                strcpy((char*)buf,(char const*)tmp2);
+    366                for (i = 0; i < 4 - strlen((char const*)tmp1); i++)
+    367                  strcat((char*)buf, "0");
+    368              }
+    369              strcat((char*)buf, (char const*)tmp1);
+    370              if (!num2 && !num1)
+    371                strcpy((char*)buf, "0");
+    372            }
+    373            else
+    374              return NULL;
+    375          
+    376            return buf;
+   \                     ??_ltoa_16:
+   \   0001AB   7437         MOV     A,#0x37
+   \   0001AD   12....       LCALL   ?XSTACK_DISP0_8
+   \   0001B0   12....       LCALL   ?Subroutine11 & 0xFFFF
+   \                     ??CrossCallReturnLabel_15:
+   \   0001B3   741F         MOV     A,#0x1f
+   \   0001B5   12....       LCALL   ?DEALLOC_XSTACK8
+   \   0001B8   7F10         MOV     R7,#0x10
+   \   0001BA   02....       LJMP    ?BANKED_LEAVE_XDATA
+   \                     ??_ltoa_0:
+   \   0001BD   E0           MOVX    A,@DPTR
+   \   0001BE   6410         XRL     A,#0x10
+   \   0001C0   6003         JZ      $+5
+   \   0001C2   02....       LJMP    ??_ltoa_20 & 0xFFFF
+   \   0001C5   8A..         MOV     ?V0 + 0,R2
+   \   0001C7   8B..         MOV     ?V0 + 1,R3
+   \   0001C9   7410         MOV     A,#0x10
+   \   0001CB   78..         MOV     R0,#?V0 + 8
+   \   0001CD   12....       LCALL   ?UL_SHR
+   \   0001D0   AE..         MOV     R6,?V0 + 8
+   \   0001D2   AF..         MOV     R7,?V0 + 9
+   \   0001D4   EE           MOV     A,R6
+   \   0001D5   7001         JNZ     ??_ltoa_21
+   \   0001D7   EF           MOV     A,R7
+   \                     ??_ltoa_21:
+   \   0001D8   6012         JZ      ??_ltoa_22
+   \   0001DA                ; Setup parameters for call to function _itoa
+   \   0001DA   7910         MOV     R1,#0x10
+   \   0001DC   740B         MOV     A,#0xb
+   \   0001DE   12....       LCALL   ?XSTACK_DISP0_8
+   \   0001E1   AC82         MOV     R4,DPL
+   \   0001E3   AD83         MOV     R5,DPH
+   \   0001E5   EE           MOV     A,R6
+   \   0001E6   FA           MOV     R2,A
+   \   0001E7   EF           MOV     A,R7
+   \   0001E8   FB           MOV     R3,A
+   \   0001E9   12....       LCALL   ??_itoa?relay
+   \                     ??_ltoa_22:
+   \   0001EC   E5..         MOV     A,?V0 + 0
+   \   0001EE   7002         JNZ     ??_ltoa_23
+   \   0001F0   E5..         MOV     A,?V0 + 1
+   \                     ??_ltoa_23:
+   \   0001F2   6012         JZ      ??_ltoa_24
+   \   0001F4                ; Setup parameters for call to function _itoa
+   \   0001F4   7910         MOV     R1,#0x10
+   \   0001F6   7401         MOV     A,#0x1
+   \   0001F8   12....       LCALL   ?XSTACK_DISP0_8
+   \   0001FB   AC82         MOV     R4,DPL
+   \   0001FD   AD83         MOV     R5,DPH
+   \   0001FF   AA..         MOV     R2,?V0 + 0
+   \   000201   AB..         MOV     R3,?V0 + 1
+   \   000203   12....       LCALL   ??_itoa?relay
+   \                     ??_ltoa_24:
+   \   000206   EE           MOV     A,R6
+   \   000207   7001         JNZ     ??_ltoa_25
+   \   000209   EF           MOV     A,R7
+   \                     ??_ltoa_25:
+   \   00020A   6044         JZ      ??_ltoa_26
+   \   00020C                ; Setup parameters for call to function strcpy
+   \   00020C   740B         MOV     A,#0xb
+   \   00020E   12....       LCALL   ?XSTACK_DISP0_8
+   \   000211   AC82         MOV     R4,DPL
+   \   000213   AD83         MOV     R5,DPH
+   \   000215   7437         MOV     A,#0x37
+   \   000217   12....       LCALL   ?XSTACK_DISP0_8
+   \   00021A   12....       LCALL   ?Subroutine8 & 0xFFFF
+   \                     ??CrossCallReturnLabel_8:
+   \   00021D   800C         SJMP    ??CrossCallReturnLabel_6
+   \                     ??_ltoa_27:
+   \   00021F                ; Setup parameters for call to function strcat
+   \   00021F   7C..         MOV     R4,#(`?<Constant "0">` & 0xff)
+   \   000221   7D..         MOV     R5,#((`?<Constant "0">` >> 8) & 0xff)
+   \   000223   7437         MOV     A,#0x37
+   \   000225   12....       LCALL   ?XSTACK_DISP0_8
+   \   000228   12....       LCALL   ?Subroutine7 & 0xFFFF
+   \                     ??CrossCallReturnLabel_6:
+   \   00022B   85....       MOV     ?V0 + 2,?V0 + 4
+   \   00022E                ; Setup parameters for call to function strlen
+   \   00022E   7401         MOV     A,#0x1
+   \   000230   12....       LCALL   ?XSTACK_DISP0_8
+   \   000233   AA82         MOV     R2,DPL
+   \   000235   AB83         MOV     R3,DPH
+   \   000237   12....       LCALL   ??strlen?relay
+   \   00023A   8A..         MOV     ?V0 + 6,R2
+   \   00023C   8B..         MOV     ?V0 + 7,R3
+   \   00023E   7404         MOV     A,#0x4
+   \   000240   C3           CLR     C
+   \   000241   95..         SUBB    A,?V0 + 6
+   \   000243   F8           MOV     R0,A
+   \   000244   E4           CLR     A
+   \   000245   95..         SUBB    A,?V0 + 7
+   \   000247   F9           MOV     R1,A
+   \   000248   C3           CLR     C
+   \   000249   E5..         MOV     A,?V0 + 2
+   \   00024B   98           SUBB    A,R0
+   \   00024C   E4           CLR     A
+   \   00024D   99           SUBB    A,R1
+   \   00024E   40CF         JC      ??_ltoa_27
+   \                     ??_ltoa_26:
+   \   000250                ; Setup parameters for call to function strcat
+   \   000250   7401         MOV     A,#0x1
+   \   000252   12....       LCALL   ?XSTACK_DISP0_8
+   \   000255   AC82         MOV     R4,DPL
+   \   000257   AD83         MOV     R5,DPH
+   \   000259   7437         MOV     A,#0x37
+   \   00025B   12....       LCALL   ?XSTACK_DISP0_8
+   \   00025E   12....       LCALL   ?Subroutine11 & 0xFFFF
+   \                     ??CrossCallReturnLabel_16:
+   \   000261   12....       LCALL   ??strcat?relay
+   \   000264   EE           MOV     A,R6
+   \   000265   7001         JNZ     ??_ltoa_28
+   \   000267   EF           MOV     A,R7
+   \                     ??_ltoa_28:
+   \   000268   6003         JZ      $+5
+   \   00026A   02....       LJMP    ??_ltoa_16 & 0xFFFF
+   \   00026D   02....       LJMP    ??_ltoa_18 & 0xFFFF
+   \                     ??_ltoa_20:
+   \   000270   7A00         MOV     R2,#0x0
+   \   000272   7B00         MOV     R3,#0x0
+   \   000274   02....       LJMP    ??CrossCallReturnLabel_15 & 0xFFFF
+    377          #endif
+    378          }
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine10:
+   \   000000   12....       LCALL   ?Subroutine23 & 0xFFFF
+   \                     ??CrossCallReturnLabel_47:
+   \   000003   E5..         MOV     A,?V0 + 2
+   \   000005   22           RET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine8:
+   \   000000   E0           MOVX    A,@DPTR
+   \   000001   FA           MOV     R2,A
+   \   000002   A3           INC     DPTR
+   \   000003   E0           MOVX    A,@DPTR
+   \   000004   FB           MOV     R3,A
+   \   000005   12....       LCALL   ??strcpy?relay
+   \   000008   75..00       MOV     ?V0 + 4,#0x0
+   \   00000B   22           RET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine7:
+   \   000000   12....       LCALL   ?Subroutine23 & 0xFFFF
+   \                     ??CrossCallReturnLabel_48:
+   \   000003   05..         INC     ?V0 + 4
+   \   000005   22           RET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine23:
+   \   000000   E0           MOVX    A,@DPTR
+   \   000001   FA           MOV     R2,A
+   \   000002   A3           INC     DPTR
+   \   000003   E0           MOVX    A,@DPTR
+   \   000004   FB           MOV     R3,A
+   \   000005   12....       LCALL   ??strcat?relay
+   \   000008   22           RET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine5:
+   \   000000   AA82         MOV     R2,DPL
+   \   000002   AB83         MOV     R3,DPH
+   \   000004   12....       LCALL   ??strlen?relay
+   \   000007   8A..         MOV     ?V0 + 8,R2
+   \   000009   8B..         MOV     ?V0 + 9,R3
+   \   00000B   7404         MOV     A,#0x4
+   \   00000D   C3           CLR     C
+   \   00000E   95..         SUBB    A,?V0 + 8
+   \   000010   F8           MOV     R0,A
+   \   000011   E4           CLR     A
+   \   000012   95..         SUBB    A,?V0 + 9
+   \   000014   F9           MOV     R1,A
+   \   000015   C3           CLR     C
+   \   000016   E5..         MOV     A,?V0 + 6
+   \   000018   98           SUBB    A,R0
+   \   000019   E4           CLR     A
+   \   00001A   99           SUBB    A,R1
+   \   00001B   22           RET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine13:
+   \   000000   E0           MOVX    A,@DPTR
+   \   000001   F8           MOV     R0,A
+   \   000002   A3           INC     DPTR
+   \   000003   E0           MOVX    A,@DPTR
+   \   000004   F583         MOV     DPH,A
+   \   000006   8882         MOV     DPL,R0
+   \   000008   22           RET
+    379          #endif // !defined(ZBIT) && !defined(ZBIT2)
+    380          
+    381          /*********************************************************************
+    382           * @fn        osal_rand
+    383           *
+    384           * @brief    Random number generator
+    385           *
+    386           * @param   none
+    387           *
+    388           * @return  uint16 - new random number
+    389           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    390          uint16 osal_rand( void )
+   \                     osal_rand:
+    391          {
+   \   000000   C082         PUSH    DPL
+   \   000002   C083         PUSH    DPH
+   \   000004                ; Saved register size: 2
+   \   000004                ; Auto size: 0
+    392            return ( Onboard_rand() );
+   \   000004                ; Setup parameters for call to function Onboard_rand
+   \   000004   12....       LCALL   ??Onboard_rand?relay
+   \   000007   80..         SJMP    ?Subroutine0
+    393          }
+    394          
+    395          /*********************************************************************
+    396           * API FUNCTIONS
+    397           *********************************************************************/
+    398          
+    399          /*********************************************************************
+    400           * @fn      osal_msg_allocate
+    401           *
+    402           * @brief
+    403           *
+    404           *    This function is called by a task to allocate a message buffer
+    405           *    into which the task will encode the particular message it wishes
+    406           *    to send.  This common buffer scheme is used to strictly limit the
+    407           *    creation of message buffers within the system due to RAM size
+    408           *    limitations on the microprocessor.   Note that all message buffers
+    409           *    are a fixed size (at least initially).  The parameter len is kept
+    410           *    in case a message pool with varying fixed message sizes is later
+    411           *    created (for example, a pool of message buffers of size LARGE,
+    412           *    MEDIUM and SMALL could be maintained and allocated based on request
+    413           *    from the tasks).
+    414           *
+    415           *
+    416           * @param   uint8 len  - wanted buffer length
+    417           *
+    418           *
+    419           * @return  pointer to allocated buffer or NULL if allocation failed.
+    420           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    421          uint8 * osal_msg_allocate( uint16 len )
+   \                     osal_msg_allocate:
+    422          {
+   \   000000   74F6         MOV     A,#-0xa
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 10
+   \   000005                ; Auto size: 0
+   \   000005   EA           MOV     A,R2
+   \   000006   FE           MOV     R6,A
+   \   000007   EB           MOV     A,R3
+   \   000008   FF           MOV     R7,A
+    423            osal_msg_hdr_t *hdr;
+    424          
+    425            if ( len == 0 )
+   \   000009   EE           MOV     A,R6
+   \   00000A   7001         JNZ     ??osal_msg_allocate_0
+   \   00000C   EF           MOV     A,R7
+   \                     ??osal_msg_allocate_0:
+   \   00000D   7006         JNZ     ??osal_msg_allocate_1
+    426              return ( NULL );
+   \                     ??osal_msg_allocate_2:
+   \   00000F   7A00         MOV     R2,#0x0
+   \   000011   7B00         MOV     R3,#0x0
+   \   000013   803E         SJMP    ??osal_msg_allocate_3
+    427          
+    428            hdr = (osal_msg_hdr_t *) osal_mem_alloc( (short)(len + sizeof( osal_msg_hdr_t )) );
+   \                     ??osal_msg_allocate_1:
+   \   000015                ; Setup parameters for call to function osal_mem_alloc
+   \   000015   7405         MOV     A,#0x5
+   \   000017   2E           ADD     A,R6
+   \   000018   FA           MOV     R2,A
+   \   000019   E4           CLR     A
+   \   00001A   3F           ADDC    A,R7
+   \   00001B   FB           MOV     R3,A
+   \   00001C   12....       LCALL   ??osal_mem_alloc?relay
+   \   00001F   8A..         MOV     ?V0 + 0,R2
+   \   000021   8B..         MOV     ?V0 + 1,R3
+   \   000023   A8..         MOV     R0,?V0 + 0
+   \   000025   A9..         MOV     R1,?V0 + 1
+    429            if ( hdr )
+   \   000027   E8           MOV     A,R0
+   \   000028   7001         JNZ     ??osal_msg_allocate_4
+   \   00002A   E9           MOV     A,R1
+   \                     ??osal_msg_allocate_4:
+   \   00002B   60E2         JZ      ??osal_msg_allocate_2
+    430            {
+    431              hdr->next = NULL;
+   \   00002D   8882         MOV     DPL,R0
+   \   00002F   8983         MOV     DPH,R1
+   \   000031   E4           CLR     A
+   \   000032   F0           MOVX    @DPTR,A
+   \   000033   A3           INC     DPTR
+   \   000034   F0           MOVX    @DPTR,A
+    432              hdr->len = len;
+   \   000035   8882         MOV     DPL,R0
+   \   000037   8983         MOV     DPH,R1
+   \   000039   A3           INC     DPTR
+   \   00003A   A3           INC     DPTR
+   \   00003B   EE           MOV     A,R6
+   \   00003C   F0           MOVX    @DPTR,A
+   \   00003D   A3           INC     DPTR
+   \   00003E   EF           MOV     A,R7
+   \   00003F   F0           MOVX    @DPTR,A
+    433              hdr->dest_id = TASK_NO_TASK;
+   \   000040   74FF         MOV     A,#-0x1
+   \   000042   8882         MOV     DPL,R0
+   \   000044   8983         MOV     DPH,R1
+   \   000046   A3           INC     DPTR
+   \   000047   A3           INC     DPTR
+   \   000048   A3           INC     DPTR
+   \   000049   A3           INC     DPTR
+   \   00004A   F0           MOVX    @DPTR,A
+    434              return ( (uint8 *) (hdr + 1) );
+   \   00004B   E8           MOV     A,R0
+   \   00004C   2405         ADD     A,#0x5
+   \   00004E   FA           MOV     R2,A
+   \   00004F   E9           MOV     A,R1
+   \   000050   3400         ADDC    A,#0x0
+   \   000052   FB           MOV     R3,A
+    435            }
+   \                     ??osal_msg_allocate_3:
+   \   000053   02....       LJMP    ?Subroutine2 & 0xFFFF
+    436            else
+    437              return ( NULL );
+    438          }
+    439          
+    440          /*********************************************************************
+    441           * @fn      osal_msg_deallocate
+    442           *
+    443           * @brief
+    444           *
+    445           *    This function is used to deallocate a message buffer. This function
+    446           *    is called by a task (or processing element) after it has finished
+    447           *    processing a received message.
+    448           *
+    449           *
+    450           * @param   uint8 *msg_ptr - pointer to new message buffer
+    451           *
+    452           * @return  SUCCESS, INVALID_MSG_POINTER
+    453           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    454          uint8 osal_msg_deallocate( uint8 *msg_ptr )
+   \                     osal_msg_deallocate:
+    455          {
+   \   000000   C082         PUSH    DPL
+   \   000002   C083         PUSH    DPH
+   \   000004                ; Saved register size: 2
+   \   000004                ; Auto size: 0
+    456            uint8 *x;
+    457          
+    458            if ( msg_ptr == NULL )
+   \   000004   EA           MOV     A,R2
+   \   000005   7001         JNZ     ??osal_msg_deallocate_0
+   \   000007   EB           MOV     A,R3
+   \                     ??osal_msg_deallocate_0:
+   \   000008   7004         JNZ     ??osal_msg_deallocate_1
+    459              return ( INVALID_MSG_POINTER );
+   \   00000A   7905         MOV     R1,#0x5
+   \   00000C   8016         SJMP    ??osal_msg_deallocate_2
+    460          
+    461            // don't deallocate queued buffer
+    462            if ( OSAL_MSG_ID( msg_ptr ) != TASK_NO_TASK )
+   \                     ??osal_msg_deallocate_1:
+   \   00000E   12....       LCALL   ?Subroutine16 & 0xFFFF
+   \                     ??CrossCallReturnLabel_30:
+   \   000011   6004         JZ      ??osal_msg_deallocate_3
+    463              return ( MSG_BUFFER_NOT_AVAIL );
+   \   000013   7904         MOV     R1,#0x4
+   \   000015   800D         SJMP    ??osal_msg_deallocate_2
+    464          
+    465            x = (uint8 *)((uint8 *)msg_ptr - sizeof( osal_msg_hdr_t ));
+    466          
+    467            osal_mem_free( (void *)x );
+   \                     ??osal_msg_deallocate_3:
+   \   000017                ; Setup parameters for call to function osal_mem_free
+   \   000017   EA           MOV     A,R2
+   \   000018   24FB         ADD     A,#-0x5
+   \   00001A   FA           MOV     R2,A
+   \   00001B   EB           MOV     A,R3
+   \   00001C   34FF         ADDC    A,#-0x1
+   \   00001E   FB           MOV     R3,A
+   \   00001F   12....       LCALL   ??osal_mem_free?relay
+    468          
+    469            return ( SUCCESS );
+   \   000022   7900         MOV     R1,#0x0
+   \                     ??osal_msg_deallocate_2:
+   \   000024                REQUIRE ?Subroutine0
+   \   000024                ; // Fall through to label ?Subroutine0
+    470          }
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine16:
+   \   000000   EA           MOV     A,R2
+   \   000001   24FF         ADD     A,#-0x1
+   \   000003   F582         MOV     DPL,A
+   \   000005   EB           MOV     A,R3
+   \   000006   12....       LCALL   ??Subroutine29_0 & 0xFFFF
+   \                     ??CrossCallReturnLabel_56:
+   \   000009   E0           MOVX    A,@DPTR
+   \   00000A   64FF         XRL     A,#0xff
+   \   00000C   22           RET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ??Subroutine29_0:
+   \   000000   34FF         ADDC    A,#-0x1
+   \   000002   F583         MOV     DPH,A
+   \   000004   22           RET
+    471          
+    472          /*********************************************************************
+    473           * @fn      osal_msg_send
+    474           *
+    475           * @brief
+    476           *
+    477           *    This function is called by a task to send a command message to
+    478           *    another task or processing element.  The sending_task field must
+    479           *    refer to a valid task, since the task ID will be used
+    480           *    for the response message.  This function will also set a message
+    481           *    ready event in the destination tasks event list.
+    482           *
+    483           *
+    484           * @param   uint8 destination task - Send msg to?  Task ID
+    485           * @param   uint8 *msg_ptr - pointer to new message buffer
+    486           * @param   uint8 len - length of data in message
+    487           *
+    488           * @return  SUCCESS, INVALID_TASK, INVALID_MSG_POINTER
+    489           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    490          uint8 osal_msg_send( uint8 destination_task, uint8 *msg_ptr )
+   \                     osal_msg_send:
+    491          {
+   \   000000   74F7         MOV     A,#-0x9
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 9
+   \   000005                ; Auto size: 0
+   \   000005   E9           MOV     A,R1
+   \   000006   FE           MOV     R6,A
+    492            if ( msg_ptr == NULL )
+   \   000007   EA           MOV     A,R2
+   \   000008   7001         JNZ     ??osal_msg_send_0
+   \   00000A   EB           MOV     A,R3
+   \                     ??osal_msg_send_0:
+   \   00000B   7004         JNZ     ??osal_msg_send_1
+    493              return ( INVALID_MSG_POINTER );
+   \                     ??osal_msg_send_2:
+   \   00000D   7905         MOV     R1,#0x5
+   \   00000F   803F         SJMP    ??osal_msg_send_3
+    494          
+    495            if ( destination_task >= tasksCnt )
+   \                     ??osal_msg_send_1:
+   \   000011   90....       MOV     DPTR,#tasksCnt
+   \   000014   E0           MOVX    A,@DPTR
+   \   000015   FC           MOV     R4,A
+   \   000016   E9           MOV     A,R1
+   \   000017   C3           CLR     C
+   \   000018   9C           SUBB    A,R4
+   \   000019   4007         JC      ??osal_msg_send_4
+    496            {
+    497              osal_msg_deallocate( msg_ptr );
+   \   00001B                ; Setup parameters for call to function osal_msg_deallocate
+   \   00001B   12....       LCALL   ??osal_msg_deallocate?relay
+    498              return ( INVALID_TASK );
+   \   00001E   7903         MOV     R1,#0x3
+   \   000020   802E         SJMP    ??osal_msg_send_3
+    499            }
+    500          
+    501            // Check the message header
+    502            if ( OSAL_MSG_NEXT( msg_ptr ) != NULL ||
+    503                 OSAL_MSG_ID( msg_ptr ) != TASK_NO_TASK )
+   \                     ??osal_msg_send_4:
+   \   000022   EA           MOV     A,R2
+   \   000023   24FB         ADD     A,#-0x5
+   \   000025   12....       LCALL   ?Subroutine21 & 0xFFFF
+   \                     ??CrossCallReturnLabel_51:
+   \   000028   7002         JNZ     ??osal_msg_send_5
+   \   00002A   A3           INC     DPTR
+   \   00002B   E0           MOVX    A,@DPTR
+   \                     ??osal_msg_send_5:
+   \   00002C   7005         JNZ     ??osal_msg_send_6
+   \   00002E   12....       LCALL   ?Subroutine16 & 0xFFFF
+   \                     ??CrossCallReturnLabel_31:
+   \   000031   6005         JZ      ??osal_msg_send_7
+    504            {
+    505              osal_msg_deallocate( msg_ptr );
+   \                     ??osal_msg_send_6:
+   \   000033                ; Setup parameters for call to function osal_msg_deallocate
+   \   000033   12....       LCALL   ??osal_msg_deallocate?relay
+    506              return ( INVALID_MSG_POINTER );
+   \   000036   80D5         SJMP    ??osal_msg_send_2
+    507            }
+    508          
+    509            OSAL_MSG_ID( msg_ptr ) = destination_task;
+   \                     ??osal_msg_send_7:
+   \   000038   EE           MOV     A,R6
+   \   000039   F0           MOVX    @DPTR,A
+    510          
+    511            // queue message
+    512            osal_msg_enqueue( &osal_qHead, msg_ptr );
+   \   00003A                ; Setup parameters for call to function osal_msg_enqueue
+   \   00003A   EA           MOV     A,R2
+   \   00003B   FC           MOV     R4,A
+   \   00003C   EB           MOV     A,R3
+   \   00003D   FD           MOV     R5,A
+   \   00003E   7A..         MOV     R2,#(osal_qHead & 0xff)
+   \   000040   7B..         MOV     R3,#((osal_qHead >> 8) & 0xff)
+   \   000042   12....       LCALL   ??osal_msg_enqueue?relay
+    513          
+    514            // Signal the task that a message is waiting
+    515            osal_set_event( destination_task, SYS_EVENT_MSG );
+   \   000045                ; Setup parameters for call to function osal_set_event
+   \   000045   7A00         MOV     R2,#0x0
+   \   000047   7B80         MOV     R3,#-0x80
+   \   000049   EE           MOV     A,R6
+   \   00004A   F9           MOV     R1,A
+   \   00004B   12....       LCALL   ??osal_set_event?relay
+    516          
+    517            return ( SUCCESS );
+   \   00004E   7900         MOV     R1,#0x0
+   \                     ??osal_msg_send_3:
+   \   000050   02....       LJMP    ??Subroutine26_0 & 0xFFFF
+    518          }
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine21:
+   \   000000   F582         MOV     DPL,A
+   \   000002   EB           MOV     A,R3
+   \   000003                REQUIRE ??Subroutine25_0
+   \   000003                ; // Fall through to label ??Subroutine25_0
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ??Subroutine25_0:
+   \   000000   12....       LCALL   ??Subroutine29_0 & 0xFFFF
+   \                     ??CrossCallReturnLabel_58:
+   \   000003   E0           MOVX    A,@DPTR
+   \   000004   22           RET
+    519          
+    520          /*********************************************************************
+    521           * @fn      osal_msg_receive
+    522           *
+    523           * @brief
+    524           *
+    525           *    This function is called by a task to retrieve a received command
+    526           *    message. The calling task must deallocate the message buffer after
+    527           *    processing the message using the osal_msg_deallocate() call.
+    528           *
+    529           * @param   uint8 task_id - receiving tasks ID
+    530           *
+    531           * @return  *uint8 - message information or NULL if no message
+    532           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    533          uint8 *osal_msg_receive( uint8 task_id )
+   \                     osal_msg_receive:
+    534          {
+   \   000000   74F2         MOV     A,#-0xe
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 14
+   \   000005                ; Auto size: 0
+   \   000005   89..         MOV     ?V0 + 3,R1
+    535            osal_msg_hdr_t *listHdr;
+    536            osal_msg_hdr_t *prevHdr = NULL;
+   \   000007   75..00       MOV     ?V0 + 4,#0x0
+   \   00000A   75..00       MOV     ?V0 + 5,#0x0
+    537            osal_msg_hdr_t *foundHdr = NULL;
+   \   00000D   7E00         MOV     R6,#0x0
+   \   00000F   7F00         MOV     R7,#0x0
+    538            halIntState_t   intState;
+    539          
+    540            // Hold off interrupts
+    541            HAL_ENTER_CRITICAL_SECTION(intState);
+   \   000011   A2AF         MOV     C,0xa8.7
+   \   000013   E4           CLR     A
+   \   000014   92E0         MOV     0xE0 /* A   */.0,C
+   \   000016   F5..         MOV     ?V0 + 2,A
+   \   000018   C2AF         CLR     0xa8.7
+    542          
+    543            // Point to the top of the queue
+    544            listHdr = osal_qHead;
+   \   00001A   90....       MOV     DPTR,#osal_qHead
+   \   00001D   8017         SJMP    ??CrossCallReturnLabel_53
+    545          
+    546            // Look through the queue for a message that belongs to the asking task
+    547            while ( listHdr != NULL )
+    548            {
+    549              if ( (listHdr - 1)->dest_id == task_id )
+    550              {
+    551                if ( foundHdr == NULL )
+    552                {
+    553                  // Save the first one
+    554                  foundHdr = listHdr;
+    555                }
+    556                else
+    557                {
+    558                  // Second msg found, stop looking
+    559                  break;
+    560                }
+    561              }
+    562              if ( foundHdr == NULL )
+   \                     ??osal_msg_receive_0:
+   \   00001F   EE           MOV     A,R6
+   \   000020   7001         JNZ     ??osal_msg_receive_1
+   \   000022   EF           MOV     A,R7
+   \                     ??osal_msg_receive_1:
+   \   000023   7006         JNZ     ??osal_msg_receive_2
+    563              {
+    564                prevHdr = listHdr;
+   \   000025   85....       MOV     ?V0 + 4,?V0 + 0
+   \   000028   85....       MOV     ?V0 + 5,?V0 + 1
+    565              }
+    566              listHdr = OSAL_MSG_NEXT( listHdr );
+   \                     ??osal_msg_receive_2:
+   \   00002B   E5..         MOV     A,?V0 + 0
+   \   00002D   24FB         ADD     A,#-0x5
+   \   00002F   F582         MOV     DPL,A
+   \   000031   E5..         MOV     A,?V0 + 1
+   \   000033   12....       LCALL   ??Subroutine29_0 & 0xFFFF
+   \                     ??CrossCallReturnLabel_53:
+   \   000036   E0           MOVX    A,@DPTR
+   \   000037   F5..         MOV     ?V0 + 0,A
+   \   000039   A3           INC     DPTR
+   \   00003A   E0           MOVX    A,@DPTR
+   \   00003B   F5..         MOV     ?V0 + 1,A
+   \   00003D   E5..         MOV     A,?V0 + 0
+   \   00003F   7002         JNZ     ??osal_msg_receive_3
+   \   000041   E5..         MOV     A,?V0 + 1
+   \                     ??osal_msg_receive_3:
+   \   000043   6024         JZ      ??osal_msg_receive_4
+   \   000045   E5..         MOV     A,?V0 + 0
+   \   000047   24FF         ADD     A,#-0x1
+   \   000049   F582         MOV     DPL,A
+   \   00004B   E5..         MOV     A,?V0 + 1
+   \   00004D   12....       LCALL   ??Subroutine25_0 & 0xFFFF
+   \                     ??CrossCallReturnLabel_49:
+   \   000050   65..         XRL     A,?V0 + 3
+   \   000052   70CB         JNZ     ??osal_msg_receive_0
+   \   000054   EE           MOV     A,R6
+   \   000055   7001         JNZ     ??osal_msg_receive_5
+   \   000057   EF           MOV     A,R7
+   \                     ??osal_msg_receive_5:
+   \   000058   7006         JNZ     ??osal_msg_receive_6
+   \   00005A   AE..         MOV     R6,?V0 + 0
+   \   00005C   AF..         MOV     R7,?V0 + 1
+   \   00005E   80CB         SJMP    ??osal_msg_receive_2
+    567            }
+    568          
+    569            // Is there more than one?
+    570            if ( listHdr != NULL )
+    571            {
+    572              // Yes, Signal the task that a message is waiting
+    573              osal_set_event( task_id, SYS_EVENT_MSG );
+   \                     ??osal_msg_receive_6:
+   \   000060                ; Setup parameters for call to function osal_set_event
+   \   000060   7A00         MOV     R2,#0x0
+   \   000062   7B80         MOV     R3,#-0x80
+   \   000064   12....       LCALL   ??osal_set_event?relay
+   \   000067   800D         SJMP    ??osal_msg_receive_7
+    574            }
+    575            else
+    576            {
+    577              // No more
+    578              osal_clear_event( task_id, SYS_EVENT_MSG );
+   \                     ??osal_msg_receive_4:
+   \   000069                ; Setup parameters for call to function osal_clear_event
+   \   000069   7A00         MOV     R2,#0x0
+   \   00006B   7B80         MOV     R3,#-0x80
+   \   00006D   12....       LCALL   ??osal_clear_event?relay
+    579            }
+    580          
+    581            // Did we find a message?
+    582            if ( foundHdr != NULL )
+   \   000070   EE           MOV     A,R6
+   \   000071   7001         JNZ     ??osal_msg_receive_8
+   \   000073   EF           MOV     A,R7
+   \                     ??osal_msg_receive_8:
+   \   000074   6015         JZ      ??osal_msg_receive_9
+    583            {
+    584              // Take out of the link list
+    585              osal_msg_extract( &osal_qHead, foundHdr, prevHdr );
+   \                     ??osal_msg_receive_7:
+   \   000076                ; Setup parameters for call to function osal_msg_extract
+   \   000076   78..         MOV     R0,#?V0 + 4
+   \   000078   12....       LCALL   ?PUSH_XSTACK_I_TWO
+   \   00007B   EE           MOV     A,R6
+   \   00007C   FC           MOV     R4,A
+   \   00007D   EF           MOV     A,R7
+   \   00007E   FD           MOV     R5,A
+   \   00007F   7A..         MOV     R2,#(osal_qHead & 0xff)
+   \   000081   7B..         MOV     R3,#((osal_qHead >> 8) & 0xff)
+   \   000083   12....       LCALL   ??osal_msg_extract?relay
+   \   000086   7402         MOV     A,#0x2
+   \   000088   12....       LCALL   ?DEALLOC_XSTACK8
+    586            }
+    587          
+    588            // Release interrupts
+    589            HAL_EXIT_CRITICAL_SECTION(intState);
+   \                     ??osal_msg_receive_9:
+   \   00008B   E5..         MOV     A,?V0 + 2
+   \   00008D   A2E0         MOV     C,0xE0 /* A   */.0
+   \   00008F   92AF         MOV     0xa8.7,C
+    590          
+    591            return ( (uint8*) foundHdr );
+   \   000091   EE           MOV     A,R6
+   \   000092   FA           MOV     R2,A
+   \   000093   EF           MOV     A,R7
+   \   000094   FB           MOV     R3,A
+   \   000095   7F06         MOV     R7,#0x6
+   \   000097   02....       LJMP    ?BANKED_LEAVE_XDATA
+   \   00009A                REQUIRE _A_IEN0
+    592          }
+    593          
+    594          /**************************************************************************************************
+    595           * @fn          osal_msg_find
+    596           *
+    597           * @brief       This function finds in place an OSAL message matching the task_id and event
+    598           *              parameters.
+    599           *
+    600           * input parameters
+    601           *
+    602           * @param       task_id - The OSAL task id that the enqueued OSAL message must match.
+    603           * @param       event - The OSAL event id that the enqueued OSAL message must match.
+    604           *
+    605           * output parameters
+    606           *
+    607           * None.
+    608           *
+    609           * @return      NULL if no match, otherwise an in place pointer to the matching OSAL message.
+    610           **************************************************************************************************
+    611           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    612          osal_event_hdr_t *osal_msg_find(uint8 task_id, uint8 event)
+   \                     osal_msg_find:
+    613          {
+   \   000000   74F7         MOV     A,#-0x9
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 9
+   \   000005                ; Auto size: 0
+   \   000005   EA           MOV     A,R2
+   \   000006   FC           MOV     R4,A
+    614            osal_msg_hdr_t *pHdr;
+    615            halIntState_t intState;
+    616          
+    617            HAL_ENTER_CRITICAL_SECTION(intState);  // Hold off interrupts.
+   \   000007   A2AF         MOV     C,0xa8.7
+   \   000009   E4           CLR     A
+   \   00000A   92E0         MOV     0xE0 /* A   */.0,C
+   \   00000C   FD           MOV     R5,A
+   \   00000D   C2AF         CLR     0xa8.7
+    618          
+    619            pHdr = osal_qHead;  // Point to the top of the queue.
+   \   00000F   90....       MOV     DPTR,#osal_qHead
+   \   000012   8009         SJMP    ??CrossCallReturnLabel_54
+    620          
+    621            // Look through the queue for a message that matches the task_id and event parameters.
+    622            while (pHdr != NULL)
+    623            {
+    624              if (((pHdr-1)->dest_id == task_id) && (((osal_event_hdr_t *)pHdr)->event == event))
+    625              {
+    626                break;
+    627              }
+    628          
+    629              pHdr = OSAL_MSG_NEXT(pHdr);
+   \                     ??osal_msg_find_0:
+   \   000014   EA           MOV     A,R2
+   \   000015   24FB         ADD     A,#-0x5
+   \   000017   F582         MOV     DPL,A
+   \   000019   EB           MOV     A,R3
+   \   00001A   12....       LCALL   ??Subroutine29_0 & 0xFFFF
+   \                     ??CrossCallReturnLabel_54:
+   \   00001D   12....       LCALL   ?Subroutine11 & 0xFFFF
+   \                     ??CrossCallReturnLabel_17:
+   \   000020   EA           MOV     A,R2
+   \   000021   7001         JNZ     ??osal_msg_find_1
+   \   000023   EB           MOV     A,R3
+   \                     ??osal_msg_find_1:
+   \   000024   6011         JZ      ??osal_msg_find_2
+   \   000026   EA           MOV     A,R2
+   \   000027   24FF         ADD     A,#-0x1
+   \   000029   12....       LCALL   ?Subroutine21 & 0xFFFF
+    630            }
+   \                     ??CrossCallReturnLabel_52:
+   \   00002C   69           XRL     A,R1
+   \   00002D   70E5         JNZ     ??osal_msg_find_0
+   \   00002F   8A82         MOV     DPL,R2
+   \   000031   8B83         MOV     DPH,R3
+   \   000033   E0           MOVX    A,@DPTR
+   \   000034   6C           XRL     A,R4
+   \   000035   70DD         JNZ     ??osal_msg_find_0
+    631          
+    632            HAL_EXIT_CRITICAL_SECTION(intState);  // Release interrupts.
+   \                     ??osal_msg_find_2:
+   \   000037   ED           MOV     A,R5
+   \   000038   02....       LJMP    ?Subroutine4 & 0xFFFF
+   \   00003B                REQUIRE _A_IEN0
+    633          
+    634            return (osal_event_hdr_t *)pHdr;
+    635          }
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine4:
+   \   000000   A2E0         MOV     C,0xE0 /* A   */.0
+   \   000002                REQUIRE ??Subroutine27_0
+   \   000002                ; // Fall through to label ??Subroutine27_0
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ??Subroutine27_0:
+   \   000000   92AF         MOV     0xa8.7,C
+   \   000002   02....       LJMP    ??Subroutine26_0 & 0xFFFF
+    636          
+    637          /*********************************************************************
+    638           * @fn      osal_msg_enqueue
+    639           *
+    640           * @brief
+    641           *
+    642           *    This function enqueues an OSAL message into an OSAL queue.
+    643           *
+    644           * @param   osal_msg_q_t *q_ptr - OSAL queue
+    645           * @param   void *msg_ptr  - OSAL message
+    646           *
+    647           * @return  none
+    648           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    649          void osal_msg_enqueue( osal_msg_q_t *q_ptr, void *msg_ptr )
+   \                     osal_msg_enqueue:
+    650          {
+   \   000000   74F7         MOV     A,#-0x9
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 9
+   \   000005                ; Auto size: 0
+    651            void *list;
+    652            halIntState_t intState;
+    653          
+    654            // Hold off interrupts
+    655            HAL_ENTER_CRITICAL_SECTION(intState);
+   \   000005   A2AF         MOV     C,0xa8.7
+   \   000007   E4           CLR     A
+   \   000008   92E0         MOV     0xE0 /* A   */.0,C
+   \   00000A   FE           MOV     R6,A
+   \   00000B   C2AF         CLR     0xa8.7
+    656          
+    657            OSAL_MSG_NEXT( msg_ptr ) = NULL;
+   \   00000D   12....       LCALL   ?Subroutine19 & 0xFFFF
+    658            // If first message in queue
+    659            if ( *q_ptr == NULL )
+   \                     ??CrossCallReturnLabel_40:
+   \   000010   8A82         MOV     DPL,R2
+   \   000012   8B83         MOV     DPH,R3
+   \   000014   E0           MOVX    A,@DPTR
+   \   000015   7002         JNZ     ??osal_msg_enqueue_0
+   \   000017   A3           INC     DPTR
+   \   000018   E0           MOVX    A,@DPTR
+   \                     ??osal_msg_enqueue_0:
+   \   000019   8A82         MOV     DPL,R2
+   \   00001B   8B83         MOV     DPH,R3
+   \   00001D   7005         JNZ     ??CrossCallReturnLabel_34
+    660            {
+    661              *q_ptr = msg_ptr;
+   \   00001F   8015         SJMP    ??CrossCallReturnLabel_35
+    662            }
+    663            else
+    664            {
+    665              // Find end of queue
+    666              for ( list = *q_ptr; OSAL_MSG_NEXT( list ) != NULL; list = OSAL_MSG_NEXT( list ) );
+   \                     ??osal_msg_enqueue_1:
+   \   000021   12....       LCALL   ?Subroutine18 & 0xFFFF
+   \                     ??CrossCallReturnLabel_34:
+   \   000024   12....       LCALL   ?Subroutine14 & 0xFFFF
+   \                     ??CrossCallReturnLabel_24:
+   \   000027   F582         MOV     DPL,A
+   \   000029   E9           MOV     A,R1
+   \   00002A   12....       LCALL   ??Subroutine25_0 & 0xFFFF
+   \                     ??CrossCallReturnLabel_50:
+   \   00002D   7002         JNZ     ??osal_msg_enqueue_2
+   \   00002F   A3           INC     DPTR
+   \   000030   E0           MOVX    A,@DPTR
+   \                     ??osal_msg_enqueue_2:
+   \   000031   70EE         JNZ     ??osal_msg_enqueue_1
+    667          
+    668              // Add message to end of queue
+    669              OSAL_MSG_NEXT( list ) = msg_ptr;
+   \   000033   12....       LCALL   ?Subroutine18 & 0xFFFF
+    670            }
+   \                     ??CrossCallReturnLabel_35:
+   \   000036   EC           MOV     A,R4
+   \   000037   F0           MOVX    @DPTR,A
+   \   000038   A3           INC     DPTR
+   \   000039   ED           MOV     A,R5
+   \   00003A   F0           MOVX    @DPTR,A
+    671          
+    672            // Re-enable interrupts
+    673            HAL_EXIT_CRITICAL_SECTION(intState);
+   \   00003B   EE           MOV     A,R6
+   \   00003C   02....       LJMP    ?Subroutine4 & 0xFFFF
+   \   00003F                REQUIRE _A_IEN0
+    674          }
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine14:
+   \   000000   E0           MOVX    A,@DPTR
+   \   000001   F8           MOV     R0,A
+   \   000002   A3           INC     DPTR
+   \   000003   E0           MOVX    A,@DPTR
+   \   000004   F9           MOV     R1,A
+   \   000005   E8           MOV     A,R0
+   \   000006   24FB         ADD     A,#-0x5
+   \   000008   22           RET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine24:
+   \   000000   EC           MOV     A,R4
+   \   000001   24FB         ADD     A,#-0x5
+   \   000003                REQUIRE ??Subroutine28_0
+   \   000003                ; // Fall through to label ??Subroutine28_0
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ??Subroutine28_0:
+   \   000000   F582         MOV     DPL,A
+   \   000002   ED           MOV     A,R5
+   \   000003                REQUIRE ??Subroutine29_0
+   \   000003                ; // Fall through to label ??Subroutine29_0
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine19:
+   \   000000   12....       LCALL   ?Subroutine24 & 0xFFFF
+   \                     ??CrossCallReturnLabel_60:
+   \   000003   E4           CLR     A
+   \   000004   F0           MOVX    @DPTR,A
+   \   000005   A3           INC     DPTR
+   \   000006   F0           MOVX    @DPTR,A
+   \   000007   22           RET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine18:
+   \   000000   E8           MOV     A,R0
+   \   000001   24FB         ADD     A,#-0x5
+   \   000003   F582         MOV     DPL,A
+   \   000005   E9           MOV     A,R1
+   \   000006   12....       LCALL   ??Subroutine29_0 & 0xFFFF
+   \                     ??CrossCallReturnLabel_57:
+   \   000009   22           RET
+    675          
+    676          /*********************************************************************
+    677           * @fn      osal_msg_dequeue
+    678           *
+    679           * @brief
+    680           *
+    681           *    This function dequeues an OSAL message from an OSAL queue.
+    682           *
+    683           * @param   osal_msg_q_t *q_ptr - OSAL queue
+    684           *
+    685           * @return  void * - pointer to OSAL message or NULL of queue is empty.
+    686           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    687          void *osal_msg_dequeue( osal_msg_q_t *q_ptr )
+   \                     osal_msg_dequeue:
+    688          {
+   \   000000   74F6         MOV     A,#-0xa
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 10
+   \   000005                ; Auto size: 0
+    689            void *msg_ptr = NULL;
+   \   000005   7800         MOV     R0,#0x0
+   \   000007   7900         MOV     R1,#0x0
+    690            halIntState_t intState;
+    691          
+    692            // Hold off interrupts
+    693            HAL_ENTER_CRITICAL_SECTION(intState);
+   \   000009   A2AF         MOV     C,0xa8.7
+   \   00000B   E4           CLR     A
+   \   00000C   92E0         MOV     0xE0 /* A   */.0,C
+   \   00000E   F5..         MOV     ?V0 + 0,A
+   \   000010   C2AF         CLR     0xa8.7
+    694          
+    695            if ( *q_ptr != NULL )
+   \   000012   8A82         MOV     DPL,R2
+   \   000014   8B83         MOV     DPH,R3
+   \   000016   E0           MOVX    A,@DPTR
+   \   000017   7002         JNZ     ??osal_msg_dequeue_0
+   \   000019   A3           INC     DPTR
+   \   00001A   E0           MOVX    A,@DPTR
+   \                     ??osal_msg_dequeue_0:
+   \   00001B   6032         JZ      ??osal_msg_dequeue_1
+    696            {
+    697              // Dequeue message
+    698              msg_ptr = *q_ptr;
+   \   00001D   8A82         MOV     DPL,R2
+   \   00001F   8B83         MOV     DPH,R3
+   \   000021   12....       LCALL   ?Subroutine14 & 0xFFFF
+    699              *q_ptr = OSAL_MSG_NEXT( msg_ptr );
+   \                     ??CrossCallReturnLabel_25:
+   \   000024   FC           MOV     R4,A
+   \   000025   E9           MOV     A,R1
+   \   000026   34FF         ADDC    A,#-0x1
+   \   000028   FD           MOV     R5,A
+   \   000029   8C82         MOV     DPL,R4
+   \   00002B   8D83         MOV     DPH,R5
+   \   00002D   E0           MOVX    A,@DPTR
+   \   00002E   FE           MOV     R6,A
+   \   00002F   A3           INC     DPTR
+   \   000030   E0           MOVX    A,@DPTR
+   \   000031   FF           MOV     R7,A
+   \   000032   8A82         MOV     DPL,R2
+   \   000034   8B83         MOV     DPH,R3
+   \   000036   EE           MOV     A,R6
+   \   000037   F0           MOVX    @DPTR,A
+   \   000038   A3           INC     DPTR
+   \   000039   EF           MOV     A,R7
+   \   00003A   F0           MOVX    @DPTR,A
+    700              OSAL_MSG_NEXT( msg_ptr ) = NULL;
+   \   00003B   8C82         MOV     DPL,R4
+   \   00003D   8D83         MOV     DPH,R5
+   \   00003F   E4           CLR     A
+   \   000040   F0           MOVX    @DPTR,A
+   \   000041   A3           INC     DPTR
+   \   000042   F0           MOVX    @DPTR,A
+    701              OSAL_MSG_ID( msg_ptr ) = TASK_NO_TASK;
+   \   000043   E8           MOV     A,R0
+   \   000044   24FF         ADD     A,#-0x1
+   \   000046   F582         MOV     DPL,A
+   \   000048   E9           MOV     A,R1
+   \   000049   12....       LCALL   ??Subroutine29_0 & 0xFFFF
+    702            }
+   \                     ??CrossCallReturnLabel_55:
+   \   00004C   74FF         MOV     A,#-0x1
+   \   00004E   F0           MOVX    @DPTR,A
+    703          
+    704            // Re-enable interrupts
+    705            HAL_EXIT_CRITICAL_SECTION(intState);
+   \                     ??osal_msg_dequeue_1:
+   \   00004F   E5..         MOV     A,?V0 + 0
+   \   000051   A2E0         MOV     C,0xE0 /* A   */.0
+   \   000053   92AF         MOV     0xa8.7,C
+    706          
+    707            return msg_ptr;
+   \   000055   E8           MOV     A,R0
+   \   000056   FA           MOV     R2,A
+   \   000057   E9           MOV     A,R1
+   \   000058   FB           MOV     R3,A
+   \   000059   02....       LJMP    ?Subroutine2 & 0xFFFF
+   \   00005C                REQUIRE _A_IEN0
+    708          }
+    709          
+    710          /*********************************************************************
+    711           * @fn      osal_msg_push
+    712           *
+    713           * @brief
+    714           *
+    715           *    This function pushes an OSAL message to the head of an OSAL
+    716           *    queue.
+    717           *
+    718           * @param   osal_msg_q_t *q_ptr - OSAL queue
+    719           * @param   void *msg_ptr  - OSAL message
+    720           *
+    721           * @return  none
+    722           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    723          void osal_msg_push( osal_msg_q_t *q_ptr, void *msg_ptr )
+   \                     osal_msg_push:
+    724          {
+   \   000000   74F7         MOV     A,#-0x9
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 9
+   \   000005                ; Auto size: 0
+    725            halIntState_t intState;
+    726          
+    727            // Hold off interrupts
+    728            HAL_ENTER_CRITICAL_SECTION(intState);
+   \   000005   E5A8         MOV     A,0xa8
+   \   000007   FE           MOV     R6,A
+   \   000008   C2AF         CLR     0xa8.7
+    729          
+    730            // Push message to head of queue
+    731            OSAL_MSG_NEXT( msg_ptr ) = *q_ptr;
+   \   00000A   8A82         MOV     DPL,R2
+   \   00000C   8B83         MOV     DPH,R3
+   \   00000E   12....       LCALL   ?Subroutine15 & 0xFFFF
+   \                     ??CrossCallReturnLabel_26:
+   \   000011   12....       LCALL   ?Subroutine20 & 0xFFFF
+   \                     ??CrossCallReturnLabel_42:
+   \   000014   E8           MOV     A,R0
+   \   000015   F0           MOVX    @DPTR,A
+   \   000016   A3           INC     DPTR
+   \   000017   E9           MOV     A,R1
+   \   000018   F0           MOVX    @DPTR,A
+    732            *q_ptr = msg_ptr;
+   \   000019   8A82         MOV     DPL,R2
+   \   00001B   8B83         MOV     DPH,R3
+   \   00001D   EC           MOV     A,R4
+   \   00001E   F0           MOVX    @DPTR,A
+   \   00001F   A3           INC     DPTR
+   \   000020   ED           MOV     A,R5
+   \   000021   F0           MOVX    @DPTR,A
+    733          
+    734            // Re-enable interrupts
+    735            HAL_EXIT_CRITICAL_SECTION(intState);
+   \   000022   EE           MOV     A,R6
+   \   000023   A2E7         MOV     C,0xE0 /* A   */.7
+   \   000025   80..         SJMP    ??Subroutine27_0
+   \   000027                REQUIRE _A_IEN0
+    736          }
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine20:
+   \   000000   12....       LCALL   ?Subroutine24 & 0xFFFF
+   \                     ??CrossCallReturnLabel_61:
+   \   000003   22           RET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine15:
+   \   000000   E0           MOVX    A,@DPTR
+   \   000001   F8           MOV     R0,A
+   \   000002   A3           INC     DPTR
+   \   000003   E0           MOVX    A,@DPTR
+   \   000004   F9           MOV     R1,A
+   \   000005   22           RET
+    737          
+    738          /*********************************************************************
+    739           * @fn      osal_msg_extract
+    740           *
+    741           * @brief
+    742           *
+    743           *    This function extracts and removes an OSAL message from the
+    744           *    middle of an OSAL queue.
+    745           *
+    746           * @param   osal_msg_q_t *q_ptr - OSAL queue
+    747           * @param   void *msg_ptr  - OSAL message to be extracted
+    748           * @param   void *prev_ptr  - OSAL message before msg_ptr in queue
+    749           *
+    750           * @return  none
+    751           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    752          void osal_msg_extract( osal_msg_q_t *q_ptr, void *msg_ptr, void *prev_ptr )
+   \                     osal_msg_extract:
+    753          {
+   \   000000   74F7         MOV     A,#-0x9
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 9
+   \   000005                ; Auto size: 0
+   \   000005   7409         MOV     A,#0x9
+   \   000007   12....       LCALL   ?XSTACK_DISP0_8
+   \   00000A   12....       LCALL   ?Subroutine15 & 0xFFFF
+    754            halIntState_t intState;
+    755          
+    756            // Hold off interrupts
+    757            HAL_ENTER_CRITICAL_SECTION(intState);
+   \                     ??CrossCallReturnLabel_27:
+   \   00000D   A2AF         MOV     C,0xa8.7
+   \   00000F   E4           CLR     A
+   \   000010   92E0         MOV     0xE0 /* A   */.0,C
+   \   000012   F5..         MOV     ?V0 + 0,A
+   \   000014   C2AF         CLR     0xa8.7
+    758          
+    759            if ( msg_ptr == *q_ptr )
+   \   000016   8A82         MOV     DPL,R2
+   \   000018   8B83         MOV     DPH,R3
+   \   00001A   E0           MOVX    A,@DPTR
+   \   00001B   FE           MOV     R6,A
+   \   00001C   A3           INC     DPTR
+   \   00001D   E0           MOVX    A,@DPTR
+   \   00001E   FF           MOV     R7,A
+   \   00001F   EC           MOV     A,R4
+   \   000020   6E           XRL     A,R6
+   \   000021   7002         JNZ     ??osal_msg_extract_0
+   \   000023   ED           MOV     A,R5
+   \   000024   6F           XRL     A,R7
+   \                     ??osal_msg_extract_0:
+   \   000025   7010         JNZ     ??osal_msg_extract_1
+    760            {
+    761              // remove from first
+    762              *q_ptr = OSAL_MSG_NEXT( msg_ptr );
+   \   000027   12....       LCALL   ?Subroutine20 & 0xFFFF
+    763            }
+   \                     ??CrossCallReturnLabel_43:
+   \   00002A   12....       LCALL   ?Subroutine15 & 0xFFFF
+   \                     ??CrossCallReturnLabel_28:
+   \   00002D   8A82         MOV     DPL,R2
+   \   00002F   8B83         MOV     DPH,R3
+   \   000031   E8           MOV     A,R0
+   \   000032   F0           MOVX    @DPTR,A
+   \   000033   A3           INC     DPTR
+   \   000034   E9           MOV     A,R1
+   \   000035   800D         SJMP    ??osal_msg_extract_2
+    764            else
+    765            {
+    766              // remove from middle
+    767              OSAL_MSG_NEXT( prev_ptr ) = OSAL_MSG_NEXT( msg_ptr );
+   \                     ??osal_msg_extract_1:
+   \   000037   12....       LCALL   ?Subroutine20 & 0xFFFF
+    768            }
+   \                     ??CrossCallReturnLabel_44:
+   \   00003A   12....       LCALL   ?Subroutine11 & 0xFFFF
+   \                     ??CrossCallReturnLabel_18:
+   \   00003D   12....       LCALL   ?Subroutine18 & 0xFFFF
+   \                     ??CrossCallReturnLabel_36:
+   \   000040   EA           MOV     A,R2
+   \   000041   F0           MOVX    @DPTR,A
+   \   000042   A3           INC     DPTR
+   \   000043   EB           MOV     A,R3
+   \                     ??osal_msg_extract_2:
+   \   000044   F0           MOVX    @DPTR,A
+    769            OSAL_MSG_NEXT( msg_ptr ) = NULL;
+   \   000045   12....       LCALL   ?Subroutine19 & 0xFFFF
+    770            OSAL_MSG_ID( msg_ptr ) = TASK_NO_TASK;
+   \                     ??CrossCallReturnLabel_41:
+   \   000048   EC           MOV     A,R4
+   \   000049   24FF         ADD     A,#-0x1
+   \   00004B   12....       LCALL   ??Subroutine28_0 & 0xFFFF
+   \                     ??CrossCallReturnLabel_59:
+   \   00004E   74FF         MOV     A,#-0x1
+   \   000050   F0           MOVX    @DPTR,A
+    771          
+    772            // Re-enable interrupts
+    773            HAL_EXIT_CRITICAL_SECTION(intState);
+   \   000051   E5..         MOV     A,?V0 + 0
+   \   000053                REQUIRE ?Subroutine4
+   \   000053                REQUIRE _A_IEN0
+   \   000053                ; // Fall through to label ?Subroutine4
+    774          }
+    775          
+    776          /*********************************************************************
+    777           * @fn      osal_msg_enqueue_max
+    778           *
+    779           * @brief
+    780           *
+    781           *    This function enqueues an OSAL message into an OSAL queue if
+    782           *    the length of the queue is less than max.
+    783           *
+    784           * @param   osal_msg_q_t *q_ptr - OSAL queue
+    785           * @param   void *msg_ptr  - OSAL message
+    786           * @param   uint8 max - maximum length of queue
+    787           *
+    788           * @return  TRUE if message was enqueued, FALSE otherwise
+    789           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    790          uint8 osal_msg_enqueue_max( osal_msg_q_t *q_ptr, void *msg_ptr, uint8 max )
+   \                     osal_msg_enqueue_max:
+    791          {
+   \   000000   74F6         MOV     A,#-0xa
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 10
+   \   000005                ; Auto size: 0
+   \   000005   E9           MOV     A,R1
+   \   000006   FE           MOV     R6,A
+    792            void *list;
+    793            uint8 ret = FALSE;
+   \   000007   7F00         MOV     R7,#0x0
+    794            halIntState_t intState;
+    795          
+    796            // Hold off interrupts
+    797            HAL_ENTER_CRITICAL_SECTION(intState);
+   \   000009   A2AF         MOV     C,0xa8.7
+   \   00000B   E4           CLR     A
+   \   00000C   92E0         MOV     0xE0 /* A   */.0,C
+   \   00000E   F5..         MOV     ?V0 + 0,A
+   \   000010   C2AF         CLR     0xa8.7
+    798          
+    799            // If first message in queue
+    800            if ( *q_ptr == NULL )
+   \   000012   8A82         MOV     DPL,R2
+   \   000014   8B83         MOV     DPH,R3
+   \   000016   E0           MOVX    A,@DPTR
+   \   000017   7002         JNZ     ??osal_msg_enqueue_max_0
+   \   000019   A3           INC     DPTR
+   \   00001A   E0           MOVX    A,@DPTR
+   \                     ??osal_msg_enqueue_max_0:
+   \   00001B   8A82         MOV     DPL,R2
+   \   00001D   8B83         MOV     DPH,R3
+   \   00001F   7008         JNZ     ??CrossCallReturnLabel_37
+    801            {
+    802              *q_ptr = msg_ptr;
+   \   000021   801A         SJMP    ??CrossCallReturnLabel_39
+    803              ret = TRUE;
+    804            }
+    805            else
+    806            {
+    807              // Find end of queue or max
+    808              list = *q_ptr;
+    809              max--;
+    810              while ( (OSAL_MSG_NEXT( list ) != NULL) && (max > 0) )
+   \                     ??osal_msg_enqueue_max_1:
+   \   000023   EE           MOV     A,R6
+   \   000024   601D         JZ      ??osal_msg_enqueue_max_2
+    811              {
+    812                list = OSAL_MSG_NEXT( list );
+   \   000026   12....       LCALL   ?Subroutine18 & 0xFFFF
+   \                     ??CrossCallReturnLabel_37:
+   \   000029   12....       LCALL   ?Subroutine15 & 0xFFFF
+    813                max--;
+   \                     ??CrossCallReturnLabel_29:
+   \   00002C   1E           DEC     R6
+    814              }
+   \   00002D   12....       LCALL   ?Subroutine18 & 0xFFFF
+   \                     ??CrossCallReturnLabel_38:
+   \   000030   E0           MOVX    A,@DPTR
+   \   000031   7002         JNZ     ??osal_msg_enqueue_max_3
+   \   000033   A3           INC     DPTR
+   \   000034   E0           MOVX    A,@DPTR
+   \                     ??osal_msg_enqueue_max_3:
+   \   000035   70EC         JNZ     ??osal_msg_enqueue_max_1
+    815          
+    816              // Add message to end of queue if max not reached
+    817              if ( max != 0 )
+   \   000037   EE           MOV     A,R6
+   \   000038   6009         JZ      ??osal_msg_enqueue_max_2
+    818              {
+    819                OSAL_MSG_NEXT( list ) = msg_ptr;
+   \   00003A   12....       LCALL   ?Subroutine18 & 0xFFFF
+   \                     ??CrossCallReturnLabel_39:
+   \   00003D   EC           MOV     A,R4
+   \   00003E   F0           MOVX    @DPTR,A
+   \   00003F   A3           INC     DPTR
+   \   000040   ED           MOV     A,R5
+   \   000041   F0           MOVX    @DPTR,A
+    820                ret = TRUE;
+   \   000042   0F           INC     R7
+    821              }
+    822            }
+    823          
+    824            // Re-enable interrupts
+    825            HAL_EXIT_CRITICAL_SECTION(intState);
+   \                     ??osal_msg_enqueue_max_2:
+   \   000043   E5..         MOV     A,?V0 + 0
+   \   000045   A2E0         MOV     C,0xE0 /* A   */.0
+   \   000047   92AF         MOV     0xa8.7,C
+    826          
+    827            return ret;
+   \   000049   EF           MOV     A,R7
+   \   00004A   F9           MOV     R1,A
+   \   00004B                REQUIRE ?Subroutine2
+   \   00004B                REQUIRE _A_IEN0
+   \   00004B                ; // Fall through to label ?Subroutine2
+    828          }
+    829          
+    830          /*********************************************************************
+    831           * @fn      osal_set_event
+    832           *
+    833           * @brief
+    834           *
+    835           *    This function is called to set the event flags for a task.  The
+    836           *    event passed in is OR'd into the task's event variable.
+    837           *
+    838           * @param   uint8 task_id - receiving tasks ID
+    839           * @param   uint8 event_flag - what event to set
+    840           *
+    841           * @return  SUCCESS, INVALID_TASK
+    842           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    843          uint8 osal_set_event( uint8 task_id, uint16 event_flag )
+   \                     osal_set_event:
+    844          {
+   \   000000   74F7         MOV     A,#-0x9
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 9
+   \   000005                ; Auto size: 0
+   \   000005   E9           MOV     A,R1
+   \   000006   FD           MOV     R5,A
+    845            if ( task_id < tasksCnt )
+   \   000007   90....       MOV     DPTR,#tasksCnt
+   \   00000A   E0           MOVX    A,@DPTR
+   \   00000B   FC           MOV     R4,A
+   \   00000C   E9           MOV     A,R1
+   \   00000D   C3           CLR     C
+   \   00000E   9C           SUBB    A,R4
+   \   00000F   5029         JNC     ??osal_set_event_0
+    846            {
+    847              halIntState_t   intState;
+    848              HAL_ENTER_CRITICAL_SECTION(intState);    // Hold off interrupts
+   \   000011   E5A8         MOV     A,0xa8
+   \   000013   FE           MOV     R6,A
+   \   000014   C2AF         CLR     0xa8.7
+    849              tasksEvents[task_id] |= event_flag;  // Stuff the event bit(s)
+   \   000016   ED           MOV     A,R5
+   \   000017   C3           CLR     C
+   \   000018   33           RLC     A
+   \   000019   F8           MOV     R0,A
+   \   00001A   E4           CLR     A
+   \   00001B   33           RLC     A
+   \   00001C   F9           MOV     R1,A
+   \   00001D   90....       MOV     DPTR,#tasksEvents
+   \   000020   E0           MOVX    A,@DPTR
+   \   000021   28           ADD     A,R0
+   \   000022   FC           MOV     R4,A
+   \   000023   A3           INC     DPTR
+   \   000024   E0           MOVX    A,@DPTR
+   \   000025   39           ADDC    A,R1
+   \   000026   8C82         MOV     DPL,R4
+   \   000028   F583         MOV     DPH,A
+   \   00002A   E0           MOVX    A,@DPTR
+   \   00002B   4A           ORL     A,R2
+   \   00002C   F0           MOVX    @DPTR,A
+   \   00002D   A3           INC     DPTR
+   \   00002E   E0           MOVX    A,@DPTR
+   \   00002F   4B           ORL     A,R3
+   \   000030   F0           MOVX    @DPTR,A
+    850              HAL_EXIT_CRITICAL_SECTION(intState);     // Release interrupts
+   \   000031   EE           MOV     A,R6
+   \   000032   A2E7         MOV     C,0xE0 /* A   */.7
+   \   000034   92AF         MOV     0xa8.7,C
+    851              return ( SUCCESS );
+   \   000036   7900         MOV     R1,#0x0
+   \   000038   8002         SJMP    ??osal_set_event_1
+    852            }
+    853             else
+    854            {
+    855              return ( INVALID_TASK );
+   \                     ??osal_set_event_0:
+   \   00003A   7903         MOV     R1,#0x3
+    856            }
+   \                     ??osal_set_event_1:
+   \   00003C   02....       LJMP    ??Subroutine26_0 & 0xFFFF
+   \   00003F                REQUIRE _A_IEN0
+    857          }
+    858          
+    859          /*********************************************************************
+    860           * @fn      osal_clear_event
+    861           *
+    862           * @brief
+    863           *
+    864           *    This function is called to clear the event flags for a task.  The
+    865           *    event passed in is masked out of the task's event variable.
+    866           *
+    867           * @param   uint8 task_id - receiving tasks ID
+    868           * @param   uint8 event_flag - what event to set
+    869           *
+    870           * @return  SUCCESS, INVALID_TASK
+    871           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    872          uint8 osal_clear_event( uint8 task_id, uint16 event_flag )
+   \                     osal_clear_event:
+    873          {
+   \   000000   74F7         MOV     A,#-0x9
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 9
+   \   000005                ; Auto size: 0
+   \   000005   E9           MOV     A,R1
+   \   000006   FE           MOV     R6,A
+    874            if ( task_id < tasksCnt )
+   \   000007   90....       MOV     DPTR,#tasksCnt
+   \   00000A   E0           MOVX    A,@DPTR
+   \   00000B   FC           MOV     R4,A
+   \   00000C   E9           MOV     A,R1
+   \   00000D   C3           CLR     C
+   \   00000E   9C           SUBB    A,R4
+   \   00000F   501E         JNC     ??osal_clear_event_0
+    875            {
+    876              halIntState_t   intState;
+    877              HAL_ENTER_CRITICAL_SECTION(intState);    // Hold off interrupts
+   \   000011   E5A8         MOV     A,0xa8
+   \   000013   FF           MOV     R7,A
+   \   000014   C2AF         CLR     0xa8.7
+    878              tasksEvents[task_id] &= ~(event_flag);   // clear the event bit(s)
+   \   000016   EA           MOV     A,R2
+   \   000017   F4           CPL     A
+   \   000018   FC           MOV     R4,A
+   \   000019   EB           MOV     A,R3
+   \   00001A   F4           CPL     A
+   \   00001B   FD           MOV     R5,A
+   \   00001C   EE           MOV     A,R6
+   \   00001D   12....       LCALL   ?Subroutine9 & 0xFFFF
+   \                     ??CrossCallReturnLabel_9:
+   \   000020   5C           ANL     A,R4
+   \   000021   F0           MOVX    @DPTR,A
+   \   000022   A3           INC     DPTR
+   \   000023   E0           MOVX    A,@DPTR
+   \   000024   5D           ANL     A,R5
+   \   000025   F0           MOVX    @DPTR,A
+    879              HAL_EXIT_CRITICAL_SECTION(intState);     // Release interrupts
+   \   000026   EF           MOV     A,R7
+   \   000027   A2E7         MOV     C,0xE0 /* A   */.7
+   \   000029   92AF         MOV     0xa8.7,C
+    880              return ( SUCCESS );
+   \   00002B   7900         MOV     R1,#0x0
+   \   00002D   8002         SJMP    ??osal_clear_event_1
+    881            }
+    882             else
+    883            {
+    884              return ( INVALID_TASK );
+   \                     ??osal_clear_event_0:
+   \   00002F   7903         MOV     R1,#0x3
+    885            }
+   \                     ??osal_clear_event_1:
+   \   000031   02....       LJMP    ??Subroutine26_0 & 0xFFFF
+   \   000034                REQUIRE _A_IEN0
+    886          }
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine9:
+   \   000000   C3           CLR     C
+   \   000001   33           RLC     A
+   \   000002   F8           MOV     R0,A
+   \   000003   E4           CLR     A
+   \   000004   33           RLC     A
+   \   000005   F9           MOV     R1,A
+   \   000006   90....       MOV     DPTR,#tasksEvents
+   \   000009   E0           MOVX    A,@DPTR
+   \   00000A   28           ADD     A,R0
+   \   00000B   FA           MOV     R2,A
+   \   00000C   A3           INC     DPTR
+   \   00000D   E0           MOVX    A,@DPTR
+   \   00000E   39           ADDC    A,R1
+   \   00000F   8A82         MOV     DPL,R2
+   \   000011   F583         MOV     DPH,A
+   \   000013   E0           MOVX    A,@DPTR
+   \   000014   22           RET
+    887          
+    888          /*********************************************************************
+    889           * @fn      osal_isr_register
+    890           *
+    891           * @brief
+    892           *
+    893           *   This function is called to register a service routine with an
+    894           *   interrupt. When the interrupt occurs, this service routine is called.
+    895           *
+    896           * @param   uint8 interrupt_id - Interrupt number
+    897           * @param   void (*isr_ptr)( uint8* ) - function pointer to ISR
+    898           *
+    899           * @return  SUCCESS, INVALID_INTERRUPT_ID,
+    900           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    901          uint8 osal_isr_register( uint8 interrupt_id, void (*isr_ptr)( uint8* ) )
+   \                     osal_isr_register:
+    902          {
+   \   000000                ; Saved register size: 0
+   \   000000                ; Auto size: 0
+    903            // Remove these statements when functionality is complete
+    904            (void)interrupt_id;
+    905            (void)isr_ptr;
+    906            return ( SUCCESS );
+   \   000000   7900         MOV     R1,#0x0
+   \   000002   02....       LJMP    ?BRET
+    907          }
+    908          
+    909          /*********************************************************************
+    910           * @fn      osal_int_enable
+    911           *
+    912           * @brief
+    913           *
+    914           *   This function is called to enable an interrupt. Once enabled,
+    915           *   occurrence of the interrupt causes the service routine associated
+    916           *   with that interrupt to be called.
+    917           *
+    918           *   If INTS_ALL is the interrupt_id, interrupts (in general) are enabled.
+    919           *   If a single interrupt is passed in, then interrupts still have
+    920           *   to be enabled with another call to INTS_ALL.
+    921           *
+    922           * @param   uint8 interrupt_id - Interrupt number
+    923           *
+    924           * @return  SUCCESS or INVALID_INTERRUPT_ID
+    925           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    926          uint8 osal_int_enable( uint8 interrupt_id )
+   \                     osal_int_enable:
+    927          {
+   \   000000                ; Saved register size: 0
+   \   000000                ; Auto size: 0
+   \   000000   E9           MOV     A,R1
+   \   000001   FA           MOV     R2,A
+    928          
+    929            if ( interrupt_id == INTS_ALL )
+   \   000002   74FF         MOV     A,#-0x1
+   \   000004   6A           XRL     A,R2
+   \   000005   7006         JNZ     ??osal_int_enable_0
+    930            {
+    931              HAL_ENABLE_INTERRUPTS();
+   \   000007   D2AF         SETB    0xa8.7
+    932              return ( SUCCESS );
+   \   000009   7900         MOV     R1,#0x0
+   \   00000B   8002         SJMP    ??osal_int_enable_1
+    933            }
+    934            else
+    935            {
+    936              return ( INVALID_INTERRUPT_ID );
+   \                     ??osal_int_enable_0:
+   \   00000D   7907         MOV     R1,#0x7
+   \                     ??osal_int_enable_1:
+   \   00000F   02....       LJMP    ?BRET
+   \   000012                REQUIRE _A_IEN0
+    937            }
+    938          }
+    939          
+    940          /*********************************************************************
+    941           * @fn      osal_int_disable
+    942           *
+    943           * @brief
+    944           *
+    945           *   This function is called to disable an interrupt. When a disabled
+    946           *   interrupt occurs, the service routine associated with that
+    947           *   interrupt is not called.
+    948           *
+    949           *   If INTS_ALL is the interrupt_id, interrupts (in general) are disabled.
+    950           *   If a single interrupt is passed in, then just that interrupt is disabled.
+    951           *
+    952           * @param   uint8 interrupt_id - Interrupt number
+    953           *
+    954           * @return  SUCCESS or INVALID_INTERRUPT_ID
+    955           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    956          uint8 osal_int_disable( uint8 interrupt_id )
+   \                     osal_int_disable:
+    957          {
+   \   000000                ; Saved register size: 0
+   \   000000                ; Auto size: 0
+   \   000000   E9           MOV     A,R1
+   \   000001   FA           MOV     R2,A
+    958          
+    959            if ( interrupt_id == INTS_ALL )
+   \   000002   74FF         MOV     A,#-0x1
+   \   000004   6A           XRL     A,R2
+   \   000005   7006         JNZ     ??osal_int_disable_0
+    960            {
+    961              HAL_DISABLE_INTERRUPTS();
+   \   000007   C2AF         CLR     0xa8.7
+    962              return ( SUCCESS );
+   \   000009   7900         MOV     R1,#0x0
+   \   00000B   8002         SJMP    ??osal_int_disable_1
+    963            }
+    964            else
+    965            {
+    966              return ( INVALID_INTERRUPT_ID );
+   \                     ??osal_int_disable_0:
+   \   00000D   7907         MOV     R1,#0x7
+   \                     ??osal_int_disable_1:
+   \   00000F   02....       LJMP    ?BRET
+   \   000012                REQUIRE _A_IEN0
+    967            }
+    968          }
+    969          
+    970          /*********************************************************************
+    971           * @fn      osal_init_system
+    972           *
+    973           * @brief
+    974           *
+    975           *   This function initializes the "task" system by creating the
+    976           *   tasks defined in the task table (OSAL_Tasks.h).
+    977           *
+    978           * @param   void
+    979           *
+    980           * @return  SUCCESS
+    981           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    982          uint8 osal_init_system( void )
+   \                     osal_init_system:
+    983          {
+   \   000000   C082         PUSH    DPL
+   \   000002   C083         PUSH    DPH
+   \   000004                ; Saved register size: 2
+   \   000004                ; Auto size: 0
+    984            // Initialize the Memory Allocation System
+    985            osal_mem_init();
+   \   000004                ; Setup parameters for call to function osal_mem_init
+   \   000004   12....       LCALL   ??osal_mem_init?relay
+    986          
+    987            // Initialize the message queue
+    988            osal_qHead = NULL;
+   \   000007   90....       MOV     DPTR,#osal_qHead
+   \   00000A   E4           CLR     A
+   \   00000B   F0           MOVX    @DPTR,A
+   \   00000C   A3           INC     DPTR
+   \   00000D   F0           MOVX    @DPTR,A
+    989          
+    990            // Initialize the timers
+    991            osalTimerInit();
+   \   00000E                ; Setup parameters for call to function osalTimerInit
+   \   00000E   12....       LCALL   ??osalTimerInit?relay
+    992          
+    993            // Initialize the Power Management System
+    994            osal_pwrmgr_init();
+   \   000011                ; Setup parameters for call to function osal_pwrmgr_init
+   \   000011   12....       LCALL   ??osal_pwrmgr_init?relay
+    995          
+    996            // Initialize the system tasks.
+    997            osalInitTasks();
+   \   000014                ; Setup parameters for call to function osalInitTasks
+   \   000014   12....       LCALL   ??osalInitTasks?relay
+    998          
+    999            // Setup efficient search for the first free block of heap.
+   1000            osal_mem_kick();
+   \   000017                ; Setup parameters for call to function osal_mem_kick
+   \   000017   12....       LCALL   ??osal_mem_kick?relay
+   1001          
+   1002            return ( SUCCESS );
+   \   00001A   7900         MOV     R1,#0x0
+   \   00001C   02....       LJMP    ?Subroutine0 & 0xFFFF
+   1003          }
+   1004          
+   1005          /*********************************************************************
+   1006           * @fn      osal_start_system
+   1007           *
+   1008           * @brief
+   1009           *
+   1010           *   This function is the main loop function of the task system.  It
+   1011           *   will look through all task events and call the task_event_processor()
+   1012           *   function for the task with the event.  If there are no events (for
+   1013           *   all tasks), this function puts the processor into Sleep.
+   1014           *   This Function doesn't return.
+   1015           *
+   1016           * @param   void
+   1017           *
+   1018           * @return  none
+   1019           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   1020          void osal_start_system( void )
+   \                     osal_start_system:
+   1021          {
+   \   000000   C082         PUSH    DPL
+   \   000002   C083         PUSH    DPH
+   \   000004                ; Saved register size: 2
+   \   000004                ; Auto size: 0
+   1022          #if !defined ( ZBIT ) && !defined ( UBIT )
+   1023            for(;;)  // Forever Loop
+   1024          #endif
+   1025            {
+   1026              osal_run_system();
+   \                     ??osal_start_system_0:
+   \   000004                ; Setup parameters for call to function osal_run_system
+   \   000004   12....       LCALL   ??osal_run_system?relay
+   \   000007   80FB         SJMP    ??osal_start_system_0
+   1027            }
+   1028          }
+   1029            
+   1030          /*********************************************************************
+   1031           * @fn      osal_run_system
+   1032           *
+   1033           * @brief
+   1034           *
+   1035           *   This will make one pass through the OSAL task .
+   1036           *
+   1037           * @param   void
+   1038           *
+   1039           * @return  none
+   1040           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   1041          void osal_run_system( void )
+   \                     osal_run_system:
+   1042          {
+   \   000000   74F6         MOV     A,#-0xa
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 10
+   \   000005                ; Auto size: 0
+   1043            uint8 idx = 0;
+   \   000005   75..00       MOV     ?V0 + 0,#0x0
+   1044          
+   1045            osalTimeUpdate();
+   \   000008                ; Setup parameters for call to function osalTimeUpdate
+   \   000008   12....       LCALL   ??osalTimeUpdate?relay
+   1046            Hal_ProcessPoll();  // This replaces MT_SerialPoll() and osal_check_timer().
+   \   00000B                ; Setup parameters for call to function Hal_ProcessPoll
+   \   00000B   12....       LCALL   ??Hal_ProcessPoll?relay
+   1047          
+   1048            do {
+   1049              if (tasksEvents[idx])  // Task is highest priority that is ready.
+   \                     ??osal_run_system_0:
+   \   00000E   E5..         MOV     A,?V0 + 0
+   \   000010   12....       LCALL   ?Subroutine9 & 0xFFFF
+   1050              {
+   1051                break;
+   1052              }
+   1053            } while (++idx < tasksCnt);
+   \                     ??CrossCallReturnLabel_10:
+   \   000013   7002         JNZ     ??osal_run_system_1
+   \   000015   A3           INC     DPTR
+   \   000016   E0           MOVX    A,@DPTR
+   \                     ??osal_run_system_1:
+   \   000017   700D         JNZ     ??osal_run_system_2
+   \   000019   05..         INC     ?V0 + 0
+   \   00001B   90....       MOV     DPTR,#tasksCnt
+   \   00001E   E0           MOVX    A,@DPTR
+   \   00001F   FA           MOV     R2,A
+   \   000020   E5..         MOV     A,?V0 + 0
+   \   000022   C3           CLR     C
+   \   000023   9A           SUBB    A,R2
+   \   000024   40E8         JC      ??osal_run_system_0
+   1054          
+   1055            if (idx < tasksCnt)
+   \                     ??osal_run_system_2:
+   \   000026   90....       MOV     DPTR,#tasksCnt
+   \   000029   E0           MOVX    A,@DPTR
+   \   00002A   FA           MOV     R2,A
+   \   00002B   E5..         MOV     A,?V0 + 0
+   \   00002D   C3           CLR     C
+   \   00002E   9A           SUBB    A,R2
+   \   00002F   505B         JNC     ??osal_run_system_3
+   1056            {
+   1057              uint16 events;
+   1058              halIntState_t intState;
+   1059          
+   1060              HAL_ENTER_CRITICAL_SECTION(intState);
+   \   000031   E5A8         MOV     A,0xa8
+   \   000033   FC           MOV     R4,A
+   \   000034   C2AF         CLR     0xa8.7
+   1061              events = tasksEvents[idx];
+   \   000036   E5..         MOV     A,?V0 + 0
+   \   000038   C3           CLR     C
+   \   000039   33           RLC     A
+   \   00003A   FE           MOV     R6,A
+   \   00003B   E4           CLR     A
+   \   00003C   33           RLC     A
+   \   00003D   FF           MOV     R7,A
+   \   00003E   90....       MOV     DPTR,#tasksEvents
+   \   000041   E0           MOVX    A,@DPTR
+   \   000042   2E           ADD     A,R6
+   \   000043   F8           MOV     R0,A
+   \   000044   A3           INC     DPTR
+   \   000045   E0           MOVX    A,@DPTR
+   \   000046   3F           ADDC    A,R7
+   \   000047   F9           MOV     R1,A
+   \   000048   8882         MOV     DPL,R0
+   \   00004A   8983         MOV     DPH,R1
+   \   00004C   12....       LCALL   ?Subroutine11 & 0xFFFF
+   1062              tasksEvents[idx] = 0;  // Clear the Events for this task.
+   \                     ??CrossCallReturnLabel_19:
+   \   00004F   8882         MOV     DPL,R0
+   \   000051   8983         MOV     DPH,R1
+   \   000053   E4           CLR     A
+   \   000054   F0           MOVX    @DPTR,A
+   \   000055   A3           INC     DPTR
+   \   000056   F0           MOVX    @DPTR,A
+   1063              HAL_EXIT_CRITICAL_SECTION(intState);
+   \   000057   EC           MOV     A,R4
+   \   000058   A2E7         MOV     C,0xE0 /* A   */.7
+   \   00005A   92AF         MOV     0xa8.7,C
+   1064          
+   1065              events = (tasksArr[idx])( idx, events );
+   \   00005C                ; Setup parameters for indirect call
+   \   00005C   A9..         MOV     R1,?V0 + 0
+   \   00005E   EE           MOV     A,R6
+   \   00005F   24..         ADD     A,#(tasksArr & 0xff)
+   \   000061   F582         MOV     DPL,A
+   \   000063   EF           MOV     A,R7
+   \   000064   34..         ADDC    A,#((tasksArr >> 8) & 0xff)
+   \   000066   F583         MOV     DPH,A
+   \   000068   12....       LCALL   ?Subroutine13 & 0xFFFF
+   \                     ??CrossCallReturnLabel_23:
+   \   00006B   12....       LCALL   ?CALL_IND
+   1066          
+   1067              HAL_ENTER_CRITICAL_SECTION(intState);
+   \   00006E   E5A8         MOV     A,0xa8
+   \   000070   FD           MOV     R5,A
+   \   000071   C2AF         CLR     0xa8.7
+   1068              tasksEvents[idx] |= events;  // Add back unprocessed events to the current task.
+   \   000073   90....       MOV     DPTR,#tasksEvents
+   \   000076   E0           MOVX    A,@DPTR
+   \   000077   2E           ADD     A,R6
+   \   000078   FC           MOV     R4,A
+   \   000079   A3           INC     DPTR
+   \   00007A   E0           MOVX    A,@DPTR
+   \   00007B   3F           ADDC    A,R7
+   \   00007C   8C82         MOV     DPL,R4
+   \   00007E   F583         MOV     DPH,A
+   \   000080   E0           MOVX    A,@DPTR
+   \   000081   4A           ORL     A,R2
+   \   000082   F0           MOVX    @DPTR,A
+   \   000083   A3           INC     DPTR
+   \   000084   E0           MOVX    A,@DPTR
+   \   000085   4B           ORL     A,R3
+   \   000086   F0           MOVX    @DPTR,A
+   1069              HAL_EXIT_CRITICAL_SECTION(intState);
+   \   000087   ED           MOV     A,R5
+   \   000088   A2E7         MOV     C,0xE0 /* A   */.7
+   \   00008A   92AF         MOV     0xa8.7,C
+   1070            }
+   1071          #if defined( POWER_SAVING )
+   1072            else  // Complete pass through all task events with no activity?
+   1073            {
+   1074              osal_pwrmgr_powerconserve();  // Put the processor/system into sleep
+   1075            }
+   1076          #endif
+   1077          
+   1078            /* Yield in case cooperative scheduling is being used. */
+   1079          #if defined (configUSE_PREEMPTION) && (configUSE_PREEMPTION == 0)
+   1080            {
+   1081              osal_task_yield();
+   1082            }
+   1083          #endif
+   1084          }
+   \                     ??osal_run_system_3:
+   \   00008C   02....       LJMP    ?Subroutine2 & 0xFFFF
+   \   00008F                REQUIRE _A_IEN0
+   1085          
+   1086          /*********************************************************************
+   1087           * @fn      osal_buffer_uint32
+   1088           *
+   1089           * @brief
+   1090           *
+   1091           *   Buffer an uint32 value - LSB first.
+   1092           *
+   1093           * @param   buf - buffer
+   1094           * @param   val - uint32 value
+   1095           *
+   1096           * @return  pointer to end of destination buffer
+   1097           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   1098          uint8* osal_buffer_uint32( uint8 *buf, uint32 val )
+   \                     osal_buffer_uint32:
+   1099          {
+   \   000000   74F0         MOV     A,#-0x10
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 16
+   \   000005                ; Auto size: 0
+   \   000005   7410         MOV     A,#0x10
+   \   000007   12....       LCALL   ?XSTACK_DISP0_8
+   \   00000A   78..         MOV     R0,#?V0 + 4
+   \   00000C   12....       LCALL   ?L_MOV_X
+   1100            *buf++ = BREAK_UINT32( val, 0 );
+   \   00000F   8A82         MOV     DPL,R2
+   \   000011   8B83         MOV     DPH,R3
+   \   000013   E5..         MOV     A,?V0 + 4
+   \   000015   12....       LCALL   ?Subroutine17 & 0xFFFF
+   1101            *buf++ = BREAK_UINT32( val, 1 );
+   1102            *buf++ = BREAK_UINT32( val, 2 );
+   \                     ??CrossCallReturnLabel_32:
+   \   000018   85....       MOV     ?V0 + 0,?V0 + 4
+   \   00001B   85....       MOV     ?V0 + 2,?V0 + 6
+   \   00001E   85....       MOV     ?V0 + 3,?V0 + 7
+   \   000021   7410         MOV     A,#0x10
+   \   000023   78..         MOV     R0,#?V0 + 0
+   \   000025   12....       LCALL   ?UL_SHR
+   \   000028   E5..         MOV     A,?V0 + 0
+   \   00002A   F0           MOVX    @DPTR,A
+   \   00002B   A3           INC     DPTR
+   1103            *buf++ = BREAK_UINT32( val, 3 );
+   \   00002C   7418         MOV     A,#0x18
+   \   00002E                REQUIRE ?Subroutine3
+   \   00002E                ; // Fall through to label ?Subroutine3
+   1104          
+   1105            return buf;
+   1106          }
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine3:
+   \   000000   78..         MOV     R0,#?V0 + 4
+   \   000002   12....       LCALL   ?UL_SHR
+   \   000005   E5..         MOV     A,?V0 + 4
+   \   000007   F0           MOVX    @DPTR,A
+   \   000008   A3           INC     DPTR
+   \   000009   AA82         MOV     R2,DPL
+   \   00000B   AB83         MOV     R3,DPH
+   \   00000D                REQUIRE ??Subroutine30_0
+   \   00000D                ; // Fall through to label ??Subroutine30_0
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine17:
+   \   000000   F0           MOVX    @DPTR,A
+   \   000001   A3           INC     DPTR
+   \   000002   85....       MOV     ?V0 + 1,?V0 + 5
+   \   000005   E5..         MOV     A,?V0 + 1
+   \   000007   F0           MOVX    @DPTR,A
+   \   000008   A3           INC     DPTR
+   \   000009   22           RET
+   1107          
+   1108          /*********************************************************************
+   1109           * @fn      osal_buffer_uint24
+   1110           *
+   1111           * @brief
+   1112           *
+   1113           *   Buffer an uint24 value - LSB first. Note that type uint24 is
+   1114           *   typedef to uint32 in comdef.h
+   1115           *
+   1116           * @param   buf - buffer
+   1117           * @param   val - uint24 value
+   1118           *
+   1119           * @return  pointer to end of destination buffer
+   1120           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   1121          uint8* osal_buffer_uint24( uint8 *buf, uint24 val )
+   \                     osal_buffer_uint24:
+   1122          {
+   \   000000   74F0         MOV     A,#-0x10
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 16
+   \   000005                ; Auto size: 0
+   \   000005   7410         MOV     A,#0x10
+   \   000007   12....       LCALL   ?XSTACK_DISP0_8
+   \   00000A   78..         MOV     R0,#?V0 + 4
+   \   00000C   12....       LCALL   ?L_MOV_X
+   1123            *buf++ = BREAK_UINT32( val, 0 );
+   \   00000F   85....       MOV     ?V0 + 0,?V0 + 4
+   \   000012   8A82         MOV     DPL,R2
+   \   000014   8B83         MOV     DPH,R3
+   \   000016   E5..         MOV     A,?V0 + 0
+   \   000018   12....       LCALL   ?Subroutine17 & 0xFFFF
+   1124            *buf++ = BREAK_UINT32( val, 1 );
+   1125            *buf++ = BREAK_UINT32( val, 2 );
+   \                     ??CrossCallReturnLabel_33:
+   \   00001B   7410         MOV     A,#0x10
+   \   00001D   80..         SJMP    ?Subroutine3
+   1126          
+   1127            return buf;
+   1128          }
+   1129          /*********************************************************************
+   1130           * @fn      osal_buffer_uint16
+   1131           *
+   1132           * @brief
+   1133           *
+   1134           *   Buffer an uint16 value - LSB first.
+   1135           *
+   1136           * @param   buf - buffer
+   1137           * @param   val - uint16 value
+   1138           *
+   1139           * @return  pointer to end of destination buffer
+   1140           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   1141          uint8* osal_buffer_uint16( uint8 *buf, uint16 val )
+   \                     osal_buffer_uint16:
+   1142          {
+   \   000000   74F7         MOV     A,#-0x9
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 9
+   \   000005                ; Auto size: 0
+   1143            *buf++ = BREAK_UINT32( val, 0 );
+   \   000005   EC           MOV     A,R4
+   \   000006   8A82         MOV     DPL,R2
+   \   000008   8B83         MOV     DPH,R3
+   \   00000A   F0           MOVX    @DPTR,A
+   \   00000B   A3           INC     DPTR
+   1144            *buf++ = BREAK_UINT32( val, 1 );
+   \   00000C   ED           MOV     A,R5
+   \   00000D   F0           MOVX    @DPTR,A
+   \   00000E   A3           INC     DPTR
+   \   00000F   02....       LJMP    ?Subroutine1 & 0xFFFF
+   1145            return buf;
+   1146          }
+   1147          /*********************************************************************
+   1148           * @fn      osal_isbufset
+   1149           *
+   1150           * @brief
+   1151           *
+   1152           *   Is all of the array elements set to a value?
+   1153           *
+   1154           * @param   buf - buffer to check
+   1155           * @param   val - value to check each array element for
+   1156           * @param   len - length to check
+   1157           *
+   1158           * @return  TRUE if all "val"
+   1159           *          FALSE otherwise
+   1160           */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   1161          uint8 osal_isbufset( uint8 *buf, uint8 val, uint8 len )
+   \                     osal_isbufset:
+   1162          {
+   \   000000   74F6         MOV     A,#-0xa
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 10
+   \   000005                ; Auto size: 0
+   \   000005   E9           MOV     A,R1
+   \   000006   FE           MOV     R6,A
+   1163            uint8 x;
+   1164            
+   1165            if ( buf == NULL )
+   \   000007   EA           MOV     A,R2
+   \   000008   7001         JNZ     ??osal_isbufset_0
+   \   00000A   EB           MOV     A,R3
+   \                     ??osal_isbufset_0:
+   \   00000B   7004         JNZ     ??osal_isbufset_1
+   1166            {
+   1167              return ( FALSE );
+   \                     ??osal_isbufset_2:
+   \   00000D   7900         MOV     R1,#0x0
+   \   00000F   801C         SJMP    ??osal_isbufset_3
+   1168            }
+   1169            
+   1170            for ( x = 0; x < len; x++ )
+   \                     ??osal_isbufset_1:
+   \   000011   7D00         MOV     R5,#0x0
+   \   000013   8011         SJMP    ??osal_isbufset_4
+   1171            {
+   1172              // Check for non-initialized value
+   1173              if ( buf[x] != val )
+   \                     ??osal_isbufset_5:
+   \   000015   8D..         MOV     ?V0 + 0,R5
+   \   000017   EA           MOV     A,R2
+   \   000018   25..         ADD     A,?V0 + 0
+   \   00001A   F582         MOV     DPL,A
+   \   00001C   EB           MOV     A,R3
+   \   00001D   3400         ADDC    A,#0x0
+   \   00001F   F583         MOV     DPH,A
+   \   000021   E0           MOVX    A,@DPTR
+   \   000022   6E           XRL     A,R6
+   \   000023   70E8         JNZ     ??osal_isbufset_2
+   1174              {
+   1175                return ( FALSE );
+   1176              }
+   1177            }
+   \   000025   0D           INC     R5
+   \                     ??osal_isbufset_4:
+   \   000026   ED           MOV     A,R5
+   \   000027   C3           CLR     C
+   \   000028   9C           SUBB    A,R4
+   \   000029   40EA         JC      ??osal_isbufset_5
+   1178            return ( TRUE );
+   \   00002B   7901         MOV     R1,#0x1
+   \                     ??osal_isbufset_3:
+   \   00002D   02....       LJMP    ?Subroutine2 & 0xFFFF
+   1179          }
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_strlen?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_strlen
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_memcpy?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_memcpy
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_revmemcpy?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_revmemcpy
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_memdup?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_memdup
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_memcmp?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_memcmp
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_memset?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_memset
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_build_uint16?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_build_uint16
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_build_uint32?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_build_uint32
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??_ltoa?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    _ltoa
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_rand?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_rand
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_msg_allocate?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_msg_allocate
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_msg_deallocate?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_msg_deallocate
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_msg_send?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_msg_send
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_msg_receive?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_msg_receive
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_msg_find?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_msg_find
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_msg_enqueue?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_msg_enqueue
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_msg_dequeue?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_msg_dequeue
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_msg_push?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_msg_push
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_msg_extract?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_msg_extract
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_msg_enqueue_max?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_msg_enqueue_max
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_set_event?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_set_event
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_clear_event?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_clear_event
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_isr_register?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_isr_register
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_int_enable?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_int_enable
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_int_disable?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_int_disable
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_init_system?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_init_system
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_start_system?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_start_system
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_run_system?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_run_system
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_buffer_uint32?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_buffer_uint32
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_buffer_uint24?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_buffer_uint24
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_buffer_uint16?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_buffer_uint16
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??osal_isbufset?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    osal_isbufset
+
+   \                                 In  segment XDATA_ROM_C, align 1
+   \                     `?<Constant "">`:
+   \   000000   00           DB ""
+   \   000001   00000000     DB 0, 0, 0, 0, 0, 0, 0, 0, 0
+   \            00000000
+   \            00      
+
+   \                                 In  segment XDATA_ROM_C, align 1
+   \                     `?<Constant "">_1`:
+   \   000000   00           DB ""
+   \   000001   00000000     DB 0, 0, 0, 0, 0, 0, 0, 0, 0
+   \            00000000
+   \            00      
+
+   \                                 In  segment XDATA_ROM_C, align 1
+   \                     `?<Constant "">_2`:
+   \   000000   00           DB ""
+   \   000001   00000000     DB 0, 0, 0, 0, 0, 0, 0, 0, 0
+   \            00000000
+   \            00      
+
+   \                                 In  segment XDATA_ROM_C, align 1
+   \                     `?<Constant "0">`:
+   \   000000   3000         DB "0"
+
+   \                                 In  segment XDATA_ROM_C, align 1
+   \                     __Constant_2710:
+   \   000000   10270000     DD 10000
+
+   \                                 In  segment XDATA_ROM_C, align 1
+   \                     __Constant_5f5e100:
+   \   000000   00E1F505     DD 100000000
+   1180          
+   1181          
+   1182          /*********************************************************************
+   1183          *********************************************************************/
+
+   Maximum stack usage in bytes:
+
+     Function                 ISTACK PSTACK XSTACK
+     --------                 ------ ------ ------
+     _ltoa                        2      0     57
+       -> _itoa                   0      0    110
+       -> _itoa                   0      0    110
+       -> _itoa                   0      0    110
+       -> strcpy                  0      0    110
+       -> strcat                  0      0    110
+       -> strlen                  0      0    110
+       -> strcat                  0      0    110
+       -> strcat                  0      0    110
+       -> strlen                  0      0    110
+       -> strcat                  0      0    110
+       -> strcpy                  0      0    110
+       -> _itoa                   0      0    110
+       -> _itoa                   0      0    110
+       -> strcpy                  0      0    110
+       -> strcat                  0      0    110
+       -> strlen                  0      0    110
+       -> strcat                  0      0    110
+     osal_buffer_uint16           1      0      9
+     osal_buffer_uint24           1      0     20
+     osal_buffer_uint32           1      0     20
+     osal_build_uint16            0      0      9
+     osal_build_uint32            0      0     16
+     osal_clear_event             1      0     23
+     osal_init_system             2      0      0
+       -> osal_mem_init           4      0      0
+       -> osalTimerInit           4      0      0
+       -> osal_pwrmgr_init        4      0      0
+       -> osalInitTasks           4      0      0
+       -> osal_mem_kick           4      0      0
+     osal_int_disable             0      0      0
+     osal_int_enable              0      0      0
+     osal_isbufset                0      0     10
+     osal_isr_register            0      0      0
+     osal_memcmp                  0      0     22
+     osal_memcpy                  1      0     29
+     osal_memdup                  0      0     18
+       -> osal_mem_alloc          0      0     30
+       -> osal_memcpy             0      0     36
+     osal_memset                  0      0     12
+       -> memset                  0      0     24
+     osal_msg_allocate            1      0     10
+       -> osal_mem_alloc          0      0     20
+     osal_msg_deallocate          2      0      9
+       -> osal_mem_free           4      0      0
+     osal_msg_dequeue             1      0     10
+     osal_msg_enqueue             0      0     18
+     osal_msg_enqueue_max         0      0     10
+     osal_msg_extract             1      0     25
+     osal_msg_find                0      0      9
+     osal_msg_push                0      0      9
+     osal_msg_receive             0      0     16
+       -> osal_set_event          0      0     28
+       -> osal_clear_event        0      0     28
+       -> osal_msg_extract        0      0     32
+     osal_msg_send                1      0      9
+       -> osal_msg_deallocate     0      0     18
+       -> osal_msg_deallocate     0      0     18
+       -> osal_msg_enqueue        0      0     18
+       -> osal_set_event          0      0     18
+     osal_rand                    2      0      0
+       -> Onboard_rand            4      0      0
+     osal_revmemcpy               1      0     12
+     osal_run_system              1      0     10
+       -> osalTimeUpdate          0      0     20
+       -> Hal_ProcessPoll         0      0     20
+     osal_set_event               1      0     23
+     osal_start_system            2      0      0
+       -> osal_run_system         4      0      0
+     osal_strlen                  2      0      0
+       -> strlen                  4      0      0
+
+
+   Segment part sizes:
+
+     Function/Label               Bytes
+     --------------               -----
+     _A_IEN0                         1
+     osal_qHead                      2
+     osal_strlen                    10
+     ?Subroutine0                    7
+     osal_memcpy                    74
+     osal_revmemcpy                 74
+     ?Subroutine11                   6
+     ?Subroutine1                    4
+     ??Subroutine26_0                5
+     osal_memdup                    58
+     osal_memcmp                   112
+     osal_memset                    31
+     ?Subroutine2                    5
+     osal_build_uint16              21
+     osal_build_uint32             133
+     ?Subroutine12                  15
+     ?Subroutine6                    6
+     ?Subroutine22                  28
+     ??Subroutine30_0                5
+     _ltoa                         631
+     ?Subroutine10                   6
+     ?Subroutine8                   12
+     ?Subroutine7                    6
+     ?Subroutine23                   9
+     ?Subroutine5                   28
+     ?Subroutine13                   9
+     osal_rand                       9
+     osal_msg_allocate              86
+     osal_msg_deallocate            36
+     ?Subroutine16                  13
+     ??Subroutine29_0                5
+     osal_msg_send                  83
+     ?Subroutine21                   3
+     ??Subroutine25_0                5
+     osal_msg_receive              154
+     osal_msg_find                  59
+     ?Subroutine4                    2
+     ??Subroutine27_0                5
+     osal_msg_enqueue               63
+     ?Subroutine14                   9
+     ?Subroutine24                   3
+     ??Subroutine28_0                3
+     ?Subroutine19                   8
+     ?Subroutine18                  10
+     osal_msg_dequeue               92
+     osal_msg_push                  39
+     ?Subroutine20                   4
+     ?Subroutine15                   6
+     osal_msg_extract               83
+     osal_msg_enqueue_max           75
+     osal_set_event                 63
+     osal_clear_event               52
+     ?Subroutine9                   21
+     osal_isr_register               5
+     osal_int_enable                18
+     osal_int_disable               18
+     osal_init_system               31
+     osal_start_system               9
+     osal_run_system               143
+     osal_buffer_uint32             46
+     ?Subroutine3                   13
+     ?Subroutine17                  10
+     osal_buffer_uint24             31
+     osal_buffer_uint16             18
+     osal_isbufset                  48
+     ??osal_strlen?relay             6
+     ??osal_memcpy?relay             6
+     ??osal_revmemcpy?relay          6
+     ??osal_memdup?relay             6
+     ??osal_memcmp?relay             6
+     ??osal_memset?relay             6
+     ??osal_build_uint16?relay       6
+     ??osal_build_uint32?relay       6
+     ??_ltoa?relay                   6
+     ??osal_rand?relay               6
+     ??osal_msg_allocate?relay       6
+     ??osal_msg_deallocate?relay     6
+     ??osal_msg_send?relay           6
+     ??osal_msg_receive?relay        6
+     ??osal_msg_find?relay           6
+     ??osal_msg_enqueue?relay        6
+     ??osal_msg_dequeue?relay        6
+     ??osal_msg_push?relay           6
+     ??osal_msg_extract?relay        6
+     ??osal_msg_enqueue_max?relay    6
+     ??osal_set_event?relay          6
+     ??osal_clear_event?relay        6
+     ??osal_isr_register?relay       6
+     ??osal_int_enable?relay         6
+     ??osal_int_disable?relay        6
+     ??osal_init_system?relay        6
+     ??osal_start_system?relay       6
+     ??osal_run_system?relay         6
+     ??osal_buffer_uint32?relay      6
+     ??osal_buffer_uint24?relay      6
+     ??osal_buffer_uint16?relay      6
+     ??osal_isbufset?relay           6
+     ?<Constant "">                 10
+     ?<Constant "">_1               10
+     ?<Constant "">_2               10
+     ?<Constant "0">                 2
+     __Constant_2710                 4
+     __Constant_5f5e100              4
+
+ 
+ 2 676 bytes in segment BANKED_CODE
+   192 bytes in segment BANK_RELAYS
+     1 byte  in segment SFR_AN
+    40 bytes in segment XDATA_ROM_C
+     2 bytes in segment XDATA_Z
+ 
+ 2 868 bytes of CODE  memory
+    32 bytes of CONST memory (+ 8 bytes shared)
+     0 bytes of DATA  memory (+ 1 byte  shared)
+     2 bytes of XDATA memory
+
+Errors: none
+Warnings: none
