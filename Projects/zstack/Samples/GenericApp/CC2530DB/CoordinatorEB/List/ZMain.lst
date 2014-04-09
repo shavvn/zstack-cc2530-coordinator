@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V7.60.1.40026 for 8051             09/Apr/2014  08:08:51 #
+# IAR C/C++ Compiler V7.60.1.40026 for 8051             09/Apr/2014  09:37:29 #
 # Copyright (C) 2004-2010 IAR Systems AB.                                     #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -45,15 +45,16 @@
 #                          -DREJOIN_POLL_RATE=440 D:\zigbee\projects\zstack-c #
 #                          c2530-coordinator\Projects\zstack\ZMain\TI2530DB\Z #
 #                          Main.c -D ZAPP_P1 -D MT_TASK -D MT_SYS_FUNC -D     #
-#                          MT_ZDO_FUNC -D LCD_SUPPORTED=DEBUG -lC             #
-#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
-#                          cts\zstack\Samples\GenericApp\CC2530DB\Coordinator #
-#                          EB\List\ -lA D:\zigbee\projects\zstack-cc2530-coor #
-#                          dinator\Projects\zstack\Samples\GenericApp\CC2530D #
-#                          B\CoordinatorEB\List\ --diag_suppress Pe001,Pa010  #
-#                          -o D:\zigbee\projects\zstack-cc2530-coordinator\Pr #
-#                          ojects\zstack\Samples\GenericApp\CC2530DB\Coordina #
-#                          torEB\Obj\ -e --require_prototypes                 #
+#                          MT_ZDO_FUNC -D HAL_UART -D HAL_UART=TRUE -D        #
+#                          HAL_DMA=TRUE -D HAL_LCD=FALSE -D HAL_KEY=FALSE     #
+#                          -lC D:\zigbee\projects\zstack-cc2530-coordinator\P #
+#                          rojects\zstack\Samples\GenericApp\CC2530DB\Coordin #
+#                          atorEB\List\ -lA D:\zigbee\projects\zstack-cc2530- #
+#                          coordinator\Projects\zstack\Samples\GenericApp\CC2 #
+#                          530DB\CoordinatorEB\List\ --diag_suppress          #
+#                          Pe001,Pa010 -o D:\zigbee\projects\zstack-cc2530-co #
+#                          ordinator\Projects\zstack\Samples\GenericApp\CC253 #
+#                          0DB\CoordinatorEB\Obj\ -e --require_prototypes     #
 #                          --no_code_motion --debug --core=plain --dptr=16,1  #
 #                          --data_model=large --code_model=banked             #
 #                          --calling_convention=xdata_reentrant               #
@@ -387,17 +388,10 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\ZMain\TI2530DB\ZMai
     127          
     128            // Display information about this device
     129            zmain_dev_info();
-   \   00007A                ; Setup parameters for call to function zmain_dev_info
-   \   00007A   12....       LCALL   ??zmain_dev_info?relay
     130          
     131            /* Display the device info on the LCD */
     132          #ifdef LCD_SUPPORTED
     133            zmain_lcd_init();
-   \   00007D                ; Setup parameters for call to function HalLcdWriteString
-   \   00007D   7901         MOV     R1,#0x1
-   \   00007F   7A..         MOV     R2,#(`?<Constant "TexasInstruments">` & 0xff)
-   \   000081   7B..         MOV     R3,#((`?<Constant "TexasInstruments">` >> 8) & 0xff)
-   \   000083   12....       LCALL   ??HalLcdWriteString?relay
     134          #endif
     135          
     136          #ifdef WDT_IN_PM1
@@ -406,22 +400,22 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\ZMain\TI2530DB\ZMai
     139          #endif
     140          
     141            osal_start_system(); // No Return from here
-   \   000086                ; Setup parameters for call to function osal_start_system
-   \   000086   12....       LCALL   ??osal_start_system?relay
+   \   00007A                ; Setup parameters for call to function osal_start_system
+   \   00007A   12....       LCALL   ??osal_start_system?relay
     142          
     143            return 0;  // Shouldn't get here.
-   \   000089   7A00         MOV     R2,#0x0
-   \   00008B   7B00         MOV     R3,#0x0
-   \   00008D   02....       LJMP    ?BRET
-   \   000090                REQUIRE P0INP
-   \   000090                REQUIRE _A_P1
-   \   000090                REQUIRE SLEEPSTA
-   \   000090                REQUIRE CLKCONSTA
-   \   000090                REQUIRE SLEEPCMD
-   \   000090                REQUIRE CLKCONCMD
-   \   000090                REQUIRE P0DIR
-   \   000090                REQUIRE P1DIR
-   \   000090                REQUIRE _A_P0
+   \   00007D   7A00         MOV     R2,#0x0
+   \   00007F   7B00         MOV     R3,#0x0
+   \   000081   02....       LJMP    ?BRET
+   \   000084                REQUIRE _A_P0
+   \   000084                REQUIRE P0INP
+   \   000084                REQUIRE _A_P1
+   \   000084                REQUIRE SLEEPSTA
+   \   000084                REQUIRE CLKCONSTA
+   \   000084                REQUIRE SLEEPCMD
+   \   000084                REQUIRE CLKCONCMD
+   \   000084                REQUIRE P0DIR
+   \   000084                REQUIRE P1DIR
     144          } // main()
     145          
     146          /*********************************************************************
@@ -681,13 +675,13 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\ZMain\TI2530DB\ZMai
    \   00014F   A8..         MOV     R0,?V0 + 0
    \   000151   8E..         MOV     ?V0 + 0,R6
    \   000153   E5..         MOV     A,?V0 + 0
-   \   000155   12....       LCALL   ??Subroutine2_0 & 0xFFFF
-   \                     ??CrossCallReturnLabel_2:
+   \   000155   12....       LCALL   ??Subroutine1_0 & 0xFFFF
+   \                     ??CrossCallReturnLabel_0:
    \   000158   E8           MOV     A,R0
    \   000159   F0           MOVX    @DPTR,A
    \   00015A   0E           INC     R6
    \   00015B   12....       LCALL   ?Subroutine0 & 0xFFFF
-   \                     ??CrossCallReturnLabel_4:
+   \                     ??CrossCallReturnLabel_2:
    \   00015E   EB           MOV     A,R3
    \   00015F   F0           MOVX    @DPTR,A
    \   000160   0E           INC     R6
@@ -696,13 +690,13 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\ZMain\TI2530DB\ZMai
    \   000163   9406         SUBB    A,#0x6
    \   000165   40E3         JC      ??zmain_ext_addr_4
    \   000167   12....       LCALL   ?Subroutine0 & 0xFFFF
-   \                     ??CrossCallReturnLabel_5:
+   \                     ??CrossCallReturnLabel_3:
    \   00016A   7410         MOV     A,#0x10
    \   00016C   F0           MOVX    @DPTR,A
    \   00016D   7401         MOV     A,#0x1
    \   00016F   2E           ADD     A,R6
-   \   000170   12....       LCALL   ??Subroutine2_0 & 0xFFFF
-   \                     ??CrossCallReturnLabel_3:
+   \   000170   12....       LCALL   ??Subroutine1_0 & 0xFFFF
+   \                     ??CrossCallReturnLabel_1:
    \   000173   74F8         MOV     A,#-0x8
    \   000175   F0           MOVX    @DPTR,A
    \   000176   80BD         SJMP    ??zmain_ext_addr_1
@@ -710,17 +704,32 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\ZMain\TI2530DB\ZMai
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
    \                     ?Subroutine0:
    \   000000   EE           MOV     A,R6
-   \   000001                REQUIRE ??Subroutine2_0
-   \   000001                ; // Fall through to label ??Subroutine2_0
+   \   000001                REQUIRE ??Subroutine1_0
+   \   000001                ; // Fall through to label ??Subroutine1_0
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-   \                     ??Subroutine2_0:
+   \                     ??Subroutine1_0:
    \   000000   24..         ADD     A,#(aExtendedAddress & 0xff)
    \   000002   F582         MOV     DPL,A
    \   000004   E4           CLR     A
    \   000005   34..         ADDC    A,#((aExtendedAddress >> 8) & 0xff)
    \   000007   F583         MOV     DPH,A
    \   000009   22           RET
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??main?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    main
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??zmain_ext_addr?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    zmain_ext_addr
+
+   \                                 In  segment XDATA_ROM_C, align 1
+   \                     `?<Constant {255, 255, 255, 255, 255, 255, 255,`:
+   \   000000   FFFFFFFF     DB 255, 255, 255, 255, 255, 255, 255, 255
+   \            FFFFFFFF
     238          
     239          #if defined ZCL_KEY_ESTABLISH
     240          /**************************************************************************************************
@@ -795,17 +804,8 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\ZMain\TI2530DB\ZMai
     309           * @return      None.
     310           **************************************************************************************************
     311           */
-
-   \                                 In  segment BANKED_CODE, align 1, keep-with-next
     312          static void zmain_dev_info(void)
-   \                     zmain_dev_info:
     313          {
-   \   000000   74F6         MOV     A,#-0xa
-   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
-   \   000005                ; Saved register size: 10
-   \   000005                ; Auto size: 17
-   \   000005   74EF         MOV     A,#-0x11
-   \   000007   12....       LCALL   ?ALLOC_XSTACK8
     314            #ifdef LCD_SUPPORTED
     315            uint8 i;
     316            uint8 *xad;
@@ -813,153 +813,23 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\ZMain\TI2530DB\ZMai
     318          
     319            // Display the extended address.
     320            xad = aExtendedAddress + Z_EXTADDR_LEN - 1;
-   \   00000A   78..         MOV     R0,#((aExtendedAddress + 7) & 0xff)
-   \   00000C   79..         MOV     R1,#(((aExtendedAddress + 7) >> 8) & 0xff)
     321          
     322            for (i = 0; i < Z_EXTADDR_LEN*2; xad--)
-   \   00000E   7C00         MOV     R4,#0x0
     323            {
     324              uint8 ch;
     325              ch = (*xad >> 4) & 0x0F;
-   \                     ??zmain_dev_info_0:
-   \   000010   8882         MOV     DPL,R0
-   \   000012   8983         MOV     DPH,R1
-   \   000014   E0           MOVX    A,@DPTR
-   \   000015   C4           SWAP    A
-   \   000016   540F         ANL     A,#0xf
-   \   000018   FD           MOV     R5,A
     326              lcd_buf[i++] = ch + (( ch < 10 ) ? '0' : '7');
-   \   000019   EC           MOV     A,R4
-   \   00001A   FE           MOV     R6,A
-   \   00001B   0C           INC     R4
-   \   00001C   ED           MOV     A,R5
-   \   00001D   C3           CLR     C
-   \   00001E   940A         SUBB    A,#0xa
-   \   000020   5004         JNC     ??zmain_dev_info_1
-   \   000022   7A30         MOV     R2,#0x30
-   \   000024   8002         SJMP    ??zmain_dev_info_2
-   \                     ??zmain_dev_info_1:
-   \   000026   7A37         MOV     R2,#0x37
-   \                     ??zmain_dev_info_2:
-   \   000028   EA           MOV     A,R2
-   \   000029   2D           ADD     A,R5
-   \   00002A   C0E0         PUSH    A
-   \   00002C   8E..         MOV     ?V0 + 0,R6
-   \   00002E   12....       LCALL   ?Subroutine1 & 0xFFFF
-   \                     ??CrossCallReturnLabel_0:
-   \   000031   D0E0         POP     A
-   \   000033   F0           MOVX    @DPTR,A
     327              ch = *xad & 0x0F;
-   \   000034   8882         MOV     DPL,R0
-   \   000036   8983         MOV     DPH,R1
-   \   000038   E0           MOVX    A,@DPTR
-   \   000039   540F         ANL     A,#0xf
-   \   00003B   FD           MOV     R5,A
     328              lcd_buf[i++] = ch + (( ch < 10 ) ? '0' : '7');
-   \   00003C   EC           MOV     A,R4
-   \   00003D   FF           MOV     R7,A
-   \   00003E   0C           INC     R4
-   \   00003F   ED           MOV     A,R5
-   \   000040   C3           CLR     C
-   \   000041   940A         SUBB    A,#0xa
-   \   000043   5004         JNC     ??zmain_dev_info_3
-   \   000045   7A30         MOV     R2,#0x30
-   \   000047   8002         SJMP    ??zmain_dev_info_4
-   \                     ??zmain_dev_info_3:
-   \   000049   7A37         MOV     R2,#0x37
-   \                     ??zmain_dev_info_4:
-   \   00004B   EA           MOV     A,R2
-   \   00004C   2D           ADD     A,R5
-   \   00004D   C0E0         PUSH    A
-   \   00004F   8F..         MOV     ?V0 + 0,R7
-   \   000051   12....       LCALL   ?Subroutine1 & 0xFFFF
     329            }
-   \                     ??CrossCallReturnLabel_1:
-   \   000054   D0E0         POP     A
-   \   000056   F0           MOVX    @DPTR,A
-   \   000057   E8           MOV     A,R0
-   \   000058   24FF         ADD     A,#-0x1
-   \   00005A   18           DEC     R0
-   \   00005B   E9           MOV     A,R1
-   \   00005C   34FF         ADDC    A,#-0x1
-   \   00005E   F9           MOV     R1,A
-   \   00005F   EC           MOV     A,R4
-   \   000060   C3           CLR     C
-   \   000061   9410         SUBB    A,#0x10
-   \   000063   40AB         JC      ??zmain_dev_info_0
     330            lcd_buf[Z_EXTADDR_LEN*2] = '\0';
-   \   000065   7410         MOV     A,#0x10
-   \   000067   12....       LCALL   ?XSTACK_DISP0_8
-   \   00006A   E4           CLR     A
-   \   00006B   F0           MOVX    @DPTR,A
     331            //printf("IEEE:\r\n");
     332            //printf(lcd_buf);
     333          
     334            HalLcdWriteString( "IEEE: ", HAL_LCD_LINE_1 );
-   \   00006C                ; Setup parameters for call to function HalLcdWriteString
-   \   00006C   7901         MOV     R1,#0x1
-   \   00006E   7A..         MOV     R2,#(`?<Constant "IEEE: ">` & 0xff)
-   \   000070   7B..         MOV     R3,#((`?<Constant "IEEE: ">` >> 8) & 0xff)
-   \   000072   12....       LCALL   ??HalLcdWriteString?relay
     335            HalLcdWriteString( (char*)lcd_buf, HAL_LCD_LINE_2 );
-   \   000075                ; Setup parameters for call to function HalLcdWriteString
-   \   000075   7902         MOV     R1,#0x2
-   \   000077   85..82       MOV     DPL,?XSP + 0
-   \   00007A   85..83       MOV     DPH,?XSP + 1
-   \   00007D   AA82         MOV     R2,DPL
-   \   00007F   AB83         MOV     R3,DPH
-   \   000081   12....       LCALL   ??HalLcdWriteString?relay
     336          #endif
     337          }
-   \   000084   7411         MOV     A,#0x11
-   \   000086   12....       LCALL   ?DEALLOC_XSTACK8
-   \   000089   7F02         MOV     R7,#0x2
-   \   00008B   02....       LJMP    ?BANKED_LEAVE_XDATA
-
-   \                                 In  segment BANKED_CODE, align 1, keep-with-next
-   \                     ?Subroutine1:
-   \   000000   85..82       MOV     DPL,?XSP + 0
-   \   000003   85..83       MOV     DPH,?XSP + 1
-   \   000006   E582         MOV     A,DPL
-   \   000008   25..         ADD     A,?V0 + 0
-   \   00000A   F582         MOV     DPL,A
-   \   00000C   E583         MOV     A,DPH
-   \   00000E   3400         ADDC    A,#0x0
-   \   000010   F583         MOV     DPH,A
-   \   000012   22           RET
-
-   \                                 In  segment BANK_RELAYS, align 1
-   \                     ??main?relay:
-   \   000000   12....       LCALL   ?BDISPATCH
-   \   000003   ......       DC24    main
-
-   \                                 In  segment BANK_RELAYS, align 1
-   \                     ??zmain_ext_addr?relay:
-   \   000000   12....       LCALL   ?BDISPATCH
-   \   000003   ......       DC24    zmain_ext_addr
-
-   \                                 In  segment BANK_RELAYS, align 1
-   \                     ??zmain_dev_info?relay:
-   \   000000   12....       LCALL   ?BDISPATCH
-   \   000003   ......       DC24    zmain_dev_info
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant {255, 255, 255, 255, 255, 255, 255,`:
-   \   000000   FFFFFFFF     DB 255, 255, 255, 255, 255, 255, 255, 255
-   \            FFFFFFFF
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "IEEE: ">`:
-   \   000000   49454545     DB "IEEE: "
-   \            3A2000  
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "TexasInstruments">`:
-   \   000000   54657861     DB "TexasInstruments"
-   \            73496E73
-   \            7472756D
-   \            656E7473
-   \            00      
     338          
     339          #ifdef LCD_SUPPORTED
     340          /*********************************************************************
@@ -1011,12 +881,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\ZMain\TI2530DB\ZMai
        -> osal_init_system      0      0      0
        -> osal_int_enable       0      0      0
        -> InitBoard             0      0      0
-       -> zmain_dev_info        0      0      0
-       -> HalLcdWriteString     0      0      0
        -> osal_start_system     0      0      0
-     zmain_dev_info             1      0     27
-       -> HalLcdWriteString     0      0     54
-       -> HalLcdWriteString     0      0     54
      zmain_ext_addr             2      0     23
        -> osal_nv_item_init     0      0     42
        -> osal_nv_read          0      0     46
@@ -1043,27 +908,22 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\ZMain\TI2530DB\ZMai
      CLKCONCMD                                         1
      P0DIR                                             1
      P1DIR                                             1
-     main                                            144
+     main                                            132
      zmain_ext_addr                                  376
      ?Subroutine0                                      1
-     ??Subroutine2_0                                  10
-     zmain_dev_info                                  142
-     ?Subroutine1                                     19
+     ??Subroutine1_0                                  10
      ??main?relay                                      6
      ??zmain_ext_addr?relay                            6
-     ??zmain_dev_info?relay                            6
      ?<Constant {255, 255, 255, 255, 255, 255, 255,    8
-     ?<Constant "IEEE: ">                              7
-     ?<Constant "TexasInstruments">                   17
 
  
- 692 bytes in segment BANKED_CODE
-  18 bytes in segment BANK_RELAYS
+ 519 bytes in segment BANKED_CODE
+  12 bytes in segment BANK_RELAYS
    9 bytes in segment SFR_AN
-  32 bytes in segment XDATA_ROM_C
+   8 bytes in segment XDATA_ROM_C
  
- 710 bytes of CODE  memory
-  32 bytes of CONST memory
+ 531 bytes of CODE  memory
+   8 bytes of CONST memory
    0 bytes of DATA  memory (+ 9 bytes shared)
 
 Errors: none

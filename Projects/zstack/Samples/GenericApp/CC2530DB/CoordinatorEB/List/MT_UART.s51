@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V7.60.1.40026 for 8051            09/Apr/2014  08:08:54 /
+// IAR C/C++ Compiler V7.60.1.40026 for 8051            09/Apr/2014  10:23:07 /
 // Copyright (C) 2004-2010 IAR Systems AB.                                    /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -45,7 +45,8 @@
 //                          -DREJOIN_POLL_RATE=440 D:\zigbee\projects\zstack- /
 //                          cc2530-coordinator\Components\mt\MT_UART.c -D     /
 //                          ZAPP_P1 -D MT_TASK -D MT_SYS_FUNC -D MT_ZDO_FUNC  /
-//                          -D LCD_SUPPORTED=DEBUG -lC                        /
+//                          -D HAL_UART -D HAL_UART=TRUE -D HAL_DMA=TRUE -D   /
+//                          HAL_LCD=FALSE -D HAL_KEY=FALSE -lC                /
 //                          D:\zigbee\projects\zstack-cc2530-coordinator\Proj /
 //                          ects\zstack\Samples\GenericApp\CC2530DB\Coordinat /
 //                          orEB\List\ -lA D:\zigbee\projects\zstack-cc2530-c /
@@ -200,7 +201,9 @@
         PUBLIC MT_UartMaxZAppBufLen
         PUBLIC MT_UartProcessZAppData
         FUNCTION MT_UartProcessZAppData,021603H
-        ARGFRAME XSTACK, 0, STACK
+        ARGFRAME XSTACK, 9, STACK
+        ARGFRAME IOVERLAY, 0, STATIC
+        ARGFRAME DOVERLAY, 0, STATIC
         LOCFRAME ISTACK, 2, STACK
         PUBLIC MT_UartProcessZToolData
         FUNCTION MT_UartProcessZToolData,0a1203H
@@ -381,12 +384,14 @@ HalUARTRead         SYMBOL "HalUARTRead"
 osal_msg_allocate   SYMBOL "osal_msg_allocate"
 osal_msg_send       SYMBOL "osal_msg_send"
 osal_msg_deallocate SYMBOL "osal_msg_deallocate"
+osal_set_event      SYMBOL "osal_set_event"
 ??HalUARTOpen?relay SYMBOL "?relay", HalUARTOpen
 ??HalUARTRead?relay SYMBOL "?relay", HalUARTRead
 ??Hal_UART_RxBufLen?relay SYMBOL "?relay", Hal_UART_RxBufLen
 ??osal_msg_allocate?relay SYMBOL "?relay", osal_msg_allocate
 ??osal_msg_deallocate?relay SYMBOL "?relay", osal_msg_deallocate
 ??osal_msg_send?relay SYMBOL "?relay", osal_msg_send
+??osal_set_event?relay SYMBOL "?relay", osal_set_event
 MT_UartAppFlowControl SYMBOL "MT_UartAppFlowControl"
 ??MT_UartAppFlowControl?relay SYMBOL "?relay", MT_UartAppFlowControl
 MT_UartCalcFCS      SYMBOL "MT_UartCalcFCS"
@@ -444,6 +449,13 @@ MT_UartZAppBufferLengthRegister SYMBOL "MT_UartZAppBufferLengthRegister"
         ARGFRAME XSTACK, 11, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
+        EXTERN osal_set_event
+        FUNCTION osal_set_event,0202H
+        ARGFRAME ISTACK, 2, STACK
+        ARGFRAME PSTACK, 0, STACK
+        ARGFRAME XSTACK, 0, STACK
+        ARGFRAME IOVERLAY, 0, STATIC
+        ARGFRAME DOVERLAY, 0, STATIC
         EXTERN ??HalUARTOpen?relay
         FUNCTION ??HalUARTOpen?relay,00H
         EXTERN ??HalUARTRead?relay
@@ -456,6 +468,8 @@ MT_UartZAppBufferLengthRegister SYMBOL "MT_UartZAppBufferLengthRegister"
         FUNCTION ??osal_msg_deallocate?relay,00H
         EXTERN ??osal_msg_send?relay
         FUNCTION ??osal_msg_send?relay,00H
+        EXTERN ??osal_set_event?relay
+        FUNCTION ??osal_set_event?relay,00H
 
 // D:\zigbee\projects\zstack-cc2530-coordinator\Components\mt\MT_UART.c
 //    1 /***************************************************************************************************
@@ -720,9 +734,9 @@ MT_UartInit:
 //  131   /* Initialize for ZApp */
 //  132 #if defined (ZAPP_P1) || defined (ZAPP_P2)
 //  133   /* Default max bytes that ZAPP can take */
-//  134   MT_UartMaxZAppBufLen  = 1;
+//  134   MT_UartMaxZAppBufLen  = 8;
         MOV     DPTR,#MT_UartMaxZAppBufLen
-        MOV     A,#0x1
+        MOV     A,#0x8
         MOVX    @DPTR,A
         INC     DPTR
         CLR     A
@@ -2172,6 +2186,17 @@ MT_UartProcessZAppData:
         ARGFRAME XSTACK, 0, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
+        FUNCALL MT_UartProcessZAppData, osal_set_event
+        LOCFRAME ISTACK, 2, STACK
+        LOCFRAME PSTACK, 0, STACK
+        LOCFRAME XSTACK, 0, STACK
+        LOCFRAME IOVERLAY, 0, STATIC
+        LOCFRAME DOVERLAY, 0, STATIC
+        ARGFRAME ISTACK, 2, STACK
+        ARGFRAME PSTACK, 0, STACK
+        ARGFRAME XSTACK, 0, STACK
+        ARGFRAME IOVERLAY, 0, STATIC
+        ARGFRAME DOVERLAY, 0, STATIC
         PUSH    DPL
         CFI DPL0 Frame(CFA_SP, 4)
         CFI CFA_SP SP+-4
@@ -2187,7 +2212,12 @@ MT_UartProcessZAppData:
         ; Setup parameters for call to function Hal_UART_RxBufLen
         MOV     R1,#0x0
         LCALL   ??Hal_UART_RxBufLen?relay
-//  331   //osal_set_event(8,0x0002);
+//  331   osal_set_event(8,0x0002);
+        ; Setup parameters for call to function osal_set_event
+        MOV     R2,#0x2
+        MOV     R3,#0x0
+        MOV     R1,#0x8
+        LCALL   ??osal_set_event?relay
 //  332   return;
         LJMP    ??Subroutine11_0 & 0xFFFF
         CFI EndBlock cfiBlock53
@@ -2232,33 +2262,35 @@ MT_UartProcessZAppData:
 //  371           msg_ptr->status = length;
 //  372           //osal_set_event(8, 2);
 //  373           /* Read the data of Rx buffer */
-//  374           HalUARTRead( MT_UART_DEFAULT_PORT, (uint8 *)(msg_ptr + 1), length );
+//  374           //HalUARTRead( MT_UART_DEFAULT_PORT, (uint8 *)(msg_ptr + 1), length );
 //  375 
 //  376           /* Send the raw data to application...or where ever */
 //  377           osal_msg_send( App_TaskID, (uint8 *)msg_ptr );
-//  378         }
-//  379       }
-//  380     }
-//  381   }
-//  382 }
-//  383 
-//  384 /***************************************************************************************************
-//  385  * @fn      SPIMgr_ZAppBufferLengthRegister
-//  386  *
-//  387  * @brief
+//  378           //osal_set_event(8,0x0002);
+//  379           //MT_UartAppFlowControl(MT_UART_ZAPP_RX_READY);
+//  380         }
+//  381       }
+//  382     }
+//  383   }
+//  384 }
+//  385 
+//  386 /***************************************************************************************************
+//  387  * @fn      SPIMgr_ZAppBufferLengthRegister
 //  388  *
-//  389  * @param   maxLen - Max Length that the application wants at a time
+//  389  * @brief
 //  390  *
-//  391  * @return  None
+//  391  * @param   maxLen - Max Length that the application wants at a time
 //  392  *
-//  393  ***************************************************************************************************/
+//  393  * @return  None
+//  394  *
+//  395  ***************************************************************************************************/
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
-//  394 void MT_UartZAppBufferLengthRegister ( uint16 maxLen )
+//  396 void MT_UartZAppBufferLengthRegister ( uint16 maxLen )
 MT_UartZAppBufferLengthRegister:
         CFI Block cfiBlock54 Using cfiCommon0
         CFI Function MT_UartZAppBufferLengthRegister
-//  395 {
+//  397 {
         PUSH    DPL
         CFI DPL0 Frame(CFA_SP, 4)
         CFI CFA_SP SP+-4
@@ -2267,8 +2299,8 @@ MT_UartZAppBufferLengthRegister:
         CFI CFA_SP SP+-5
         ; Saved register size: 2
         ; Auto size: 0
-//  396   /* If the maxLen is larger than the RX buff, something is not right */
-//  397   if (maxLen <= MT_UART_DEFAULT_MAX_RX_BUFF)
+//  398   /* If the maxLen is larger than the RX buff, something is not right */
+//  399   if (maxLen <= MT_UART_DEFAULT_MAX_RX_BUFF)
         CLR     C
         MOV     A,R2
         SUBB    A,#-0x7f
@@ -2276,14 +2308,14 @@ MT_UartZAppBufferLengthRegister:
         SUBB    A,#0x0
         MOV     DPTR,#MT_UartMaxZAppBufLen
         JNC     ??MT_UartZAppBufferLengthRegister_0
-//  398     MT_UartMaxZAppBufLen = maxLen;
+//  400     MT_UartMaxZAppBufLen = maxLen;
         MOV     A,R2
         MOVX    @DPTR,A
         INC     DPTR
         MOV     A,R3
         SJMP    ??MT_UartZAppBufferLengthRegister_1
-//  399   else
-//  400     MT_UartMaxZAppBufLen = 1; /* default is 1 byte */
+//  401   else
+//  402     MT_UartMaxZAppBufLen = 1; /* default is 1 byte */
 ??MT_UartZAppBufferLengthRegister_0:
         MOV     A,#0x1
         MOVX    @DPTR,A
@@ -2292,26 +2324,26 @@ MT_UartZAppBufferLengthRegister:
 ??MT_UartZAppBufferLengthRegister_1:
         LJMP    ?Subroutine0 & 0xFFFF
         CFI EndBlock cfiBlock54
-//  401 }
-//  402 
-//  403 /***************************************************************************************************
-//  404  * @fn      SPIMgr_AppFlowControl
-//  405  *
-//  406  * @brief
+//  403 }
+//  404 
+//  405 /***************************************************************************************************
+//  406  * @fn      SPIMgr_AppFlowControl
 //  407  *
-//  408  * @param   status - ready to send or not
+//  408  * @brief
 //  409  *
-//  410  * @return  None
+//  410  * @param   status - ready to send or not
 //  411  *
-//  412  ***************************************************************************************************/
+//  412  * @return  None
+//  413  *
+//  414  ***************************************************************************************************/
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
-//  413 void MT_UartAppFlowControl ( bool status )
+//  415 void MT_UartAppFlowControl ( bool status )
 MT_UartAppFlowControl:
         CFI Block cfiBlock55 Using cfiCommon0
         CFI Function MT_UartAppFlowControl
-//  414 {
-        FUNCALL MT_UartAppFlowControl, Hal_UART_RxBufLen
+//  416 {
+        FUNCALL MT_UartAppFlowControl, MT_UartProcessZAppData
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
         LOCFRAME XSTACK, 9, STACK
@@ -2339,33 +2371,34 @@ MT_UartAppFlowControl:
         ; Auto size: 0
         MOV     A,R1
         MOV     R6,A
-//  415 
-//  416   /* Make sure only update if needed */
-//  417   if (status != MT_UartZAppRxStatus )
+//  417 
+//  418   /* Make sure only update if needed */
+//  419   if (status != MT_UartZAppRxStatus )
         MOV     DPTR,#MT_UartZAppRxStatus
         MOVX    A,@DPTR
         XRL     A,R6
         JZ      ??MT_UartAppFlowControl_0
-//  418   {
-//  419     MT_UartZAppRxStatus = status;
+//  420   {
+//  421     MT_UartZAppRxStatus = status;
         MOV     A,R6
         MOVX    @DPTR,A
-//  420   }
-//  421 
-//  422   /* App is ready to read again, ProcessZAppData have to be triggered too */
-//  423   if (status == MT_UART_ZAPP_RX_READY)
+//  422   }
+//  423 
+//  424   /* App is ready to read again, ProcessZAppData have to be triggered too */
+//  425   if (status == MT_UART_ZAPP_RX_READY)
 ??MT_UartAppFlowControl_0:
         MOV     A,#0x1
         XRL     A,R6
         JNZ     ??MT_UartAppFlowControl_1
-//  424   {
-//  425     MT_UartProcessZAppData (MT_UART_DEFAULT_PORT, HAL_UART_RX_TIMEOUT );
-        ; Setup parameters for call to function Hal_UART_RxBufLen
+//  426   {
+//  427     MT_UartProcessZAppData (MT_UART_DEFAULT_PORT, HAL_UART_RX_TIMEOUT );
+        ; Setup parameters for call to function MT_UartProcessZAppData
+        MOV     R2,#0x4
         MOV     R1,#0x0
-        LCALL   ??Hal_UART_RxBufLen?relay
-//  426   }
-//  427 
-//  428 }
+        LCALL   ??MT_UartProcessZAppData?relay
+//  428   }
+//  429 
+//  430 }
 ??MT_UartAppFlowControl_1:
         LJMP    ?Subroutine1 & 0xFFFF
         CFI EndBlock cfiBlock55
@@ -2413,17 +2446,17 @@ MT_UartAppFlowControl:
         DC24    MT_UartAppFlowControl
 
         END
-//  429 
-//  430 #endif //ZAPP
 //  431 
-//  432 /***************************************************************************************************
-//  433 ***************************************************************************************************/
+//  432 #endif //ZAPP
+//  433 
+//  434 /***************************************************************************************************
+//  435 ***************************************************************************************************/
 // 
-// 777 bytes in segment BANKED_CODE
+// 788 bytes in segment BANKED_CODE
 //  42 bytes in segment BANK_RELAYS
 //  12 bytes in segment XDATA_Z
 // 
-// 819 bytes of CODE  memory
+// 830 bytes of CODE  memory
 //  12 bytes of XDATA memory
 //
 //Errors: none

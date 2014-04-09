@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V7.60.1.40026 for 8051            08/Apr/2014  21:42:38 /
+// IAR C/C++ Compiler V7.60.1.40026 for 8051            09/Apr/2014  09:37:37 /
 // Copyright (C) 2004-2010 IAR Systems AB.                                    /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -45,12 +45,13 @@
 //                          -DREJOIN_POLL_RATE=440 D:\zigbee\projects\zstack- /
 //                          cc2530-coordinator\Components\stack\zdo\ZDApp.c   /
 //                          -D ZAPP_P1 -D MT_TASK -D MT_SYS_FUNC -D           /
-//                          MT_ZDO_FUNC -D LCD_SUPPORTED=DEBUG -lC            /
-//                          D:\zigbee\projects\zstack-cc2530-coordinator\Proj /
-//                          ects\zstack\Samples\GenericApp\CC2530DB\Coordinat /
-//                          orEB\List\ -lA D:\zigbee\projects\zstack-cc2530-c /
-//                          oordinator\Projects\zstack\Samples\GenericApp\CC2 /
-//                          530DB\CoordinatorEB\List\ --diag_suppress         /
+//                          MT_ZDO_FUNC -D HAL_UART -D HAL_UART=TRUE -D       /
+//                          HAL_DMA=TRUE -D HAL_LCD=FALSE -D HAL_KEY=FALSE    /
+//                          -lC D:\zigbee\projects\zstack-cc2530-coordinator\ /
+//                          Projects\zstack\Samples\GenericApp\CC2530DB\Coord /
+//                          inatorEB\List\ -lA D:\zigbee\projects\zstack-cc25 /
+//                          30-coordinator\Projects\zstack\Samples\GenericApp /
+//                          \CC2530DB\CoordinatorEB\List\ --diag_suppress     /
 //                          Pe001,Pa010 -o D:\zigbee\projects\zstack-cc2530-c /
 //                          oordinator\Projects\zstack\Samples\GenericApp\CC2 /
 //                          530DB\CoordinatorEB\Obj\ -e --require_prototypes  /
@@ -304,13 +305,9 @@
         PUBLIC AddrMgrWriteNVRequest
         FUNCTION AddrMgrWriteNVRequest,0203H
         ARGFRAME XSTACK, 0, STACK
-        PUBLIC MatchRsps
         PUBLIC ZDAppCheckForHoldKey
-        FUNCTION ZDAppCheckForHoldKey,021203H
-        ARGFRAME XSTACK, 9, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        LOCFRAME ISTACK, 2, STACK
+        FUNCTION ZDAppCheckForHoldKey,0203H
+        ARGFRAME XSTACK, 0, STACK
         PUBLIC ZDAppDetermineDeviceType
         FUNCTION ZDAppDetermineDeviceType,021203H
         ARGFRAME XSTACK, 12, STACK
@@ -810,7 +807,6 @@ sAddrExtCpy         SYMBOL "sAddrExtCpy"
 osal_memset         SYMBOL "osal_memset"
 osal_nv_item_init   SYMBOL "osal_nv_item_init"
 osal_nv_read        SYMBOL "osal_nv_read"
-HalKeyRead          SYMBOL "HalKeyRead"
 ZDP_IncomingData    SYMBOL "ZDP_IncomingData"
 ZDO_ParseAddrRsp    SYMBOL "ZDO_ParseAddrRsp"
 ZDO_UpdateAddrManager SYMBOL "ZDO_UpdateAddrManager"
@@ -849,7 +845,6 @@ osal_get_timeoutEx  SYMBOL "osal_get_timeoutEx"
 APSME_HoldDataRequests SYMBOL "APSME_HoldDataRequests"
 ZDP_DeviceAnnce     SYMBOL "ZDP_DeviceAnnce"
 ??APSME_HoldDataRequests?relay SYMBOL "?relay", APSME_HoldDataRequests
-??HalKeyRead?relay  SYMBOL "?relay", HalKeyRead
 ??HalLedBlink?relay SYMBOL "?relay", HalLedBlink
 ??HalLedSet?relay   SYMBOL "?relay", HalLedSet
 ??NLME_GetCoordShortAddr?relay SYMBOL "?relay", NLME_GetCoordShortAddr
@@ -1276,13 +1271,6 @@ ZDO_beaconNotifyIndCB SYMBOL "ZDO_beaconNotifyIndCB"
         ARGFRAME XSTACK, 37, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN HalKeyRead
-        FUNCTION HalKeyRead,0202H
-        ARGFRAME ISTACK, 2, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 0, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
         EXTERN ZDP_IncomingData
         FUNCTION ZDP_IncomingData,0202H
         ARGFRAME ISTACK, 2, STACK
@@ -1544,8 +1532,6 @@ ZDO_beaconNotifyIndCB SYMBOL "ZDO_beaconNotifyIndCB"
         ARGFRAME DOVERLAY, 0, STATIC
         EXTERN ??APSME_HoldDataRequests?relay
         FUNCTION ??APSME_HoldDataRequests?relay,00H
-        EXTERN ??HalKeyRead?relay
-        FUNCTION ??HalKeyRead?relay,00H
         EXTERN ??HalLedBlink?relay
         FUNCTION ??HalLedBlink?relay,00H
         EXTERN ??HalLedSet?relay
@@ -1838,12 +1824,7 @@ ZDO_beaconNotifyIndCB SYMBOL "ZDO_beaconNotifyIndCB"
 //  138  */
 //  139 
 //  140 #if defined( LCD_SUPPORTED )
-
-        RSEG XDATA_Z:XDATA:NOROOT(0)
 //  141   uint8 MatchRsps = 0;
-MatchRsps:
-        DS 1
-        REQUIRE __INIT_XDATA_Z
 //  142 #endif
 //  143 
 
@@ -2094,17 +2075,6 @@ ZDApp_Init:
         ARGFRAME XSTACK, 9, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL ZDApp_Init, ZDAppCheckForHoldKey
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 9, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 9, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
         FUNCALL ZDApp_Init, ZDO_Init
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
@@ -2232,8 +2202,6 @@ ZDApp_Init:
 //  266 
 //  267   // Check for manual "Hold Auto Start"
 //  268   ZDAppCheckForHoldKey();
-        ; Setup parameters for call to function ZDAppCheckForHoldKey
-        LCALL   ??ZDAppCheckForHoldKey?relay
 //  269 
 //  270   // Initialize ZDO items and setup the device - type of device to create.
 //  271   ZDO_Init();
@@ -4516,46 +4484,20 @@ ZDAppCheckForHoldKey:
         CFI Block cfiBlock28 Using cfiCommon0
         CFI Function ZDAppCheckForHoldKey
 //  976 {
-        FUNCALL ZDAppCheckForHoldKey, HalKeyRead
-        LOCFRAME ISTACK, 2, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 0, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 2, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 0, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        PUSH    DPL
-        CFI DPL0 Frame(CFA_SP, 4)
-        CFI CFA_SP SP+-4
-        PUSH    DPH
-        CFI DPH0 Frame(CFA_SP, 5)
-        CFI CFA_SP SP+-5
-        ; Saved register size: 2
+        ; Saved register size: 0
         ; Auto size: 0
 //  977 #if (defined HAL_KEY) && (HAL_KEY == TRUE)
 //  978   // Get Keypad directly to see if a HOLD_START is needed.
 //  979   // Hold down the SW_BYPASS_START key (see OnBoard.h)
 //  980   // while booting to avoid starting up the device.
 //  981   if ( HalKeyRead () == SW_BYPASS_START)
-        ; Setup parameters for call to function HalKeyRead
-        LCALL   ??HalKeyRead?relay
-        MOV     A,R1
-        XRL     A,#0x1
-        JNZ     ??ZDAppCheckForHoldKey_0
 //  982   {
 //  983     // Change the device state to HOLD on start up
 //  984     devState = DEV_HOLD;
-        CLR     A
-        MOV     DPTR,#devState
-        MOVX    @DPTR,A
 //  985   }
 //  986 #endif // HAL_KEY
 //  987 }
-??ZDAppCheckForHoldKey_0:
-        LJMP    ?Subroutine2 & 0xFFFF
+        LJMP    ?BRET
         CFI EndBlock cfiBlock28
 //  988 
 //  989 /*********************************************************************
@@ -14201,16 +14143,16 @@ __Constant_3e8:
 // 2973 /*********************************************************************
 // 2974 *********************************************************************/
 // 
-// 4 983 bytes in segment BANKED_CODE
+// 4 963 bytes in segment BANKED_CODE
 //   378 bytes in segment BANK_RELAYS
 //    12 bytes in segment XDATA_I
 //    12 bytes in segment XDATA_ID
 //    12 bytes in segment XDATA_ROM_C
-//    50 bytes in segment XDATA_Z
+//    49 bytes in segment XDATA_Z
 // 
-// 5 373 bytes of CODE  memory
+// 5 353 bytes of CODE  memory
 //     0 bytes of CONST memory (+ 12 bytes shared)
-//    62 bytes of XDATA memory
+//    61 bytes of XDATA memory
 //
 //Errors: none
 //Warnings: none

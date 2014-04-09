@@ -131,7 +131,7 @@ void MT_UartInit ()
   /* Initialize for ZApp */
 #if defined (ZAPP_P1) || defined (ZAPP_P2)
   /* Default max bytes that ZAPP can take */
-  MT_UartMaxZAppBufLen  = 1;
+  MT_UartMaxZAppBufLen  = 8;
   MT_UartZAppRxStatus   = MT_UART_ZAPP_RX_READY;
 #endif
 
@@ -328,7 +328,7 @@ void MT_UartProcessZAppData ( uint8 port, uint8 event )
   osal_event_hdr_t  *msg_ptr;
   uint16 length = 0;
   uint16 rxBufLen  = Hal_UART_RxBufLen(MT_UART_DEFAULT_PORT);
-  //osal_set_event(8,0x0002);
+  osal_set_event(8,0x0002);
   return;
   /*
      If maxZAppBufferLength is 0 or larger than current length
@@ -371,10 +371,12 @@ void MT_UartProcessZAppData ( uint8 port, uint8 event )
           msg_ptr->status = length;
           //osal_set_event(8, 2);
           /* Read the data of Rx buffer */
-          HalUARTRead( MT_UART_DEFAULT_PORT, (uint8 *)(msg_ptr + 1), length );
+          //HalUARTRead( MT_UART_DEFAULT_PORT, (uint8 *)(msg_ptr + 1), length );
 
           /* Send the raw data to application...or where ever */
           osal_msg_send( App_TaskID, (uint8 *)msg_ptr );
+          //osal_set_event(8,0x0002);
+          //MT_UartAppFlowControl(MT_UART_ZAPP_RX_READY);
         }
       }
     }

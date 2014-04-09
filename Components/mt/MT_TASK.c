@@ -192,6 +192,9 @@ void MT_ProcessIncomingCommand( mtOSALSerialData_t *msg )
   /* Use the first byte of the message as the command ID */
   switch ( msg->hdr.event )
   {
+    case SPI_INCOMING_ZAPP_DATA:
+      HalUARTWrite(0, msg_ptr, 8);
+      break;
     case CMD_SERIAL_MSG:
       MT_ProcessIncoming(msg->msg);
       break;

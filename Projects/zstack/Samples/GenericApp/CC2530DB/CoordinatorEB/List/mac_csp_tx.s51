@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V7.60.1.40026 for 8051            08/Apr/2014  21:42:39 /
+// IAR C/C++ Compiler V7.60.1.40026 for 8051            09/Apr/2014  09:37:45 /
 // Copyright (C) 2004-2010 IAR Systems AB.                                    /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -46,16 +46,17 @@
 //                          -DREJOIN_POLL_RATE=440 D:\zigbee\projects\zstack- /
 //                          cc2530-coordinator\Components\mac\low_level\srf04 /
 //                          \single_chip\mac_csp_tx.c -D ZAPP_P1 -D MT_TASK   /
-//                          -D MT_SYS_FUNC -D MT_ZDO_FUNC -D                  /
-//                          LCD_SUPPORTED=DEBUG -lC                           /
+//                          -D MT_SYS_FUNC -D MT_ZDO_FUNC -D HAL_UART -D      /
+//                          HAL_UART=TRUE -D HAL_DMA=TRUE -D HAL_LCD=FALSE    /
+//                          -D HAL_KEY=FALSE -lC D:\zigbee\projects\zstack-cc /
+//                          2530-coordinator\Projects\zstack\Samples\GenericA /
+//                          pp\CC2530DB\CoordinatorEB\List\ -lA               /
 //                          D:\zigbee\projects\zstack-cc2530-coordinator\Proj /
 //                          ects\zstack\Samples\GenericApp\CC2530DB\Coordinat /
-//                          orEB\List\ -lA D:\zigbee\projects\zstack-cc2530-c /
-//                          oordinator\Projects\zstack\Samples\GenericApp\CC2 /
-//                          530DB\CoordinatorEB\List\ --diag_suppress         /
-//                          Pe001,Pa010 -o D:\zigbee\projects\zstack-cc2530-c /
-//                          oordinator\Projects\zstack\Samples\GenericApp\CC2 /
-//                          530DB\CoordinatorEB\Obj\ -e --require_prototypes  /
+//                          orEB\List\ --diag_suppress Pe001,Pa010 -o         /
+//                          D:\zigbee\projects\zstack-cc2530-coordinator\Proj /
+//                          ects\zstack\Samples\GenericApp\CC2530DB\Coordinat /
+//                          orEB\Obj\ -e --require_prototypes                 /
 //                          --no_code_motion --debug --core=plain             /
 //                          --dptr=16,1 --data_model=large                    /
 //                          --code_model=banked --calling_convention=xdata_re /
@@ -940,10 +941,10 @@ cspReadCountSymbols:
         CFI CFA_SP SP+-3
         LJMP    ?BRET
         CFI EndBlock cfiBlock2
+        REQUIRE T2M0
         REQUIRE T2M1
         REQUIRE _A_IEN0
         REQUIRE T2MSEL
-        REQUIRE T2M0
 //  307 }
 //  308 
 //  309 
@@ -1024,11 +1025,11 @@ cspPrepForTxProgram:
 //  335 }
         LJMP    ??Subroutine5_0 & 0xFFFF
         CFI EndBlock cfiBlock3
-        REQUIRE _A_IEN0
-        REQUIRE RFST
         REQUIRE RFIRQF1
         REQUIRE S1CON
         REQUIRE T2CSPCFG
+        REQUIRE _A_IEN0
+        REQUIRE RFST
 //  336 
 //  337 
 //  338 /**************************************************************************************************
@@ -1374,11 +1375,11 @@ macCspTxGoCsma:
         SJMP    ??Subroutine5_0
         CFI EndBlock cfiBlock10
         REQUIRE RFST
+        REQUIRE T2IRQF
+        REQUIRE T2M0
         REQUIRE T2M1
         REQUIRE _A_IEN0
         REQUIRE T2MSEL
-        REQUIRE T2IRQF
-        REQUIRE T2M0
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
 ?Subroutine0:
@@ -1693,11 +1694,11 @@ macCspTxGoSlotted:
         MOV     R7,#0x1
         LJMP    ?BANKED_LEAVE_XDATA
         CFI EndBlock cfiBlock15
+        REQUIRE T2M0
         REQUIRE T2MOVF0
         REQUIRE _A_IEN0
         REQUIRE T2MSEL
         REQUIRE RFST
-        REQUIRE T2M0
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
 ?Subroutine3:
@@ -2100,14 +2101,14 @@ macCspTxRequestAckTimeoutCallback:
         MOV     R7,#0x3
         LJMP    ?BANKED_LEAVE_XDATA
         CFI EndBlock cfiBlock20
-        REQUIRE _A_IEN0
-        REQUIRE RFST
         REQUIRE RFIRQF1
         REQUIRE S1CON
-        REQUIRE T2M1
-        REQUIRE T2MSEL
+        REQUIRE _A_IEN0
+        REQUIRE RFST
         REQUIRE T2IRQF
         REQUIRE T2M0
+        REQUIRE T2M1
+        REQUIRE T2MSEL
 //  798 
 //  799 
 //  800 /**************************************************************************************************

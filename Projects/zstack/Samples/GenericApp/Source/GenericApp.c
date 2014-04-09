@@ -182,11 +182,18 @@ void GenericApp_Init( byte task_id )
   GenericApp_TransID = 0;
   
   //HalUARTInit();
+  /*
   uartConfig.configured = TRUE;
   uartConfig.baudRate = HAL_UART_BR_115200;
   uartConfig.flowControl = FALSE;
   uartConfig.callBackFunc = MT_UartProcessZAppData;
-  HalUARTOpen(0,&uartConfig);
+  HalUARTOpen(0,&uartConfig);*/
+  uartConfig.configured           = TRUE;              // 2x30 don't care - see uart driver.
+  uartConfig.baudRate             = HAL_UART_BR_115200;
+  uartConfig.flowControl          = FALSE;
+  uartConfig.intEnable            = TRUE;              // 2x30 don't care - see uart driver.
+  uartConfig.callBackFunc         = MT_UartProcessZAppData;
+  HalUARTOpen (0, &uartConfig);
 
   // Device hardware initialization can be added here or in main() (Zmain.c).
   // If the hardware is application specific - add it here.
@@ -213,8 +220,9 @@ void GenericApp_Init( byte task_id )
 #if defined ( LCD_SUPPORTED )
     HalLcdWriteString( "GenericApp", HAL_LCD_LINE_1 );
 #endif
-  ZDO_RegisterForZDOMsg( GenericApp_TaskID, Device_annce);  
-  MT_UartAppFlowControl(MT_UART_ZAPP_RX_READY);
+  ZDO_RegisterForZDOMsg( GenericApp_TaskID, Device_annce);
+  HalUARTWrite(0,"Init!\r\n",10);
+  //MT_UartAppFlowControl(MT_UART_ZAPP_RX_READY);
   //ZDO_RegisterForZDOMsg( GenericApp_TaskID, End_Device_Bind_rsp );
   //ZDO_RegisterForZDOMsg( GenericApp_TaskID, Match_Desc_rsp );
   //printf("\r\n GenericApp init complete!\r\n");
@@ -330,7 +338,7 @@ UINT16 GenericApp_ProcessEvent( byte task_id, UINT16 events )
   }
   
   if (events & GENERICAPP_UART_RX_EVT) {
-    HalUARTWrite(0, "RX_EVT", 7);
+    //HalUARTWrite(0, "RX_EVT", 7);
     GenericApp_SerialMSGCB();
   }
 
@@ -548,12 +556,14 @@ void GenericApp_SendTheMessage( void )
 
 void GenericApp_SerialMSGCB(void)
 {
-  unsigned char buf [5] = "";
+  unsigned char buf [8] = "";
  // printf("UART received!");
-  HalUARTRead(0, buf, 4);
-  HalUARTWrite(0, buf, 4);
-  HalUARTWrite(0, "Hello", 6);
-  MT_UartAppFlowControl(MT_UART_ZAPP_RX_READY);
+  HalUARTRead(0, buf, 8);
+  if ( buf[0] != 0x00) {
+    HalUARTWrite(0, buf, 8);
+    //HalUARTWrite(0, "Hell\r\n", 8);
+    //MT_UartAppFlowControl(MT_UART_ZAPP_RX_READY);
+  }
 }
 
 /*********************************************************************

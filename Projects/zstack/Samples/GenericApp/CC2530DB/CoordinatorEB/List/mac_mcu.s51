@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V7.60.1.40026 for 8051            08/Apr/2014  21:42:53 /
+// IAR C/C++ Compiler V7.60.1.40026 for 8051            09/Apr/2014  09:37:45 /
 // Copyright (C) 2004-2010 IAR Systems AB.                                    /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -45,16 +45,17 @@
 //                          -DREJOIN_POLL_RATE=440 D:\zigbee\projects\zstack- /
 //                          cc2530-coordinator\Components\mac\low_level\srf04 /
 //                          \single_chip\mac_mcu.c -D ZAPP_P1 -D MT_TASK -D   /
-//                          MT_SYS_FUNC -D MT_ZDO_FUNC -D                     /
-//                          LCD_SUPPORTED=DEBUG -lC                           /
+//                          MT_SYS_FUNC -D MT_ZDO_FUNC -D HAL_UART -D         /
+//                          HAL_UART=TRUE -D HAL_DMA=TRUE -D HAL_LCD=FALSE    /
+//                          -D HAL_KEY=FALSE -lC D:\zigbee\projects\zstack-cc /
+//                          2530-coordinator\Projects\zstack\Samples\GenericA /
+//                          pp\CC2530DB\CoordinatorEB\List\ -lA               /
 //                          D:\zigbee\projects\zstack-cc2530-coordinator\Proj /
 //                          ects\zstack\Samples\GenericApp\CC2530DB\Coordinat /
-//                          orEB\List\ -lA D:\zigbee\projects\zstack-cc2530-c /
-//                          oordinator\Projects\zstack\Samples\GenericApp\CC2 /
-//                          530DB\CoordinatorEB\List\ --diag_suppress         /
-//                          Pe001,Pa010 -o D:\zigbee\projects\zstack-cc2530-c /
-//                          oordinator\Projects\zstack\Samples\GenericApp\CC2 /
-//                          530DB\CoordinatorEB\Obj\ -e --require_prototypes  /
+//                          orEB\List\ --diag_suppress Pe001,Pa010 -o         /
+//                          D:\zigbee\projects\zstack-cc2530-coordinator\Proj /
+//                          ects\zstack\Samples\GenericApp\CC2530DB\Coordinat /
+//                          orEB\Obj\ -e --require_prototypes                 /
 //                          --no_code_motion --debug --core=plain             /
 //                          --dptr=16,1 --data_model=large                    /
 //                          --code_model=banked --calling_convention=xdata_re /
@@ -1344,6 +1345,10 @@ macMcuInit:
         MOV     R7,#0x2
         LJMP    ?BANKED_LEAVE_XDATA
         CFI EndBlock cfiBlock2
+        REQUIRE T2CTRL
+        REQUIRE IEN2
+        REQUIRE CLKCONSTA
+        REQUIRE T2M0
         REQUIRE T2M1
         REQUIRE _A_IEN0
         REQUIRE IP0
@@ -1351,10 +1356,6 @@ macMcuInit:
         REQUIRE IP1
         REQUIRE RNDL
         REQUIRE T2MSEL
-        REQUIRE T2CTRL
-        REQUIRE IEN2
-        REQUIRE CLKCONSTA
-        REQUIRE T2M0
 //  329 
 //  330 
 //  331 /**************************************************************************************************
@@ -1485,10 +1486,10 @@ macMcuTimerForceDelay:
 //  398 }
         LJMP    ?BRET
         CFI EndBlock cfiBlock5
+        REQUIRE T2M0
         REQUIRE T2M1
         REQUIRE _A_IEN0
         REQUIRE T2MSEL
-        REQUIRE T2M0
 //  399 
 //  400 /**************************************************************************************************
 //  401  * @fn          macMcuTimerCapture
@@ -1540,10 +1541,10 @@ macMcuTimerCapture:
         CFI CFA_SP SP+-3
         LJMP    ?BRET
         CFI EndBlock cfiBlock6
+        REQUIRE T2M0
         REQUIRE T2M1
         REQUIRE _A_IEN0
         REQUIRE T2MSEL
-        REQUIRE T2M0
 //  423 }
 //  424 
 //  425 
@@ -1606,12 +1607,12 @@ macMcuOverflowCount:
 //  451   ((uint8 *)&overflowCount)[UINT32_NDX0] = T2MOVF0;
         LJMP    ?Subroutine1 & 0xFFFF
         CFI EndBlock cfiBlock7
+        REQUIRE T2M0
         REQUIRE T2MOVF0
         REQUIRE T2MOVF1
         REQUIRE T2MOVF2
         REQUIRE _A_IEN0
         REQUIRE T2MSEL
-        REQUIRE T2M0
 //  452   ((uint8 *)&overflowCount)[UINT32_NDX1] = T2MOVF1;
 //  453   ((uint8 *)&overflowCount)[UINT32_NDX2] = T2MOVF2;
 //  454   ((uint8 *)&overflowCount)[UINT32_NDX3] = 0;
@@ -2253,13 +2254,13 @@ macMcuOverflowSetCompare:
         MOV     C,0xE0 /* A   */.0
         LJMP    ?Subroutine3 & 0xFFFF
         CFI EndBlock cfiBlock23
+        REQUIRE T2IRQF
         REQUIRE T2MOVF0
         REQUIRE T2MOVF1
         REQUIRE T2MOVF2
         REQUIRE T2IRQM
         REQUIRE _A_IEN0
         REQUIRE T2MSEL
-        REQUIRE T2IRQF
 //  571 }
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
@@ -2485,9 +2486,9 @@ macMcuTimer2Isr:
 //  652   HAL_EXIT_ISR();  
 ??macMcuTimer2Isr_1:
         REQUIRE ?Subroutine2
+        REQUIRE T2IRQF
         REQUIRE T2IRQM
         REQUIRE _A_IEN0
-        REQUIRE T2IRQF
         ; // Fall through to label ?Subroutine2
 //  653 }
 
@@ -2653,8 +2654,8 @@ macMcuTimer2OverflowWorkaround:
 ??macMcuTimer2OverflowWorkaround_0:
         LJMP    ??Subroutine8_0 & 0xFFFF
         CFI EndBlock cfiBlock29
-        REQUIRE T2IRQM
         REQUIRE T2IRQF
+        REQUIRE T2IRQM
         REQUIRE T2MOVF0
         REQUIRE T2MOVF1
         REQUIRE T2MOVF2
@@ -2820,12 +2821,12 @@ macMcuPrecisionCount:
         LCALL   ?L_ADD_X
         LJMP    ??Subroutine7_0 & 0xFFFF
         CFI EndBlock cfiBlock33
+        REQUIRE T2M0
         REQUIRE T2MOVF0
         REQUIRE T2MOVF1
         REQUIRE T2MOVF2
         REQUIRE _A_IEN0
         REQUIRE T2MSEL
-        REQUIRE T2M0
 //  724 }
 //  725 
 //  726 
@@ -3026,10 +3027,10 @@ macMcuRfIsr:
 ??macMcuRfIsr_3:
         SJMP    ?Subroutine2
         CFI EndBlock cfiBlock34
-        REQUIRE _A_IEN0
-        REQUIRE RFIRQF0
         REQUIRE RFIRQF1
         REQUIRE S1CON
+        REQUIRE _A_IEN0
+        REQUIRE RFIRQF0
 //  790 }
 //  791 
 //  792 

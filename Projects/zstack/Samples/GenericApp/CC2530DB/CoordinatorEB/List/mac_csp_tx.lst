@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V7.60.1.40026 for 8051             08/Apr/2014  21:42:39 #
+# IAR C/C++ Compiler V7.60.1.40026 for 8051             09/Apr/2014  09:37:45 #
 # Copyright (C) 2004-2010 IAR Systems AB.                                     #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -45,16 +45,18 @@
 #                          -DREJOIN_POLL_RATE=440 D:\zigbee\projects\zstack-c #
 #                          c2530-coordinator\Components\mac\low_level\srf04\s #
 #                          ingle_chip\mac_csp_tx.c -D ZAPP_P1 -D MT_TASK -D   #
-#                          MT_SYS_FUNC -D MT_ZDO_FUNC -D LCD_SUPPORTED=DEBUG  #
-#                          -lC D:\zigbee\projects\zstack-cc2530-coordinator\P #
-#                          rojects\zstack\Samples\GenericApp\CC2530DB\Coordin #
-#                          atorEB\List\ -lA D:\zigbee\projects\zstack-cc2530- #
-#                          coordinator\Projects\zstack\Samples\GenericApp\CC2 #
-#                          530DB\CoordinatorEB\List\ --diag_suppress          #
-#                          Pe001,Pa010 -o D:\zigbee\projects\zstack-cc2530-co #
-#                          ordinator\Projects\zstack\Samples\GenericApp\CC253 #
-#                          0DB\CoordinatorEB\Obj\ -e --require_prototypes     #
-#                          --no_code_motion --debug --core=plain --dptr=16,1  #
+#                          MT_SYS_FUNC -D MT_ZDO_FUNC -D HAL_UART -D          #
+#                          HAL_UART=TRUE -D HAL_DMA=TRUE -D HAL_LCD=FALSE -D  #
+#                          HAL_KEY=FALSE -lC D:\zigbee\projects\zstack-cc2530 #
+#                          -coordinator\Projects\zstack\Samples\GenericApp\CC #
+#                          2530DB\CoordinatorEB\List\ -lA                     #
+#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\Coordinator #
+#                          EB\List\ --diag_suppress Pe001,Pa010 -o            #
+#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\Coordinator #
+#                          EB\Obj\ -e --require_prototypes --no_code_motion   #
+#                          --debug --core=plain --dptr=16,1                   #
 #                          --data_model=large --code_model=banked             #
 #                          --calling_convention=xdata_reentrant               #
 #                          --place_constants=data_rom --nr_virtual_regs 16    #
@@ -547,10 +549,10 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mac\low_level\srf04\sing
    \   000022   F9           MOV     R1,A
    \   000023   D0..         POP     ?V0 + 0
    \   000025   02....       LJMP    ?BRET
+   \   000028                REQUIRE T2M0
    \   000028                REQUIRE T2M1
    \   000028                REQUIRE _A_IEN0
    \   000028                REQUIRE T2MSEL
-   \   000028                REQUIRE T2M0
     307          }
     308          
     309          
@@ -613,11 +615,11 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mac\low_level\srf04\sing
    \   000038   92AF         MOV     0xa8.7,C
     335          }
    \   00003A   02....       LJMP    ??Subroutine5_0 & 0xFFFF
-   \   00003D                REQUIRE _A_IEN0
-   \   00003D                REQUIRE RFST
    \   00003D                REQUIRE RFIRQF1
    \   00003D                REQUIRE S1CON
    \   00003D                REQUIRE T2CSPCFG
+   \   00003D                REQUIRE _A_IEN0
+   \   00003D                REQUIRE RFST
     336          
     337          
     338          /**************************************************************************************************
@@ -903,11 +905,11 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mac\low_level\srf04\sing
     518          }
    \   000046   80..         SJMP    ??Subroutine5_0
    \   000048                REQUIRE RFST
+   \   000048                REQUIRE T2IRQF
+   \   000048                REQUIRE T2M0
    \   000048                REQUIRE T2M1
    \   000048                REQUIRE _A_IEN0
    \   000048                REQUIRE T2MSEL
-   \   000048                REQUIRE T2IRQF
-   \   000048                REQUIRE T2M0
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
    \                     ?Subroutine3:
@@ -1143,11 +1145,11 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mac\low_level\srf04\sing
     678          }
    \   000050   7F01         MOV     R7,#0x1
    \   000052   02....       LJMP    ?BANKED_LEAVE_XDATA
+   \   000055                REQUIRE T2M0
    \   000055                REQUIRE T2MOVF0
    \   000055                REQUIRE _A_IEN0
    \   000055                REQUIRE T2MSEL
    \   000055                REQUIRE RFST
-   \   000055                REQUIRE T2M0
     679          
     680          
     681          /**************************************************************************************************
@@ -1413,14 +1415,14 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mac\low_level\srf04\sing
    \                     ??macCspTxRequestAckTimeoutCallback_5:
    \   0000BE   7F03         MOV     R7,#0x3
    \   0000C0   02....       LJMP    ?BANKED_LEAVE_XDATA
-   \   0000C3                REQUIRE _A_IEN0
-   \   0000C3                REQUIRE RFST
    \   0000C3                REQUIRE RFIRQF1
    \   0000C3                REQUIRE S1CON
-   \   0000C3                REQUIRE T2M1
-   \   0000C3                REQUIRE T2MSEL
+   \   0000C3                REQUIRE _A_IEN0
+   \   0000C3                REQUIRE RFST
    \   0000C3                REQUIRE T2IRQF
    \   0000C3                REQUIRE T2M0
+   \   0000C3                REQUIRE T2M1
+   \   0000C3                REQUIRE T2MSEL
     798          
     799          
     800          /**************************************************************************************************

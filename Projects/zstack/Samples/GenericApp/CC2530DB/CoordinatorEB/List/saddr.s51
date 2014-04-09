@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V7.60.1.40026 for 8051            08/Apr/2014  21:42:54 /
+// IAR C/C++ Compiler V7.60.1.40026 for 8051            09/Apr/2014  09:37:46 /
 // Copyright (C) 2004-2010 IAR Systems AB.                                    /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -45,12 +45,13 @@
 //                          -DREJOIN_POLL_RATE=440 D:\zigbee\projects\zstack- /
 //                          cc2530-coordinator\Components\services\saddr\sadd /
 //                          r.c -D ZAPP_P1 -D MT_TASK -D MT_SYS_FUNC -D       /
-//                          MT_ZDO_FUNC -D LCD_SUPPORTED=DEBUG -lC            /
-//                          D:\zigbee\projects\zstack-cc2530-coordinator\Proj /
-//                          ects\zstack\Samples\GenericApp\CC2530DB\Coordinat /
-//                          orEB\List\ -lA D:\zigbee\projects\zstack-cc2530-c /
-//                          oordinator\Projects\zstack\Samples\GenericApp\CC2 /
-//                          530DB\CoordinatorEB\List\ --diag_suppress         /
+//                          MT_ZDO_FUNC -D HAL_UART -D HAL_UART=TRUE -D       /
+//                          HAL_DMA=TRUE -D HAL_LCD=FALSE -D HAL_KEY=FALSE    /
+//                          -lC D:\zigbee\projects\zstack-cc2530-coordinator\ /
+//                          Projects\zstack\Samples\GenericApp\CC2530DB\Coord /
+//                          inatorEB\List\ -lA D:\zigbee\projects\zstack-cc25 /
+//                          30-coordinator\Projects\zstack\Samples\GenericApp /
+//                          \CC2530DB\CoordinatorEB\List\ --diag_suppress     /
 //                          Pe001,Pa010 -o D:\zigbee\projects\zstack-cc2530-c /
 //                          oordinator\Projects\zstack\Samples\GenericApp\CC2 /
 //                          530DB\CoordinatorEB\Obj\ -e --require_prototypes  /

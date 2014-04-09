@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V7.60.1.40026 for 8051             08/Apr/2014  21:42:48 #
+# IAR C/C++ Compiler V7.60.1.40026 for 8051             09/Apr/2014  09:37:30 #
 # Copyright (C) 2004-2010 IAR Systems AB.                                     #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -45,15 +45,16 @@
 #                          -DREJOIN_POLL_RATE=440 D:\zigbee\projects\zstack-c #
 #                          c2530-coordinator\Components\stack\zdo\ZDNwkMgr.c  #
 #                          -D ZAPP_P1 -D MT_TASK -D MT_SYS_FUNC -D            #
-#                          MT_ZDO_FUNC -D LCD_SUPPORTED=DEBUG -lC             #
-#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
-#                          cts\zstack\Samples\GenericApp\CC2530DB\Coordinator #
-#                          EB\List\ -lA D:\zigbee\projects\zstack-cc2530-coor #
-#                          dinator\Projects\zstack\Samples\GenericApp\CC2530D #
-#                          B\CoordinatorEB\List\ --diag_suppress Pe001,Pa010  #
-#                          -o D:\zigbee\projects\zstack-cc2530-coordinator\Pr #
-#                          ojects\zstack\Samples\GenericApp\CC2530DB\Coordina #
-#                          torEB\Obj\ -e --require_prototypes                 #
+#                          MT_ZDO_FUNC -D HAL_UART -D HAL_UART=TRUE -D        #
+#                          HAL_DMA=TRUE -D HAL_LCD=FALSE -D HAL_KEY=FALSE     #
+#                          -lC D:\zigbee\projects\zstack-cc2530-coordinator\P #
+#                          rojects\zstack\Samples\GenericApp\CC2530DB\Coordin #
+#                          atorEB\List\ -lA D:\zigbee\projects\zstack-cc2530- #
+#                          coordinator\Projects\zstack\Samples\GenericApp\CC2 #
+#                          530DB\CoordinatorEB\List\ --diag_suppress          #
+#                          Pe001,Pa010 -o D:\zigbee\projects\zstack-cc2530-co #
+#                          ordinator\Projects\zstack\Samples\GenericApp\CC253 #
+#                          0DB\CoordinatorEB\Obj\ -e --require_prototypes     #
 #                          --no_code_motion --debug --core=plain --dptr=16,1  #
 #                          --data_model=large --code_model=banked             #
 #                          --calling_convention=xdata_reentrant               #
@@ -207,41 +208,10 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDNwkMgr.c
      70          #define ONE_MINUTE             60000  // 1(m) * 60(s) * 1000(ms)
      71          
      72          #if defined ( LCD_SUPPORTED )
-
-   \                                 In  segment XDATA_ROM_C, align 1
      73            const char NwkMgrStr_1[]     = "NM-fail not hi";
-   \                     NwkMgrStr_1:
-   \   000000   4E4D2D66     DB "NM-fail not hi"
-   \            61696C20
-   \            6E6F7420
-   \            686900  
-
-   \                                 In  segment XDATA_ROM_C, align 1
      74            const char NwkMgrStr_2[]     = "NM-cur<last fail";
-   \                     NwkMgrStr_2:
-   \   000000   4E4D2D63     DB "NM-cur<last fail"
-   \            75723C6C
-   \            61737420
-   \            6661696C
-   \            00      
-
-   \                                 In  segment XDATA_ROM_C, align 1
      75            const char NwkMgrStr_3[]     = "NM-energy too hi";
-   \                     NwkMgrStr_3:
-   \   000000   4E4D2D65     DB "NM-energy too hi"
-   \            6E657267
-   \            7920746F
-   \            6F206869
-   \            00      
-
-   \                                 In  segment XDATA_ROM_C, align 1
      76            const char NwkMgrStr_4[]     = "NM-energy not up";
-   \                     NwkMgrStr_4:
-   \   000000   4E4D2D65     DB "NM-energy not up"
-   \            6E657267
-   \            79206E6F
-   \            74207570
-   \            00      
      77          #endif
      78            
      79          /******************************************************************************
@@ -1698,15 +1668,15 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDNwkMgr.c
    \   000005                ; Auto size: 0
     723            uint8 i;
     724            uint8 channelEnergy = 0;
-   \   000005   7E00         MOV     R6,#0x0
+   \   000005   7D00         MOV     R5,#0x0
     725            uint8 energyIncreased = FALSE;
     726              
     727            // Get the current channel energy
     728            if ( ( (uint32)1 << _NIB.nwkLogicalChannel ) & pEDScanConfirm->scannedChannels )
    \   000007   75..01       MOV     ?V0 + 0,#0x1
-   \   00000A   8E..         MOV     ?V0 + 1,R6
-   \   00000C   8E..         MOV     ?V0 + 2,R6
-   \   00000E   8E..         MOV     ?V0 + 3,R6
+   \   00000A   8D..         MOV     ?V0 + 1,R5
+   \   00000C   8D..         MOV     ?V0 + 2,R5
+   \   00000E   8D..         MOV     ?V0 + 3,R5
    \   000010   90....       MOV     DPTR,#(_NIB + 22)
    \   000013   E0           MOVX    A,@DPTR
    \   000014   78..         MOV     R0,#?V0 + 0
@@ -1732,7 +1702,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDNwkMgr.c
    \   000036   12....       LCALL   ?Subroutine7 & 0xFFFF
     731            }
    \                     ??CrossCallReturnLabel_24:
-   \   000039   FE           MOV     R6,A
+   \   000039   FD           MOV     R5,A
     732              
     733            // If this energy scan does not indicate higher energy on the current 
     734            // channel then other channels, no action is taken. The device should 
@@ -1776,7 +1746,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDNwkMgr.c
    \   000075   12....       LCALL   ?Subroutine7 & 0xFFFF
    \                     ??CrossCallReturnLabel_25:
    \   000078   C3           CLR     C
-   \   000079   9E           SUBB    A,R6
+   \   000079   9D           SUBB    A,R5
    \   00007A   50C2         JNC     ??ZDNwkMgr_CheckForChannelInterference_2
     740              {
     741                energyIncreased = TRUE;
@@ -1847,45 +1817,17 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDNwkMgr.c
    \   0000CB   E0           MOVX    A,@DPTR
    \   0000CC   04           INC     A
    \   0000CD   F0           MOVX    @DPTR,A
-   \   0000CE   8038         SJMP    ??ZDNwkMgr_CheckForChannelInterference_4
     766            }
     767          #if defined ( LCD_SUPPORTED )
     768            else
     769            {
     770              HalLcdWriteString( (char*)NwkMgrStr_4, HAL_LCD_LINE_1 );
-   \                     ??ZDNwkMgr_CheckForChannelInterference_3:
-   \   0000D0                ; Setup parameters for call to function HalLcdWriteString
-   \   0000D0   7901         MOV     R1,#0x1
-   \   0000D2   7A..         MOV     R2,#(NwkMgrStr_4 & 0xff)
-   \   0000D4   7B..         MOV     R3,#((NwkMgrStr_4 >> 8) & 0xff)
-   \   0000D6   12....       LCALL   ??HalLcdWriteString?relay
     771              HalLcdWriteStringValueValue( ": ", _NIB.nwkLogicalChannel, 10, channelEnergy, 10, HAL_LCD_LINE_2 );
-   \   0000D9                ; Setup parameters for call to function HalLcdWriteStringValueValue
-   \   0000D9   75..02       MOV     ?V0 + 0,#0x2
-   \   0000DC   78..         MOV     R0,#?V0 + 0
-   \   0000DE   12....       LCALL   ?PUSH_XSTACK_I_ONE
-   \   0000E1   75..0A       MOV     ?V0 + 0,#0xa
-   \   0000E4   78..         MOV     R0,#?V0 + 0
-   \   0000E6   12....       LCALL   ?PUSH_XSTACK_I_ONE
-   \   0000E9   8E..         MOV     ?V0 + 0,R6
-   \   0000EB   75..00       MOV     ?V0 + 1,#0x0
-   \   0000EE   78..         MOV     R0,#?V0 + 0
-   \   0000F0   12....       LCALL   ?PUSH_XSTACK_I_TWO
-   \   0000F3   790A         MOV     R1,#0xa
-   \   0000F5   90....       MOV     DPTR,#(_NIB + 22)
-   \   0000F8   E0           MOVX    A,@DPTR
-   \   0000F9   FC           MOV     R4,A
-   \   0000FA   7D00         MOV     R5,#0x0
-   \   0000FC   7A..         MOV     R2,#(`?<Constant ": ">` & 0xff)
-   \   0000FE   7B..         MOV     R3,#((`?<Constant ": ">` >> 8) & 0xff)
-   \   000100   12....       LCALL   ??HalLcdWriteStringValueValue?relay
-   \   000103   7404         MOV     A,#0x4
-   \   000105   12....       LCALL   ?DEALLOC_XSTACK8
     772            }
     773          #endif
     774          }
-   \                     ??ZDNwkMgr_CheckForChannelInterference_4:
-   \   000108   02....       LJMP    ?Subroutine2 & 0xFFFF
+   \                     ??ZDNwkMgr_CheckForChannelInterference_3:
+   \   0000CE   02....       LJMP    ?Subroutine2 & 0xFFFF
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
    \                     ?Subroutine7:
@@ -2454,6 +2396,14 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDNwkMgr.c
    \                     ??ZDNwkMgr_ProcessDataConfirm_0:
    \   000024   02....       LJMP    ?Subroutine3 & 0xFFFF
 
+   \                                 In  segment XDATA_ROM_C, align 1
+   \                     __Constant_7fff800:
+   \   000000   00F8FF07     DD 134215680
+
+   \                                 In  segment XDATA_ROM_C, align 1
+   \                     __Constant_0:
+   \   000000   00000000     DD 0
+
    \                                 In  segment BANK_RELAYS, align 1
    \                     ??ZDNwkMgr_Init?relay:
    \   000000   12....       LCALL   ?BDISPATCH
@@ -2503,18 +2453,6 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDNwkMgr.c
    \                     ??ZDNwkMgr_ProcessDataConfirm?relay:
    \   000000   12....       LCALL   ?BDISPATCH
    \   000003   ......       DC24    ZDNwkMgr_ProcessDataConfirm
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant ": ">`:
-   \   000000   3A2000       DB ": "
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     __Constant_7fff800:
-   \   000000   00F8FF07     DD 134215680
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     __Constant_0:
-   \   000000   00000000     DD 0
     953          
     954          /*********************************************************************
     955           * PAN ID Conflict Routines
@@ -2641,9 +2579,6 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDNwkMgr.c
        -> ZDNwkMgr_BuildAndSendUpdateNotify
                                         0      0     34
        -> osal_start_timerEx            0      0     24
-       -> HalLcdWriteString             0      0     24
-       -> HalLcdWriteStringValueValue
-                                        0      0     32
      ZDNwkMgr_EDScanConfirmCB           1      0     19
        -> osal_msg_allocate             0      0     32
        -> osal_memcpy                   0      0     38
@@ -2700,10 +2635,6 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDNwkMgr.c
 
      Function/Label                               Bytes
      --------------                               -----
-     NwkMgrStr_1                                    15
-     NwkMgrStr_2                                    17
-     NwkMgrStr_3                                    17
-     NwkMgrStr_4                                    17
      ZDNwkMgr_TaskID                                 1
      ZDNwkMgr_MgmtNwkUpdateNotifyTransSeq
                                                      1
@@ -2746,7 +2677,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDNwkMgr.c
      ?Subroutine4                                    9
      ZDNwkMgr_ProcessServerDiscRsp                  63
      ZDNwkMgr_CheckForChannelInterference
-                                                   267
+                                                   209
      ?Subroutine7                                    3
      ??Subroutine18_0                               13
      ZDNwkMgr_BuildAndSendUpdateNotify
@@ -2757,6 +2688,8 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDNwkMgr.c
                                                     73
      ZDNwkMgr_EDScanConfirmCB                      136
      ZDNwkMgr_ProcessDataConfirm                    39
+     __Constant_7fff800                              4
+     __Constant_0                                    4
      ??ZDNwkMgr_Init?relay                           6
      ??ZDNwkMgr_event_loop?relay                     6
      ??ZDNwkMgr_ProcessMgmtNwkUpdateReq?relay        6
@@ -2767,18 +2700,15 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDNwkMgr.c
      ??ZDNwkMgr_ReportChannelInterference?relay      6
      ??ZDNwkMgr_EDScanConfirmCB?relay                6
      ??ZDNwkMgr_ProcessDataConfirm?relay             6
-     ?<Constant ": ">                                3
-     __Constant_7fff800                              4
-     __Constant_0                                    4
 
  
- 1 994 bytes in segment BANKED_CODE
+ 1 936 bytes in segment BANKED_CODE
     60 bytes in segment BANK_RELAYS
-    77 bytes in segment XDATA_ROM_C
+     8 bytes in segment XDATA_ROM_C
     39 bytes in segment XDATA_Z
  
- 2 054 bytes of CODE  memory
-    69 bytes of CONST memory (+ 8 bytes shared)
+ 1 996 bytes of CODE  memory
+     0 bytes of CONST memory (+ 8 bytes shared)
     39 bytes of XDATA memory
 
 Errors: none

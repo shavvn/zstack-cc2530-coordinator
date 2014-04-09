@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V7.60.1.40026 for 8051             08/Apr/2014  21:42:51 #
+# IAR C/C++ Compiler V7.60.1.40026 for 8051             09/Apr/2014  09:37:44 #
 # Copyright (C) 2004-2010 IAR Systems AB.                                     #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -45,15 +45,16 @@
 #                          -DREJOIN_POLL_RATE=440 D:\zigbee\projects\zstack-c #
 #                          c2530-coordinator\Components\hal\common\hal_driver #
 #                          s.c -D ZAPP_P1 -D MT_TASK -D MT_SYS_FUNC -D        #
-#                          MT_ZDO_FUNC -D LCD_SUPPORTED=DEBUG -lC             #
-#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
-#                          cts\zstack\Samples\GenericApp\CC2530DB\Coordinator #
-#                          EB\List\ -lA D:\zigbee\projects\zstack-cc2530-coor #
-#                          dinator\Projects\zstack\Samples\GenericApp\CC2530D #
-#                          B\CoordinatorEB\List\ --diag_suppress Pe001,Pa010  #
-#                          -o D:\zigbee\projects\zstack-cc2530-coordinator\Pr #
-#                          ojects\zstack\Samples\GenericApp\CC2530DB\Coordina #
-#                          torEB\Obj\ -e --require_prototypes                 #
+#                          MT_ZDO_FUNC -D HAL_UART -D HAL_UART=TRUE -D        #
+#                          HAL_DMA=TRUE -D HAL_LCD=FALSE -D HAL_KEY=FALSE     #
+#                          -lC D:\zigbee\projects\zstack-cc2530-coordinator\P #
+#                          rojects\zstack\Samples\GenericApp\CC2530DB\Coordin #
+#                          atorEB\List\ -lA D:\zigbee\projects\zstack-cc2530- #
+#                          coordinator\Projects\zstack\Samples\GenericApp\CC2 #
+#                          530DB\CoordinatorEB\List\ --diag_suppress          #
+#                          Pe001,Pa010 -o D:\zigbee\projects\zstack-cc2530-co #
+#                          ordinator\Projects\zstack\Samples\GenericApp\CC253 #
+#                          0DB\CoordinatorEB\Obj\ -e --require_prototypes     #
 #                          --no_code_motion --debug --core=plain --dptr=16,1  #
 #                          --data_model=large --code_model=banked             #
 #                          --calling_convention=xdata_reentrant               #
@@ -340,8 +341,6 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\hal\common\hal_drivers.c
     165            /* KEY */
     166          #if (defined HAL_KEY) && (HAL_KEY == TRUE)
     167            HalKeyInit();
-   \   000010                ; Setup parameters for call to function HalKeyInit
-   \   000010   12....       LCALL   ??HalKeyInit?relay
     168          #endif
     169          
     170            /* SPI */
@@ -354,7 +353,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\hal\common\hal_drivers.c
     177            usbHidInit();
     178          #endif
     179          }
-   \   000013   80..         SJMP    ?Subroutine0
+   \   000010   80..         SJMP    ?Subroutine0
     180          
     181          
     182          /**************************************************************************************************
@@ -428,7 +427,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\hal\common\hal_drivers.c
    \   00002A   6F           XRL     A,R7
    \                     ??Hal_ProcessEvent_5:
    \   00002B   FB           MOV     R3,A
-   \   00002C   8035         SJMP    ??Hal_ProcessEvent_6
+   \   00002C   801E         SJMP    ??Hal_ProcessEvent_6
     212            }
     213          
     214            if ( events & HAL_LED_BLINK_EVENT )
@@ -444,7 +443,6 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\hal\common\hal_drivers.c
     218          #endif /* BLINK_LEDS && HAL_LED */
     219              return events ^ HAL_LED_BLINK_EVENT;
    \   000036   7402         MOV     A,#0x2
-   \                     ??Hal_ProcessEvent_8:
    \   000038   6E           XRL     A,R6
    \   000039   FA           MOV     R2,A
    \   00003A   EF           MOV     A,R7
@@ -455,38 +453,25 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\hal\common\hal_drivers.c
    \                     ??Hal_ProcessEvent_7:
    \   00003D   EE           MOV     A,R6
    \   00003E   A2E0         MOV     C,0xE0 /* A   */.0
-   \   000040   501D         JNC     ??Hal_ProcessEvent_9
+   \   000040   5006         JNC     ??Hal_ProcessEvent_8
     223            {
     224          
     225          #if (defined HAL_KEY) && (HAL_KEY == TRUE)
     226              /* Check for keys */
     227              HalKeyPoll();
-   \   000042                ; Setup parameters for call to function HalKeyPoll
-   \   000042   12....       LCALL   ??HalKeyPoll?relay
     228          
     229              /* if interrupt disabled, do next polling */
     230              if (!Hal_KeyIntEnable)
-   \   000045   90....       MOV     DPTR,#Hal_KeyIntEnable
-   \   000048   E0           MOVX    A,@DPTR
-   \   000049   7010         JNZ     ??Hal_ProcessEvent_10
     231              {
     232                osal_start_timerEx( Hal_TaskID, HAL_KEY_EVENT, 100);
-   \   00004B                ; Setup parameters for call to function osal_start_timerEx
-   \   00004B   7C64         MOV     R4,#0x64
-   \   00004D   7D00         MOV     R5,#0x0
-   \   00004F   7A01         MOV     R2,#0x1
-   \   000051   7B00         MOV     R3,#0x0
-   \   000053   90....       MOV     DPTR,#Hal_TaskID
-   \   000056   E0           MOVX    A,@DPTR
-   \   000057   F9           MOV     R1,A
-   \   000058   12....       LCALL   ??osal_start_timerEx?relay
     233              }
     234          #endif // HAL_KEY
     235          
     236              return events ^ HAL_KEY_EVENT;
-   \                     ??Hal_ProcessEvent_10:
-   \   00005B   7401         MOV     A,#0x1
-   \   00005D   80D9         SJMP    ??Hal_ProcessEvent_8
+   \   000042   7401         MOV     A,#0x1
+   \   000044   6E           XRL     A,R6
+   \   000045   FA           MOV     R2,A
+   \   000046   8004         SJMP    ??Hal_ProcessEvent_6
     237            }
     238          
     239          #ifdef POWER_SAVING
@@ -507,12 +492,12 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\hal\common\hal_drivers.c
     254            
     255            /* Nothing interested, discard the message */
     256            return 0;
-   \                     ??Hal_ProcessEvent_9:
-   \   00005F   7A00         MOV     R2,#0x0
-   \   000061   7B00         MOV     R3,#0x0
+   \                     ??Hal_ProcessEvent_8:
+   \   000048   7A00         MOV     R2,#0x0
+   \   00004A   7B00         MOV     R3,#0x0
    \                     ??Hal_ProcessEvent_6:
-   \   000063   7F02         MOV     R7,#0x2
-   \   000065   02....       LJMP    ?BANKED_LEAVE_XDATA
+   \   00004C   7F02         MOV     R7,#0x2
+   \   00004E   02....       LJMP    ?BANKED_LEAVE_XDATA
     257          
     258          }
     259          
@@ -563,7 +548,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\hal\common\hal_drivers.c
     295          #endif
     296          
     297          }
-   \   000007   02....       LJMP    ?Subroutine0 & 0xFFFF
+   \   000007   80..         SJMP    ?Subroutine0
 
    \                                 In  segment BANK_RELAYS, align 1
    \                     ??Hal_Init?relay:
@@ -599,15 +584,12 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\hal\common\hal_drivers.c
        -> HalDmaInit              4      0      0
        -> HalLedInit              4      0      0
        -> HalUARTInit             4      0      0
-       -> HalKeyInit              4      0      0
      Hal_Init                     2      0      0
      Hal_ProcessEvent             0      0     10
        -> osal_msg_receive        0      0     20
        -> osal_msg_deallocate     0      0     20
        -> osal_msg_receive        0      0     20
        -> HalLedUpdate            0      0     20
-       -> HalKeyPoll              0      0     20
-       -> osal_start_timerEx      0      0     20
      Hal_ProcessPoll              2      0      0
        -> HalUARTPoll             4      0      0
 
@@ -619,20 +601,20 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\hal\common\hal_drivers.c
      Hal_TaskID                  1
      Hal_Init                    9
      ?Subroutine0                7
-     HalDriverInit              21
-     Hal_ProcessEvent          104
-     Hal_ProcessPoll            10
+     HalDriverInit              18
+     Hal_ProcessEvent           81
+     Hal_ProcessPoll             9
      ??Hal_Init?relay            6
      ??HalDriverInit?relay       6
      ??Hal_ProcessEvent?relay    6
      ??Hal_ProcessPoll?relay     6
 
  
- 151 bytes in segment BANKED_CODE
+ 124 bytes in segment BANKED_CODE
   24 bytes in segment BANK_RELAYS
    1 byte  in segment XDATA_Z
  
- 175 bytes of CODE  memory
+ 148 bytes of CODE  memory
    1 byte  of XDATA memory
 
 Errors: none

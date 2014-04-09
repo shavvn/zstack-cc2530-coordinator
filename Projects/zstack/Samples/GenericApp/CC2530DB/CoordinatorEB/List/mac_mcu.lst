@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V7.60.1.40026 for 8051             08/Apr/2014  21:42:53 #
+# IAR C/C++ Compiler V7.60.1.40026 for 8051             09/Apr/2014  09:37:45 #
 # Copyright (C) 2004-2010 IAR Systems AB.                                     #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -45,16 +45,18 @@
 #                          -DREJOIN_POLL_RATE=440 D:\zigbee\projects\zstack-c #
 #                          c2530-coordinator\Components\mac\low_level\srf04\s #
 #                          ingle_chip\mac_mcu.c -D ZAPP_P1 -D MT_TASK -D      #
-#                          MT_SYS_FUNC -D MT_ZDO_FUNC -D LCD_SUPPORTED=DEBUG  #
-#                          -lC D:\zigbee\projects\zstack-cc2530-coordinator\P #
-#                          rojects\zstack\Samples\GenericApp\CC2530DB\Coordin #
-#                          atorEB\List\ -lA D:\zigbee\projects\zstack-cc2530- #
-#                          coordinator\Projects\zstack\Samples\GenericApp\CC2 #
-#                          530DB\CoordinatorEB\List\ --diag_suppress          #
-#                          Pe001,Pa010 -o D:\zigbee\projects\zstack-cc2530-co #
-#                          ordinator\Projects\zstack\Samples\GenericApp\CC253 #
-#                          0DB\CoordinatorEB\Obj\ -e --require_prototypes     #
-#                          --no_code_motion --debug --core=plain --dptr=16,1  #
+#                          MT_SYS_FUNC -D MT_ZDO_FUNC -D HAL_UART -D          #
+#                          HAL_UART=TRUE -D HAL_DMA=TRUE -D HAL_LCD=FALSE -D  #
+#                          HAL_KEY=FALSE -lC D:\zigbee\projects\zstack-cc2530 #
+#                          -coordinator\Projects\zstack\Samples\GenericApp\CC #
+#                          2530DB\CoordinatorEB\List\ -lA                     #
+#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\Coordinator #
+#                          EB\List\ --diag_suppress Pe001,Pa010 -o            #
+#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
+#                          cts\zstack\Samples\GenericApp\CC2530DB\Coordinator #
+#                          EB\Obj\ -e --require_prototypes --no_code_motion   #
+#                          --debug --core=plain --dptr=16,1                   #
 #                          --data_model=large --code_model=banked             #
 #                          --calling_convention=xdata_reentrant               #
 #                          --place_constants=data_rom --nr_virtual_regs 16    #
@@ -823,6 +825,10 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mac\low_level\srf04\sing
    \   00015D   12....       LCALL   ?DEALLOC_XSTACK8
    \   000160   7F02         MOV     R7,#0x2
    \   000162   02....       LJMP    ?BANKED_LEAVE_XDATA
+   \   000165                REQUIRE T2CTRL
+   \   000165                REQUIRE IEN2
+   \   000165                REQUIRE CLKCONSTA
+   \   000165                REQUIRE T2M0
    \   000165                REQUIRE T2M1
    \   000165                REQUIRE _A_IEN0
    \   000165                REQUIRE IP0
@@ -830,10 +836,6 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mac\low_level\srf04\sing
    \   000165                REQUIRE IP1
    \   000165                REQUIRE RNDL
    \   000165                REQUIRE T2MSEL
-   \   000165                REQUIRE T2CTRL
-   \   000165                REQUIRE IEN2
-   \   000165                REQUIRE CLKCONSTA
-   \   000165                REQUIRE T2M0
     329          
     330          
     331          /**************************************************************************************************
@@ -955,10 +957,10 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mac\low_level\srf04\sing
    \   000011   92AF         MOV     0xa8.7,C
     398          }
    \   000013   02....       LJMP    ?BRET
+   \   000016                REQUIRE T2M0
    \   000016                REQUIRE T2M1
    \   000016                REQUIRE _A_IEN0
    \   000016                REQUIRE T2MSEL
-   \   000016                REQUIRE T2M0
     399          
     400          /**************************************************************************************************
     401           * @fn          macMcuTimerCapture
@@ -1003,10 +1005,10 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mac\low_level\srf04\sing
    \   000016   AA..         MOV     R2,?V0 + 0
    \   000018   D0..         POP     ?V0 + 0
    \   00001A   02....       LJMP    ?BRET
+   \   00001D                REQUIRE T2M0
    \   00001D                REQUIRE T2M1
    \   00001D                REQUIRE _A_IEN0
    \   00001D                REQUIRE T2MSEL
-   \   00001D                REQUIRE T2M0
     423          }
     424          
     425          
@@ -1051,12 +1053,12 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mac\low_level\srf04\sing
    \   000012   E5A2         MOV     A,0xa2
     451            ((uint8 *)&overflowCount)[UINT32_NDX0] = T2MOVF0;
    \   000014   02....       LJMP    ?Subroutine1 & 0xFFFF
+   \   000017                REQUIRE T2M0
    \   000017                REQUIRE T2MOVF0
    \   000017                REQUIRE T2MOVF1
    \   000017                REQUIRE T2MOVF2
    \   000017                REQUIRE _A_IEN0
    \   000017                REQUIRE T2MSEL
-   \   000017                REQUIRE T2M0
     452            ((uint8 *)&overflowCount)[UINT32_NDX1] = T2MOVF1;
     453            ((uint8 *)&overflowCount)[UINT32_NDX2] = T2MOVF2;
     454            ((uint8 *)&overflowCount)[UINT32_NDX3] = 0;
@@ -1418,13 +1420,13 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mac\low_level\srf04\sing
    \   00006E   EA           MOV     A,R2
    \   00006F   A2E0         MOV     C,0xE0 /* A   */.0
    \   000071   02....       LJMP    ?Subroutine3 & 0xFFFF
+   \   000074                REQUIRE T2IRQF
    \   000074                REQUIRE T2MOVF0
    \   000074                REQUIRE T2MOVF1
    \   000074                REQUIRE T2MOVF2
    \   000074                REQUIRE T2IRQM
    \   000074                REQUIRE _A_IEN0
    \   000074                REQUIRE T2MSEL
-   \   000074                REQUIRE T2IRQF
     571          }
     572          
     573          
@@ -1560,9 +1562,9 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mac\low_level\srf04\sing
     652            HAL_EXIT_ISR();  
    \                     ??macMcuTimer2Isr_1:
    \   00004D                REQUIRE ?Subroutine2
+   \   00004D                REQUIRE T2IRQF
    \   00004D                REQUIRE T2IRQM
    \   00004D                REQUIRE _A_IEN0
-   \   00004D                REQUIRE T2IRQF
    \   00004D                ; // Fall through to label ?Subroutine2
     653          }
 
@@ -1660,8 +1662,8 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mac\low_level\srf04\sing
     686          }
    \                     ??macMcuTimer2OverflowWorkaround_0:
    \   00005F   02....       LJMP    ??Subroutine8_0 & 0xFFFF
-   \   000062                REQUIRE T2IRQM
    \   000062                REQUIRE T2IRQF
+   \   000062                REQUIRE T2IRQM
    \   000062                REQUIRE T2MOVF0
    \   000062                REQUIRE T2MOVF1
    \   000062                REQUIRE T2MOVF2
@@ -1752,12 +1754,12 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mac\low_level\srf04\sing
    \   00005A   78..         MOV     R0,#?V0 + 0
    \   00005C   12....       LCALL   ?L_ADD_X
    \   00005F   02....       LJMP    ??Subroutine7_0 & 0xFFFF
+   \   000062                REQUIRE T2M0
    \   000062                REQUIRE T2MOVF0
    \   000062                REQUIRE T2MOVF1
    \   000062                REQUIRE T2MOVF2
    \   000062                REQUIRE _A_IEN0
    \   000062                REQUIRE T2MSEL
-   \   000062                REQUIRE T2M0
     724          }
     725          
     726          
@@ -1892,10 +1894,10 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mac\low_level\srf04\sing
     789            HAL_EXIT_ISR();  
    \                     ??macMcuRfIsr_3:
    \   00006A   80..         SJMP    ?Subroutine2
-   \   00006C                REQUIRE _A_IEN0
-   \   00006C                REQUIRE RFIRQF0
    \   00006C                REQUIRE RFIRQF1
    \   00006C                REQUIRE S1CON
+   \   00006C                REQUIRE _A_IEN0
+   \   00006C                REQUIRE RFIRQF0
     790          }
     791          
     792          

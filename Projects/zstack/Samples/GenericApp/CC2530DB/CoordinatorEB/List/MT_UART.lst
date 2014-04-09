@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V7.60.1.40026 for 8051             09/Apr/2014  08:08:54 #
+# IAR C/C++ Compiler V7.60.1.40026 for 8051             09/Apr/2014  10:23:07 #
 # Copyright (C) 2004-2010 IAR Systems AB.                                     #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -45,7 +45,8 @@
 #                          -DREJOIN_POLL_RATE=440 D:\zigbee\projects\zstack-c #
 #                          c2530-coordinator\Components\mt\MT_UART.c -D       #
 #                          ZAPP_P1 -D MT_TASK -D MT_SYS_FUNC -D MT_ZDO_FUNC   #
-#                          -D LCD_SUPPORTED=DEBUG -lC                         #
+#                          -D HAL_UART -D HAL_UART=TRUE -D HAL_DMA=TRUE -D    #
+#                          HAL_LCD=FALSE -D HAL_KEY=FALSE -lC                 #
 #                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
 #                          cts\zstack\Samples\GenericApp\CC2530DB\Coordinator #
 #                          EB\List\ -lA D:\zigbee\projects\zstack-cc2530-coor #
@@ -379,9 +380,9 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mt\MT_UART.c
     131            /* Initialize for ZApp */
     132          #if defined (ZAPP_P1) || defined (ZAPP_P2)
     133            /* Default max bytes that ZAPP can take */
-    134            MT_UartMaxZAppBufLen  = 1;
+    134            MT_UartMaxZAppBufLen  = 8;
    \   000071   90....       MOV     DPTR,#MT_UartMaxZAppBufLen
-   \   000074   7401         MOV     A,#0x1
+   \   000074   7408         MOV     A,#0x8
    \   000076   F0           MOVX    @DPTR,A
    \   000077   A3           INC     DPTR
    \   000078   E4           CLR     A
@@ -1033,9 +1034,14 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mt\MT_UART.c
    \   000004                ; Setup parameters for call to function Hal_UART_RxBufLen
    \   000004   7900         MOV     R1,#0x0
    \   000006   12....       LCALL   ??Hal_UART_RxBufLen?relay
-    331            //osal_set_event(8,0x0002);
+    331            osal_set_event(8,0x0002);
+   \   000009                ; Setup parameters for call to function osal_set_event
+   \   000009   7A02         MOV     R2,#0x2
+   \   00000B   7B00         MOV     R3,#0x0
+   \   00000D   7908         MOV     R1,#0x8
+   \   00000F   12....       LCALL   ??osal_set_event?relay
     332            return;
-   \   000009   02....       LJMP    ??Subroutine11_0 & 0xFFFF
+   \   000012   02....       LJMP    ??Subroutine11_0 & 0xFFFF
     333            /*
     334               If maxZAppBufferLength is 0 or larger than current length
     335               the entire length of the current buffer is returned.
@@ -1079,37 +1085,39 @@ Warning[Pe111]: statement is unreachable
     371                    msg_ptr->status = length;
     372                    //osal_set_event(8, 2);
     373                    /* Read the data of Rx buffer */
-    374                    HalUARTRead( MT_UART_DEFAULT_PORT, (uint8 *)(msg_ptr + 1), length );
+    374                    //HalUARTRead( MT_UART_DEFAULT_PORT, (uint8 *)(msg_ptr + 1), length );
     375          
     376                    /* Send the raw data to application...or where ever */
     377                    osal_msg_send( App_TaskID, (uint8 *)msg_ptr );
-    378                  }
-    379                }
-    380              }
-    381            }
-    382          }
-    383          
-    384          /***************************************************************************************************
-    385           * @fn      SPIMgr_ZAppBufferLengthRegister
-    386           *
-    387           * @brief
+    378                    //osal_set_event(8,0x0002);
+    379                    //MT_UartAppFlowControl(MT_UART_ZAPP_RX_READY);
+    380                  }
+    381                }
+    382              }
+    383            }
+    384          }
+    385          
+    386          /***************************************************************************************************
+    387           * @fn      SPIMgr_ZAppBufferLengthRegister
     388           *
-    389           * @param   maxLen - Max Length that the application wants at a time
+    389           * @brief
     390           *
-    391           * @return  None
+    391           * @param   maxLen - Max Length that the application wants at a time
     392           *
-    393           ***************************************************************************************************/
+    393           * @return  None
+    394           *
+    395           ***************************************************************************************************/
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-    394          void MT_UartZAppBufferLengthRegister ( uint16 maxLen )
+    396          void MT_UartZAppBufferLengthRegister ( uint16 maxLen )
    \                     MT_UartZAppBufferLengthRegister:
-    395          {
+    397          {
    \   000000   C082         PUSH    DPL
    \   000002   C083         PUSH    DPH
    \   000004                ; Saved register size: 2
    \   000004                ; Auto size: 0
-    396            /* If the maxLen is larger than the RX buff, something is not right */
-    397            if (maxLen <= MT_UART_DEFAULT_MAX_RX_BUFF)
+    398            /* If the maxLen is larger than the RX buff, something is not right */
+    399            if (maxLen <= MT_UART_DEFAULT_MAX_RX_BUFF)
    \   000004   C3           CLR     C
    \   000005   EA           MOV     A,R2
    \   000006   9481         SUBB    A,#-0x7f
@@ -1117,14 +1125,14 @@ Warning[Pe111]: statement is unreachable
    \   000009   9400         SUBB    A,#0x0
    \   00000B   90....       MOV     DPTR,#MT_UartMaxZAppBufLen
    \   00000E   5006         JNC     ??MT_UartZAppBufferLengthRegister_0
-    398              MT_UartMaxZAppBufLen = maxLen;
+    400              MT_UartMaxZAppBufLen = maxLen;
    \   000010   EA           MOV     A,R2
    \   000011   F0           MOVX    @DPTR,A
    \   000012   A3           INC     DPTR
    \   000013   EB           MOV     A,R3
    \   000014   8005         SJMP    ??MT_UartZAppBufferLengthRegister_1
-    399            else
-    400              MT_UartMaxZAppBufLen = 1; /* default is 1 byte */
+    401            else
+    402              MT_UartMaxZAppBufLen = 1; /* default is 1 byte */
    \                     ??MT_UartZAppBufferLengthRegister_0:
    \   000016   7401         MOV     A,#0x1
    \   000018   F0           MOVX    @DPTR,A
@@ -1132,58 +1140,59 @@ Warning[Pe111]: statement is unreachable
    \   00001A   E4           CLR     A
    \                     ??MT_UartZAppBufferLengthRegister_1:
    \   00001B   02....       LJMP    ?Subroutine0 & 0xFFFF
-    401          }
-    402          
-    403          /***************************************************************************************************
-    404           * @fn      SPIMgr_AppFlowControl
-    405           *
-    406           * @brief
+    403          }
+    404          
+    405          /***************************************************************************************************
+    406           * @fn      SPIMgr_AppFlowControl
     407           *
-    408           * @param   status - ready to send or not
+    408           * @brief
     409           *
-    410           * @return  None
+    410           * @param   status - ready to send or not
     411           *
-    412           ***************************************************************************************************/
+    412           * @return  None
+    413           *
+    414           ***************************************************************************************************/
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-    413          void MT_UartAppFlowControl ( bool status )
+    415          void MT_UartAppFlowControl ( bool status )
    \                     MT_UartAppFlowControl:
-    414          {
+    416          {
    \   000000   74F7         MOV     A,#-0x9
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
    \   000005                ; Saved register size: 9
    \   000005                ; Auto size: 0
    \   000005   E9           MOV     A,R1
    \   000006   FE           MOV     R6,A
-    415          
-    416            /* Make sure only update if needed */
-    417            if (status != MT_UartZAppRxStatus )
+    417          
+    418            /* Make sure only update if needed */
+    419            if (status != MT_UartZAppRxStatus )
    \   000007   90....       MOV     DPTR,#MT_UartZAppRxStatus
    \   00000A   E0           MOVX    A,@DPTR
    \   00000B   6E           XRL     A,R6
    \   00000C   6002         JZ      ??MT_UartAppFlowControl_0
-    418            {
-    419              MT_UartZAppRxStatus = status;
+    420            {
+    421              MT_UartZAppRxStatus = status;
    \   00000E   EE           MOV     A,R6
    \   00000F   F0           MOVX    @DPTR,A
-    420            }
-    421          
-    422            /* App is ready to read again, ProcessZAppData have to be triggered too */
-    423            if (status == MT_UART_ZAPP_RX_READY)
+    422            }
+    423          
+    424            /* App is ready to read again, ProcessZAppData have to be triggered too */
+    425            if (status == MT_UART_ZAPP_RX_READY)
    \                     ??MT_UartAppFlowControl_0:
    \   000010   7401         MOV     A,#0x1
    \   000012   6E           XRL     A,R6
-   \   000013   7005         JNZ     ??MT_UartAppFlowControl_1
-    424            {
-    425              MT_UartProcessZAppData (MT_UART_DEFAULT_PORT, HAL_UART_RX_TIMEOUT );
-   \   000015                ; Setup parameters for call to function Hal_UART_RxBufLen
-   \   000015   7900         MOV     R1,#0x0
-   \   000017   12....       LCALL   ??Hal_UART_RxBufLen?relay
-    426            }
-    427          
-    428          }
+   \   000013   7007         JNZ     ??MT_UartAppFlowControl_1
+    426            {
+    427              MT_UartProcessZAppData (MT_UART_DEFAULT_PORT, HAL_UART_RX_TIMEOUT );
+   \   000015                ; Setup parameters for call to function MT_UartProcessZAppData
+   \   000015   7A04         MOV     R2,#0x4
+   \   000017   7900         MOV     R1,#0x0
+   \   000019   12....       LCALL   ??MT_UartProcessZAppData?relay
+    428            }
+    429          
+    430          }
    \                     ??MT_UartAppFlowControl_1:
-   \   00001A   02....       LJMP    ?Subroutine1 & 0xFFFF
+   \   00001C   02....       LJMP    ?Subroutine1 & 0xFFFF
 
    \                                 In  segment BANK_RELAYS, align 1
    \                     ??MT_UartInit?relay:
@@ -1219,23 +1228,24 @@ Warning[Pe111]: statement is unreachable
    \                     ??MT_UartAppFlowControl?relay:
    \   000000   12....       LCALL   ?BDISPATCH
    \   000003   ......       DC24    MT_UartAppFlowControl
-    429          
-    430          #endif //ZAPP
     431          
-    432          /***************************************************************************************************
-    433          ***************************************************************************************************/
+    432          #endif //ZAPP
+    433          
+    434          /***************************************************************************************************
+    435          ***************************************************************************************************/
 
    Maximum stack usage in bytes:
 
      Function                       ISTACK PSTACK XSTACK
      --------                       ------ ------ ------
      MT_UartAppFlowControl              0      0      9
-       -> Hal_UART_RxBufLen             0      0     18
+       -> MT_UartProcessZAppData        0      0     18
      MT_UartCalcFCS                     0      0     20
      MT_UartInit                        3      0     29
        -> HalUARTOpen                   4      0     58
-     MT_UartProcessZAppData             2      0      0
+     MT_UartProcessZAppData             2      0      9
        -> Hal_UART_RxBufLen             4      0      0
+       -> osal_set_event                4      0      0
      MT_UartProcessZToolData            1      0     11
        -> Hal_UART_RxBufLen             0      0     22
        -> HalUARTRead                   0      0     22
@@ -1281,10 +1291,10 @@ Warning[Pe111]: statement is unreachable
      ?Subroutine3                              16
      ?Subroutine7                              15
      ?Subroutine2                               6
-     MT_UartProcessZAppData                    12
+     MT_UartProcessZAppData                    21
      MT_UartZAppBufferLengthRegister
                                                30
-     MT_UartAppFlowControl                     29
+     MT_UartAppFlowControl                     31
      ??MT_UartInit?relay                        6
      ??MT_UartRegisterTaskID?relay              6
      ??MT_UartCalcFCS?relay                     6
@@ -1294,11 +1304,11 @@ Warning[Pe111]: statement is unreachable
      ??MT_UartAppFlowControl?relay              6
 
  
- 777 bytes in segment BANKED_CODE
+ 788 bytes in segment BANKED_CODE
   42 bytes in segment BANK_RELAYS
   12 bytes in segment XDATA_Z
  
- 819 bytes of CODE  memory
+ 830 bytes of CODE  memory
   12 bytes of XDATA memory
 
 Errors: none

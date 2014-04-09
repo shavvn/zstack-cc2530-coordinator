@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V7.60.1.40026 for 8051             08/Apr/2014  22:18:30 #
+# IAR C/C++ Compiler V7.60.1.40026 for 8051             09/Apr/2014  10:09:30 #
 # Copyright (C) 2004-2010 IAR Systems AB.                                     #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -45,7 +45,8 @@
 #                          -DREJOIN_POLL_RATE=440 D:\zigbee\projects\zstack-c #
 #                          c2530-coordinator\Components\mt\MT_TASK.c -D       #
 #                          ZAPP_P1 -D MT_TASK -D MT_SYS_FUNC -D MT_ZDO_FUNC   #
-#                          -D LCD_SUPPORTED=DEBUG -lC                         #
+#                          -D HAL_UART -D HAL_UART=TRUE -D HAL_DMA=TRUE -D    #
+#                          HAL_LCD=FALSE -D HAL_KEY=FALSE -lC                 #
 #                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
 #                          cts\zstack\Samples\GenericApp\CC2530DB\Coordinator #
 #                          EB\List\ -lA D:\zigbee\projects\zstack-cc2530-coor #
@@ -518,7 +519,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mt\MT_TASK.c
    \   00001B   12....       LCALL   ?UC_SWITCH_SPARSE
    \                     `?<Jumptable for MT_ProcessIncomingCommand>_0`:
    \   00001E   00           DB        0
-   \   00001F   05           DB        5
+   \   00001F   06           DB        6
    \   000020   01           DB        1
    \   000021   ....         DW        ??MT_ProcessIncomingCommand_0
    \   000023   02           DB        2
@@ -527,187 +528,197 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mt\MT_TASK.c
    \   000027   ....         DW        ??MT_ProcessIncomingCommand_2
    \   000029   06           DB        6
    \   00002A   ....         DW        ??MT_ProcessIncomingCommand_3
-   \   00002C   24           DB        36
+   \   00002C   22           DB        34
    \   00002D   ....         DW        ??MT_ProcessIncomingCommand_4
-   \   00002F   ....         DW        ??MT_ProcessIncomingCommand_5
+   \   00002F   24           DB        36
+   \   000030   ....         DW        ??MT_ProcessIncomingCommand_5
+   \   000032   ....         DW        ??MT_ProcessIncomingCommand_6
     194            {
-    195              case CMD_SERIAL_MSG:
-    196                MT_ProcessIncoming(msg->msg);
-   \                     ??MT_ProcessIncomingCommand_0:
-   \   000031                ; Setup parameters for call to function MT_ProcessIncoming
-   \   000031   8E82         MOV     DPL,R6
-   \   000033   8F83         MOV     DPH,R7
-   \   000035   A3           INC     DPTR
-   \   000036   A3           INC     DPTR
-   \   000037   E0           MOVX    A,@DPTR
-   \   000038   FA           MOV     R2,A
-   \   000039   A3           INC     DPTR
-   \   00003A   E0           MOVX    A,@DPTR
-   \   00003B   FB           MOV     R3,A
-   \   00003C   12....       LCALL   ??MT_ProcessIncoming?relay
-   \   00003F   806B         SJMP    ??MT_ProcessIncomingCommand_5
-    197                break;
-    198          
-    199              case CMD_DEBUG_MSG:
-    200                MT_ProcessDebugMsg( (mtDebugMsg_t *)msg );
-   \                     ??MT_ProcessIncomingCommand_1:
-   \   000041                ; Setup parameters for call to function MT_ProcessDebugMsg
-   \   000041   12....       LCALL   ??MT_ProcessDebugMsg?relay
-   \   000044   8066         SJMP    ??MT_ProcessIncomingCommand_5
-    201                break;
-    202          
-    203              case CB_FUNC:
-    204                /*
-    205                  Build SPI message here instead of redundantly calling MT_BuildSPIMsg
-    206                  because we have copied data already in the allocated message
-    207                */
-    208          
-    209                /* msg_ptr is the beginning of the intended SPI message */
-    210                len = SPI_0DATA_MSG_LEN + msg_ptr[DATALEN_FIELD];
-   \                     ??MT_ProcessIncomingCommand_2:
-   \   000046   85..82       MOV     DPL,?V0 + 0
-   \   000049   85..83       MOV     DPH,?V0 + 1
-   \   00004C   A3           INC     DPTR
-   \   00004D   A3           INC     DPTR
-   \   00004E   A3           INC     DPTR
-   \   00004F   E0           MOVX    A,@DPTR
-   \   000050   2405         ADD     A,#0x5
-   \   000052   F5..         MOV     ?V0 + 4,A
-    211          
-    212                /*
-    213                  FCS goes to the last byte in the message and is calculated over all
-    214                  the bytes except FCS and SOP
-    215                */
-    216                msg_ptr[len-1] = MT_UartCalcFCS(msg_ptr + 1, (byte)(len-2));
-   \   000054                ; Setup parameters for call to function MT_UartCalcFCS
-   \   000054   74FE         MOV     A,#-0x2
-   \   000056   25..         ADD     A,?V0 + 4
-   \   000058   F9           MOV     R1,A
-   \   000059   85..82       MOV     DPL,?V0 + 0
-   \   00005C   85..83       MOV     DPH,?V0 + 1
-   \   00005F   A3           INC     DPTR
-   \   000060   AA82         MOV     R2,DPL
-   \   000062   AB83         MOV     R3,DPH
-   \   000064   12....       LCALL   ??MT_UartCalcFCS?relay
-   \   000067   E9           MOV     A,R1
-   \   000068   C0E0         PUSH    A
-   \   00006A   85....       MOV     ?V0 + 2,?V0 + 4
-   \   00006D   E5..         MOV     A,?V0 + 0
-   \   00006F   25..         ADD     A,?V0 + 2
-   \   000071   F8           MOV     R0,A
-   \   000072   E5..         MOV     A,?V0 + 1
-   \   000074   3400         ADDC    A,#0x0
-   \   000076   F9           MOV     R1,A
-   \   000077   74FF         MOV     A,#-0x1
-   \   000079   28           ADD     A,R0
-   \   00007A   F582         MOV     DPL,A
-   \   00007C   74FF         MOV     A,#-0x1
-   \   00007E   39           ADDC    A,R1
-   \   00007F   F583         MOV     DPH,A
-   \   000081   D0E0         POP     A
-   \   000083   F0           MOVX    @DPTR,A
-    217          
-    218          #ifdef MT_UART_DEFAULT_PORT
-    219                HalUARTWrite ( MT_UART_DEFAULT_PORT, msg_ptr, len );
-   \   000084                ; Setup parameters for call to function HalUARTWrite
-   \   000084   AC..         MOV     R4,?V0 + 2
-   \   000086   7D00         MOV     R5,#0x0
-   \   000088   AA..         MOV     R2,?V0 + 0
-   \   00008A   AB..         MOV     R3,?V0 + 1
-   \   00008C   7900         MOV     R1,#0x0
-   \   00008E   12....       LCALL   ??HalUARTWrite?relay
-   \   000091   8019         SJMP    ??MT_ProcessIncomingCommand_5
-    220          #endif
-    221                break;
-    222          
-    223              case CMD_DEBUG_STR:
-    224                MT_ProcessDebugStr( (mtDebugStr_t *)msg );
-   \                     ??MT_ProcessIncomingCommand_3:
-   \   000093                ; Setup parameters for call to function MT_ProcessDebugStr
-   \   000093   12....       LCALL   ??MT_ProcessDebugStr?relay
-   \   000096   8014         SJMP    ??MT_ProcessIncomingCommand_5
-    225                break;
-    226          
-    227          #if !defined ( NONWK )
-    228              case MT_SYS_APP_RSP_MSG:
-    229                len = SPI_0DATA_MSG_LEN + msg_ptr[DATALEN_FIELD];
-    230                MTProcessAppRspMsg( msg_ptr, len );
+    195              case SPI_INCOMING_ZAPP_DATA:
+    196                HalUARTWrite(0, msg_ptr, 8);
    \                     ??MT_ProcessIncomingCommand_4:
-   \   000098                ; Setup parameters for call to function MTProcessAppRspMsg
-   \   000098   85..82       MOV     DPL,?V0 + 0
-   \   00009B   85..83       MOV     DPH,?V0 + 1
-   \   00009E   A3           INC     DPTR
-   \   00009F   A3           INC     DPTR
-   \   0000A0   A3           INC     DPTR
-   \   0000A1   E0           MOVX    A,@DPTR
-   \   0000A2   2405         ADD     A,#0x5
-   \   0000A4   F9           MOV     R1,A
-   \   0000A5   AA..         MOV     R2,?V0 + 0
-   \   0000A7   AB..         MOV     R3,?V0 + 1
-   \   0000A9   12....       LCALL   ??MTProcessAppRspMsg?relay
-    231                break;
-    232          #endif  // NONWK
-    233          
-    234          #if defined (MT_UTIL_FUNC)
-    235          #if defined ZCL_KEY_ESTABLISH
-    236              case ZCL_KEY_ESTABLISH_IND:
-    237                MT_UtilKeyEstablishInd((keyEstablishmentInd_t *)msg);
-    238                break;
-    239          #endif
-    240          #endif
-    241          #ifdef MT_ZDO_CB_FUNC
-    242              case ZDO_STATE_CHANGE:
-    243                MT_ZdoStateChangeCB((osal_event_hdr_t *)msg);
-    244                break;
-    245          #endif
-    246          
-    247              default:
-    248                break;
-    249            }
-    250          
-    251            if ( deallocate )
-    252            {
-    253              osal_msg_deallocate( (uint8 *)msg );
+   \   000034                ; Setup parameters for call to function HalUARTWrite
+   \   000034   7C08         MOV     R4,#0x8
+   \                     ??MT_ProcessIncomingCommand_7:
+   \   000036   7D00         MOV     R5,#0x0
+   \   000038   AA..         MOV     R2,?V0 + 0
+   \   00003A   AB..         MOV     R3,?V0 + 1
+   \   00003C   7900         MOV     R1,#0x0
+   \   00003E   12....       LCALL   ??HalUARTWrite?relay
+   \   000041   8070         SJMP    ??MT_ProcessIncomingCommand_6
+    197                break;
+    198              case CMD_SERIAL_MSG:
+    199                MT_ProcessIncoming(msg->msg);
+   \                     ??MT_ProcessIncomingCommand_0:
+   \   000043                ; Setup parameters for call to function MT_ProcessIncoming
+   \   000043   8E82         MOV     DPL,R6
+   \   000045   8F83         MOV     DPH,R7
+   \   000047   A3           INC     DPTR
+   \   000048   A3           INC     DPTR
+   \   000049   E0           MOVX    A,@DPTR
+   \   00004A   FA           MOV     R2,A
+   \   00004B   A3           INC     DPTR
+   \   00004C   E0           MOVX    A,@DPTR
+   \   00004D   FB           MOV     R3,A
+   \   00004E   12....       LCALL   ??MT_ProcessIncoming?relay
+   \   000051   8060         SJMP    ??MT_ProcessIncomingCommand_6
+    200                break;
+    201          
+    202              case CMD_DEBUG_MSG:
+    203                MT_ProcessDebugMsg( (mtDebugMsg_t *)msg );
+   \                     ??MT_ProcessIncomingCommand_1:
+   \   000053                ; Setup parameters for call to function MT_ProcessDebugMsg
+   \   000053   12....       LCALL   ??MT_ProcessDebugMsg?relay
+   \   000056   805B         SJMP    ??MT_ProcessIncomingCommand_6
+    204                break;
+    205          
+    206              case CB_FUNC:
+    207                /*
+    208                  Build SPI message here instead of redundantly calling MT_BuildSPIMsg
+    209                  because we have copied data already in the allocated message
+    210                */
+    211          
+    212                /* msg_ptr is the beginning of the intended SPI message */
+    213                len = SPI_0DATA_MSG_LEN + msg_ptr[DATALEN_FIELD];
+   \                     ??MT_ProcessIncomingCommand_2:
+   \   000058   85..82       MOV     DPL,?V0 + 0
+   \   00005B   85..83       MOV     DPH,?V0 + 1
+   \   00005E   A3           INC     DPTR
+   \   00005F   A3           INC     DPTR
+   \   000060   A3           INC     DPTR
+   \   000061   E0           MOVX    A,@DPTR
+   \   000062   2405         ADD     A,#0x5
+   \   000064   F5..         MOV     ?V0 + 4,A
+    214          
+    215                /*
+    216                  FCS goes to the last byte in the message and is calculated over all
+    217                  the bytes except FCS and SOP
+    218                */
+    219                msg_ptr[len-1] = MT_UartCalcFCS(msg_ptr + 1, (byte)(len-2));
+   \   000066                ; Setup parameters for call to function MT_UartCalcFCS
+   \   000066   74FE         MOV     A,#-0x2
+   \   000068   25..         ADD     A,?V0 + 4
+   \   00006A   F9           MOV     R1,A
+   \   00006B   85..82       MOV     DPL,?V0 + 0
+   \   00006E   85..83       MOV     DPH,?V0 + 1
+   \   000071   A3           INC     DPTR
+   \   000072   AA82         MOV     R2,DPL
+   \   000074   AB83         MOV     R3,DPH
+   \   000076   12....       LCALL   ??MT_UartCalcFCS?relay
+   \   000079   E9           MOV     A,R1
+   \   00007A   C0E0         PUSH    A
+   \   00007C   85....       MOV     ?V0 + 2,?V0 + 4
+   \   00007F   E5..         MOV     A,?V0 + 0
+   \   000081   25..         ADD     A,?V0 + 2
+   \   000083   F8           MOV     R0,A
+   \   000084   E5..         MOV     A,?V0 + 1
+   \   000086   3400         ADDC    A,#0x0
+   \   000088   F9           MOV     R1,A
+   \   000089   74FF         MOV     A,#-0x1
+   \   00008B   28           ADD     A,R0
+   \   00008C   F582         MOV     DPL,A
+   \   00008E   74FF         MOV     A,#-0x1
+   \   000090   39           ADDC    A,R1
+   \   000091   F583         MOV     DPH,A
+   \   000093   D0E0         POP     A
+   \   000095   F0           MOVX    @DPTR,A
+    220          
+    221          #ifdef MT_UART_DEFAULT_PORT
+    222                HalUARTWrite ( MT_UART_DEFAULT_PORT, msg_ptr, len );
+   \   000096                ; Setup parameters for call to function HalUARTWrite
+   \   000096   AC..         MOV     R4,?V0 + 2
+   \   000098   809C         SJMP    ??MT_ProcessIncomingCommand_7
+    223          #endif
+    224                break;
+    225          
+    226              case CMD_DEBUG_STR:
+    227                MT_ProcessDebugStr( (mtDebugStr_t *)msg );
+   \                     ??MT_ProcessIncomingCommand_3:
+   \   00009A                ; Setup parameters for call to function MT_ProcessDebugStr
+   \   00009A   12....       LCALL   ??MT_ProcessDebugStr?relay
+   \   00009D   8014         SJMP    ??MT_ProcessIncomingCommand_6
+    228                break;
+    229          
+    230          #if !defined ( NONWK )
+    231              case MT_SYS_APP_RSP_MSG:
+    232                len = SPI_0DATA_MSG_LEN + msg_ptr[DATALEN_FIELD];
+    233                MTProcessAppRspMsg( msg_ptr, len );
    \                     ??MT_ProcessIncomingCommand_5:
-   \   0000AC                ; Setup parameters for call to function osal_msg_deallocate
-   \   0000AC   EE           MOV     A,R6
-   \   0000AD   FA           MOV     R2,A
-   \   0000AE   EF           MOV     A,R7
-   \   0000AF   FB           MOV     R3,A
-   \   0000B0   12....       LCALL   ??osal_msg_deallocate?relay
-    254            }
-    255          }
-   \   0000B3   7F05         MOV     R7,#0x5
-   \   0000B5   02....       LJMP    ?BANKED_LEAVE_XDATA
-    256          
-    257          #ifdef MT_TASK
-    258          /***************************************************************************************************
-    259           * @fn      MT_TransportAlloc
-    260           *
-    261           * @brief   Allocate memory for transport msg
-    262           *
-    263           * @param   uint8 cmd0 - The first byte of the MT command id containing the command type and subsystem.
-    264           *          uint8 len - length
+   \   00009F                ; Setup parameters for call to function MTProcessAppRspMsg
+   \   00009F   85..82       MOV     DPL,?V0 + 0
+   \   0000A2   85..83       MOV     DPH,?V0 + 1
+   \   0000A5   A3           INC     DPTR
+   \   0000A6   A3           INC     DPTR
+   \   0000A7   A3           INC     DPTR
+   \   0000A8   E0           MOVX    A,@DPTR
+   \   0000A9   2405         ADD     A,#0x5
+   \   0000AB   F9           MOV     R1,A
+   \   0000AC   AA..         MOV     R2,?V0 + 0
+   \   0000AE   AB..         MOV     R3,?V0 + 1
+   \   0000B0   12....       LCALL   ??MTProcessAppRspMsg?relay
+    234                break;
+    235          #endif  // NONWK
+    236          
+    237          #if defined (MT_UTIL_FUNC)
+    238          #if defined ZCL_KEY_ESTABLISH
+    239              case ZCL_KEY_ESTABLISH_IND:
+    240                MT_UtilKeyEstablishInd((keyEstablishmentInd_t *)msg);
+    241                break;
+    242          #endif
+    243          #endif
+    244          #ifdef MT_ZDO_CB_FUNC
+    245              case ZDO_STATE_CHANGE:
+    246                MT_ZdoStateChangeCB((osal_event_hdr_t *)msg);
+    247                break;
+    248          #endif
+    249          
+    250              default:
+    251                break;
+    252            }
+    253          
+    254            if ( deallocate )
+    255            {
+    256              osal_msg_deallocate( (uint8 *)msg );
+   \                     ??MT_ProcessIncomingCommand_6:
+   \   0000B3                ; Setup parameters for call to function osal_msg_deallocate
+   \   0000B3   EE           MOV     A,R6
+   \   0000B4   FA           MOV     R2,A
+   \   0000B5   EF           MOV     A,R7
+   \   0000B6   FB           MOV     R3,A
+   \   0000B7   12....       LCALL   ??osal_msg_deallocate?relay
+    257            }
+    258          }
+   \   0000BA   7F05         MOV     R7,#0x5
+   \   0000BC   02....       LJMP    ?BANKED_LEAVE_XDATA
+    259          
+    260          #ifdef MT_TASK
+    261          /***************************************************************************************************
+    262           * @fn      MT_TransportAlloc
+    263           *
+    264           * @brief   Allocate memory for transport msg
     265           *
-    266           * @return  pointer the allocated memory or NULL if fail to allocate the memory
-    267           ***************************************************************************************************/
+    266           * @param   uint8 cmd0 - The first byte of the MT command id containing the command type and subsystem.
+    267           *          uint8 len - length
+    268           *
+    269           * @return  pointer the allocated memory or NULL if fail to allocate the memory
+    270           ***************************************************************************************************/
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-    268          uint8 *MT_TransportAlloc(uint8 cmd0, uint8 len)
+    271          uint8 *MT_TransportAlloc(uint8 cmd0, uint8 len)
    \                     MT_TransportAlloc:
-    269          {
+    272          {
    \   000000   74F6         MOV     A,#-0xa
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
    \   000005                ; Saved register size: 10
    \   000005                ; Auto size: 0
    \   000005   EA           MOV     A,R2
    \   000006   FE           MOV     R6,A
-    270            uint8 *p;
-    271          
-    272            (void)cmd0;  // Intentionally unreferenced parameter
-    273          
-    274            /* Allocate a buffer of data length + SOP+CMD+FCS (5bytes) */
-    275            p = osal_msg_allocate(len + SPI_0DATA_MSG_LEN);
+    273            uint8 *p;
+    274          
+    275            (void)cmd0;  // Intentionally unreferenced parameter
+    276          
+    277            /* Allocate a buffer of data length + SOP+CMD+FCS (5bytes) */
+    278            p = osal_msg_allocate(len + SPI_0DATA_MSG_LEN);
    \   000007                ; Setup parameters for call to function osal_msg_allocate
    \   000007   8E..         MOV     ?V0 + 0,R6
    \   000009   7405         MOV     A,#0x5
@@ -719,75 +730,75 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mt\MT_TASK.c
    \   000012   12....       LCALL   ??osal_msg_allocate?relay
    \   000015   8A82         MOV     DPL,R2
    \   000017   8B83         MOV     DPH,R3
-    276          
-    277            if (p)
+    279          
+    280            if (p)
    \   000019   E582         MOV     A,DPL
    \   00001B   7002         JNZ     ??MT_TransportAlloc_0
    \   00001D   E583         MOV     A,DPH
    \                     ??MT_TransportAlloc_0:
    \   00001F   6007         JZ      ??MT_TransportAlloc_1
-    278            {
-    279              p++; /* Save space for SOP_VALUE, msg structure */
-    280              return p;
+    281            {
+    282              p++; /* Save space for SOP_VALUE, msg structure */
+    283              return p;
    \   000021   A3           INC     DPTR
    \   000022   AA82         MOV     R2,DPL
    \   000024   AB83         MOV     R3,DPH
    \   000026   8004         SJMP    ??MT_TransportAlloc_2
-    281            }
-    282            else
-    283            {
-    284              return NULL;
+    284            }
+    285            else
+    286            {
+    287              return NULL;
    \                     ??MT_TransportAlloc_1:
    \   000028   7A00         MOV     R2,#0x0
    \   00002A   7B00         MOV     R3,#0x0
-    285            }
+    288            }
    \                     ??MT_TransportAlloc_2:
    \   00002C   02....       LJMP    ?Subroutine0 & 0xFFFF
-    286          }
-    287          
-    288          /***************************************************************************************************
-    289           * @fn      MT_TransportSend
-    290           *
-    291           * @brief   Fill in SOP and FCS then send out the msg
-    292           *
-    293           * @param   uint8 *pBuf - pointer to the message that contains CMD, length, data and FCS
-    294           *
-    295           * @return  None
-    296           ***************************************************************************************************/
+    289          }
+    290          
+    291          /***************************************************************************************************
+    292           * @fn      MT_TransportSend
+    293           *
+    294           * @brief   Fill in SOP and FCS then send out the msg
+    295           *
+    296           * @param   uint8 *pBuf - pointer to the message that contains CMD, length, data and FCS
+    297           *
+    298           * @return  None
+    299           ***************************************************************************************************/
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-    297          void MT_TransportSend(uint8 *pBuf)
+    300          void MT_TransportSend(uint8 *pBuf)
    \                     MT_TransportSend:
-    298          {
+    301          {
    \   000000   74F6         MOV     A,#-0xa
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
    \   000005                ; Saved register size: 10
    \   000005                ; Auto size: 0
-    299            uint8 *msgPtr;
-    300            uint8 dataLen = pBuf[0]; /* Data length is on byte #1 from the pointer */
+    302            uint8 *msgPtr;
+    303            uint8 dataLen = pBuf[0]; /* Data length is on byte #1 from the pointer */
    \   000005   8A82         MOV     DPL,R2
    \   000007   8B83         MOV     DPH,R3
    \   000009   E0           MOVX    A,@DPTR
    \   00000A   FD           MOV     R5,A
-    301          
-    302            /* Move back to the SOP */
-    303            msgPtr = pBuf-1;
+    304          
+    305            /* Move back to the SOP */
+    306            msgPtr = pBuf-1;
    \   00000B   EA           MOV     A,R2
    \   00000C   24FF         ADD     A,#-0x1
    \   00000E   FE           MOV     R6,A
    \   00000F   EB           MOV     A,R3
    \   000010   34FF         ADDC    A,#-0x1
    \   000012   FF           MOV     R7,A
-    304          
-    305            /* Insert SOP */
-    306            msgPtr[0] = MT_UART_SOF;
+    307          
+    308            /* Insert SOP */
+    309            msgPtr[0] = MT_UART_SOF;
    \   000013   74FE         MOV     A,#-0x2
    \   000015   8E82         MOV     DPL,R6
    \   000017   8F83         MOV     DPH,R7
    \   000019   F0           MOVX    @DPTR,A
-    307          
-    308            /* Insert FCS */
-    309            msgPtr[SPI_0DATA_MSG_LEN - 1 + dataLen] = MT_UartCalcFCS (pBuf, (3 + dataLen));
+    310          
+    311            /* Insert FCS */
+    312            msgPtr[SPI_0DATA_MSG_LEN - 1 + dataLen] = MT_UartCalcFCS (pBuf, (3 + dataLen));
    \   00001A   8D82         MOV     DPL,R5
    \   00001C   8582..       MOV     ?V0 + 0,DPL
    \   00001F                ; Setup parameters for call to function MT_UartCalcFCS
@@ -807,10 +818,10 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mt\MT_TASK.c
    \   000033   A3           INC     DPTR
    \   000034   E9           MOV     A,R1
    \   000035   F0           MOVX    @DPTR,A
-    310          
-    311            /* Send to UART */
-    312          #ifdef MT_UART_DEFAULT_PORT
-    313            HalUARTWrite(MT_UART_DEFAULT_PORT, msgPtr, dataLen + SPI_0DATA_MSG_LEN);
+    313          
+    314            /* Send to UART */
+    315          #ifdef MT_UART_DEFAULT_PORT
+    316            HalUARTWrite(MT_UART_DEFAULT_PORT, msgPtr, dataLen + SPI_0DATA_MSG_LEN);
    \   000036                ; Setup parameters for call to function HalUARTWrite
    \   000036   7405         MOV     A,#0x5
    \   000038   25..         ADD     A,?V0 + 0
@@ -824,17 +835,17 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mt\MT_TASK.c
    \   000042   FB           MOV     R3,A
    \   000043   7900         MOV     R1,#0x0
    \   000045   12....       LCALL   ??HalUARTWrite?relay
-    314          #endif
-    315          
-    316            /* Deallocate */
-    317            osal_msg_deallocate(msgPtr);
+    317          #endif
+    318          
+    319            /* Deallocate */
+    320            osal_msg_deallocate(msgPtr);
    \   000048                ; Setup parameters for call to function osal_msg_deallocate
    \   000048   EE           MOV     A,R6
    \   000049   FA           MOV     R2,A
    \   00004A   EF           MOV     A,R7
    \   00004B   FB           MOV     R3,A
    \   00004C   12....       LCALL   ??osal_msg_deallocate?relay
-    318          }
+    321          }
    \   00004F   02....       LJMP    ?Subroutine0 & 0xFFFF
 
    \                                 In  segment BANK_RELAYS, align 1
@@ -861,9 +872,9 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mt\MT_TASK.c
    \                     ??MT_TransportSend?relay:
    \   000000   12....       LCALL   ?BDISPATCH
    \   000003   ......       DC24    MT_TransportSend
-    319          #endif /* MT_TASK */
-    320          /***************************************************************************************************
-    321           ***************************************************************************************************/
+    322          #endif /* MT_TASK */
+    323          /***************************************************************************************************
+    324           ***************************************************************************************************/
 
    Maximum stack usage in bytes:
 
@@ -878,6 +889,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mt\MT_TASK.c
        -> MT_SysOsalTimerExpired        0      0     20
        -> MT_SysOsalTimerExpired        0      0     20
      MT_ProcessIncomingCommand          1      0     23
+       -> HalUARTWrite                  0      0     26
        -> MT_ProcessIncoming            0      0     26
        -> MT_ProcessDebugMsg            0      0     26
        -> MT_UartCalcFCS                0      0     26
@@ -904,7 +916,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mt\MT_TASK.c
      MT_TaskInit                         25
      MT_ProcessEvent                    167
      ?Subroutine0                         5
-     MT_ProcessIncomingCommand          184
+     MT_ProcessIncomingCommand          191
      MT_TransportAlloc                   47
      MT_TransportSend                    82
      ??MT_TaskInit?relay                  6
@@ -914,10 +926,10 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\mt\MT_TASK.c
      ??MT_TransportSend?relay             6
 
  
- 510 bytes in segment BANKED_CODE
+ 517 bytes in segment BANKED_CODE
   30 bytes in segment BANK_RELAYS
  
- 540 bytes of CODE memory
+ 547 bytes of CODE memory
 
 Errors: none
 Warnings: none

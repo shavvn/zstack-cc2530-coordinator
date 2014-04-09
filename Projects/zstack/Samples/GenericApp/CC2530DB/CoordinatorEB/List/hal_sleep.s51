@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V7.60.1.40026 for 8051            08/Apr/2014  21:42:52 /
+// IAR C/C++ Compiler V7.60.1.40026 for 8051            09/Apr/2014  09:37:44 /
 // Copyright (C) 2004-2010 IAR Systems AB.                                    /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -45,16 +45,17 @@
 //                          -DREJOIN_POLL_RATE=440 D:\zigbee\projects\zstack- /
 //                          cc2530-coordinator\Components\hal\target\CC2530EB /
 //                          \hal_sleep.c -D ZAPP_P1 -D MT_TASK -D             /
-//                          MT_SYS_FUNC -D MT_ZDO_FUNC -D                     /
-//                          LCD_SUPPORTED=DEBUG -lC                           /
+//                          MT_SYS_FUNC -D MT_ZDO_FUNC -D HAL_UART -D         /
+//                          HAL_UART=TRUE -D HAL_DMA=TRUE -D HAL_LCD=FALSE    /
+//                          -D HAL_KEY=FALSE -lC D:\zigbee\projects\zstack-cc /
+//                          2530-coordinator\Projects\zstack\Samples\GenericA /
+//                          pp\CC2530DB\CoordinatorEB\List\ -lA               /
 //                          D:\zigbee\projects\zstack-cc2530-coordinator\Proj /
 //                          ects\zstack\Samples\GenericApp\CC2530DB\Coordinat /
-//                          orEB\List\ -lA D:\zigbee\projects\zstack-cc2530-c /
-//                          oordinator\Projects\zstack\Samples\GenericApp\CC2 /
-//                          530DB\CoordinatorEB\List\ --diag_suppress         /
-//                          Pe001,Pa010 -o D:\zigbee\projects\zstack-cc2530-c /
-//                          oordinator\Projects\zstack\Samples\GenericApp\CC2 /
-//                          530DB\CoordinatorEB\Obj\ -e --require_prototypes  /
+//                          orEB\List\ --diag_suppress Pe001,Pa010 -o         /
+//                          D:\zigbee\projects\zstack-cc2530-coordinator\Proj /
+//                          ects\zstack\Samples\GenericApp\CC2530DB\Coordinat /
+//                          orEB\Obj\ -e --require_prototypes                 /
 //                          --no_code_motion --debug --core=plain             /
 //                          --dptr=16,1 --data_model=large                    /
 //                          --code_model=banked --calling_convention=xdata_re /
@@ -396,14 +397,10 @@
 MAC_PwrNextTimeout  SYMBOL "MAC_PwrNextTimeout"
 halAssertHandler    SYMBOL "halAssertHandler"
 MAC_PwrOffReq       SYMBOL "MAC_PwrOffReq"
-HalKeyEnterSleep    SYMBOL "HalKeyEnterSleep"
 HalLedEnterSleep    SYMBOL "HalLedEnterSleep"
 HalLedExitSleep     SYMBOL "HalLedExitSleep"
-HalKeyExitSleep     SYMBOL "HalKeyExitSleep"
 MAC_PwrOnReq        SYMBOL "MAC_PwrOnReq"
 macMcuTimer2OverflowWorkaround SYMBOL "macMcuTimer2OverflowWorkaround"
-??HalKeyEnterSleep?relay SYMBOL "?relay", HalKeyEnterSleep
-??HalKeyExitSleep?relay SYMBOL "?relay", HalKeyExitSleep
 ??HalLedEnterSleep?relay SYMBOL "?relay", HalLedEnterSleep
 ??HalLedExitSleep?relay SYMBOL "?relay", HalLedExitSleep
 ??MAC_PwrNextTimeout?relay SYMBOL "?relay", MAC_PwrNextTimeout
@@ -447,13 +444,6 @@ halSleepTimerIsr    SYMBOL "halSleepTimerIsr"
         ARGFRAME XSTACK, 16, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN HalKeyEnterSleep
-        FUNCTION HalKeyEnterSleep,0202H
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 16, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
         EXTERN HalLedEnterSleep
         FUNCTION HalLedEnterSleep,0202H
         ARGFRAME ISTACK, 0, STACK
@@ -463,13 +453,6 @@ halSleepTimerIsr    SYMBOL "halSleepTimerIsr"
         ARGFRAME DOVERLAY, 0, STATIC
         EXTERN HalLedExitSleep
         FUNCTION HalLedExitSleep,0202H
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 16, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN HalKeyExitSleep
-        FUNCTION HalKeyExitSleep,0202H
         ARGFRAME ISTACK, 0, STACK
         ARGFRAME PSTACK, 0, STACK
         ARGFRAME XSTACK, 16, STACK
@@ -489,10 +472,6 @@ halSleepTimerIsr    SYMBOL "halSleepTimerIsr"
         ARGFRAME XSTACK, 16, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN ??HalKeyEnterSleep?relay
-        FUNCTION ??HalKeyEnterSleep?relay,00H
-        EXTERN ??HalKeyExitSleep?relay
-        FUNCTION ??HalKeyExitSleep?relay,00H
         EXTERN ??HalLedEnterSleep?relay
         FUNCTION ??HalLedEnterSleep?relay,00H
         EXTERN ??HalLedExitSleep?relay
@@ -893,17 +872,6 @@ halSleep:
         ARGFRAME XSTACK, 16, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL halSleep, HalKeyEnterSleep
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 16, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 16, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
         FUNCALL halSleep, HalLedEnterSleep
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
@@ -949,17 +917,6 @@ halSleep:
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         FUNCALL halSleep, HalLedExitSleep
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 16, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 16, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL halSleep, HalKeyExitSleep
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
         LOCFRAME XSTACK, 16, STACK
@@ -1174,8 +1131,6 @@ halSleep:
 //  312 #if ((defined HAL_KEY) && (HAL_KEY == TRUE))
 //  313       /* get peripherals ready for sleep */
 //  314       HalKeyEnterSleep();
-        ; Setup parameters for call to function HalKeyEnterSleep
-        LCALL   ??HalKeyEnterSleep?relay
 //  315 #endif
 //  316 
 //  317 #ifdef HAL_SLEEP_DEBUG_LED
@@ -1309,8 +1264,6 @@ halSleep:
 //  385 #if ((defined HAL_KEY) && (HAL_KEY == TRUE))
 //  386       /* handle peripherals */
 //  387       (void)HalKeyExitSleep();
-        ; Setup parameters for call to function HalKeyExitSleep
-        LCALL   ??HalKeyExitSleep?relay
 //  388 #endif
 //  389 
 //  390       /* power on the MAC; blocks until completion */
@@ -1912,7 +1865,7 @@ __Constant_ffffffe9:
         END
 //  589 
 // 
-// 588 bytes in segment BANKED_CODE
+// 582 bytes in segment BANKED_CODE
 //  36 bytes in segment BANK_RELAYS
 //   1 byte  in segment DATA_I
 //   1 byte  in segment DATA_ID
@@ -1923,7 +1876,7 @@ __Constant_ffffffe9:
 //  36 bytes in segment XDATA_ROM_C
 //   1 byte  in segment XDATA_Z
 // 
-// 657 bytes of CODE  memory (+  3 bytes shared)
+// 651 bytes of CODE  memory (+  3 bytes shared)
 //   0 bytes of CONST memory (+ 36 bytes shared)
 //   1 byte  of DATA  memory (+ 10 bytes shared)
 //   1 byte  of XDATA memory

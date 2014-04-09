@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V7.60.1.40026 for 8051            08/Apr/2014  21:42:48 /
+// IAR C/C++ Compiler V7.60.1.40026 for 8051            09/Apr/2014  09:37:30 /
 // Copyright (C) 2004-2010 IAR Systems AB.                                    /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -45,12 +45,13 @@
 //                          -DREJOIN_POLL_RATE=440 D:\zigbee\projects\zstack- /
 //                          cc2530-coordinator\Components\stack\zdo\ZDNwkMgr. /
 //                          c -D ZAPP_P1 -D MT_TASK -D MT_SYS_FUNC -D         /
-//                          MT_ZDO_FUNC -D LCD_SUPPORTED=DEBUG -lC            /
-//                          D:\zigbee\projects\zstack-cc2530-coordinator\Proj /
-//                          ects\zstack\Samples\GenericApp\CC2530DB\Coordinat /
-//                          orEB\List\ -lA D:\zigbee\projects\zstack-cc2530-c /
-//                          oordinator\Projects\zstack\Samples\GenericApp\CC2 /
-//                          530DB\CoordinatorEB\List\ --diag_suppress         /
+//                          MT_ZDO_FUNC -D HAL_UART -D HAL_UART=TRUE -D       /
+//                          HAL_DMA=TRUE -D HAL_LCD=FALSE -D HAL_KEY=FALSE    /
+//                          -lC D:\zigbee\projects\zstack-cc2530-coordinator\ /
+//                          Projects\zstack\Samples\GenericApp\CC2530DB\Coord /
+//                          inatorEB\List\ -lA D:\zigbee\projects\zstack-cc25 /
+//                          30-coordinator\Projects\zstack\Samples\GenericApp /
+//                          \CC2530DB\CoordinatorEB\List\ --diag_suppress     /
 //                          Pe001,Pa010 -o D:\zigbee\projects\zstack-cc2530-c /
 //                          oordinator\Projects\zstack\Samples\GenericApp\CC2 /
 //                          530DB\CoordinatorEB\Obj\ -e --require_prototypes  /
@@ -193,10 +194,6 @@
         FUNCTION ??ZDNwkMgr_SetNwkManagerAddr?relay,0203H
         PUBLIC ??ZDNwkMgr_event_loop?relay
         FUNCTION ??ZDNwkMgr_event_loop?relay,0203H
-        PUBLIC NwkMgrStr_1
-        PUBLIC NwkMgrStr_2
-        PUBLIC NwkMgrStr_3
-        PUBLIC NwkMgrStr_4
         FUNCTION ZDNwkMgr_BuildAndSendUpdateNotify,021203H
         ARGFRAME XSTACK, 21, STACK
         ARGFRAME IOVERLAY, 0, STATIC
@@ -433,15 +430,11 @@ ZDO_ParseMgmtNwkUpdateReq SYMBOL "ZDO_ParseMgmtNwkUpdateReq"
 NLME_SetUpdateID    SYMBOL "NLME_SetUpdateID"
 ZDP_MgmtNwkUpdateNotify SYMBOL "ZDP_MgmtNwkUpdateNotify"
 ZDO_ParseServerDiscRsp SYMBOL "ZDO_ParseServerDiscRsp"
-HalLcdWriteString   SYMBOL "HalLcdWriteString"
-HalLcdWriteStringValueValue SYMBOL "HalLcdWriteStringValueValue"
 osal_mem_alloc      SYMBOL "osal_mem_alloc"
 osal_mem_free       SYMBOL "osal_mem_free"
 osal_msg_allocate   SYMBOL "osal_msg_allocate"
 osal_msg_send       SYMBOL "osal_msg_send"
 osal_memcpy         SYMBOL "osal_memcpy"
-??HalLcdWriteString?relay SYMBOL "?relay", HalLcdWriteString
-??HalLcdWriteStringValueValue?relay SYMBOL "?relay", HalLcdWriteStringValueValue
 ??NLME_EDScanRequest?relay SYMBOL "?relay", NLME_EDScanRequest
 ??NLME_SetUpdateID?relay SYMBOL "?relay", NLME_SetUpdateID
 ??ZDApp_NwkStateUpdateCB?relay SYMBOL "?relay", ZDApp_NwkStateUpdateCB
@@ -558,20 +551,6 @@ ZDNwkMgr_event_loop SYMBOL "ZDNwkMgr_event_loop"
         ARGFRAME XSTACK, 12, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN HalLcdWriteString
-        FUNCTION HalLcdWriteString,0202H
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 12, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN HalLcdWriteStringValueValue
-        FUNCTION HalLcdWriteStringValueValue,0202H
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 16, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
         EXTERN osal_mem_alloc
         FUNCTION osal_mem_alloc,0202H
         ARGFRAME ISTACK, 0, STACK
@@ -607,10 +586,6 @@ ZDNwkMgr_event_loop SYMBOL "ZDNwkMgr_event_loop"
         ARGFRAME XSTACK, 19, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN ??HalLcdWriteString?relay
-        FUNCTION ??HalLcdWriteString?relay,00H
-        EXTERN ??HalLcdWriteStringValueValue?relay
-        FUNCTION ??HalLcdWriteStringValueValue?relay,00H
         EXTERN ??NLME_EDScanRequest?relay
         FUNCTION ??NLME_EDScanRequest?relay,00H
         EXTERN ??NLME_SetUpdateID?relay
@@ -720,30 +695,10 @@ ZDNwkMgr_event_loop SYMBOL "ZDNwkMgr_event_loop"
 //   70 #define ONE_MINUTE             60000  // 1(m) * 60(s) * 1000(ms)
 //   71 
 //   72 #if defined ( LCD_SUPPORTED )
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA
 //   73   const char NwkMgrStr_1[]     = "NM-fail not hi";
-NwkMgrStr_1:
-        DB "NM-fail not hi"
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA
 //   74   const char NwkMgrStr_2[]     = "NM-cur<last fail";
-NwkMgrStr_2:
-        DB "NM-cur<last fail"
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA
 //   75   const char NwkMgrStr_3[]     = "NM-energy too hi";
-NwkMgrStr_3:
-        DB "NM-energy too hi"
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA
 //   76   const char NwkMgrStr_4[]     = "NM-energy not up";
-NwkMgrStr_4:
-        DB "NM-energy not up"
 //   77 #endif
 //   78   
 //   79 /******************************************************************************
@@ -3227,28 +3182,6 @@ ZDNwkMgr_CheckForChannelInterference:
         ARGFRAME XSTACK, 12, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL ZDNwkMgr_CheckForChannelInterference, HalLcdWriteString
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 12, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 12, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL ZDNwkMgr_CheckForChannelInterference, HalLcdWriteStringValueValue
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 16, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 16, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
         MOV     A,#-0xc
         LCALL   ?BANKED_ENTER_XDATA
         CFI DPH0 load(1, XDATA, add(CFA_XSP16, literal(-1)))
@@ -3269,15 +3202,15 @@ ZDNwkMgr_CheckForChannelInterference:
         ; Auto size: 0
 //  723   uint8 i;
 //  724   uint8 channelEnergy = 0;
-        MOV     R6,#0x0
+        MOV     R5,#0x0
 //  725   uint8 energyIncreased = FALSE;
 //  726     
 //  727   // Get the current channel energy
 //  728   if ( ( (uint32)1 << _NIB.nwkLogicalChannel ) & pEDScanConfirm->scannedChannels )
         MOV     ?V0 + 0,#0x1
-        MOV     ?V0 + 1,R6
-        MOV     ?V0 + 2,R6
-        MOV     ?V0 + 3,R6
+        MOV     ?V0 + 1,R5
+        MOV     ?V0 + 2,R5
+        MOV     ?V0 + 3,R5
         MOV     DPTR,#(_NIB + 22)
         MOVX    A,@DPTR
         MOV     R0,#?V0 + 0
@@ -3303,7 +3236,7 @@ ZDNwkMgr_CheckForChannelInterference:
         LCALL   ?Subroutine7 & 0xFFFF
 //  731   }
 ??CrossCallReturnLabel_24:
-        MOV     R6,A
+        MOV     R5,A
 //  732     
 //  733   // If this energy scan does not indicate higher energy on the current 
 //  734   // channel then other channels, no action is taken. The device should 
@@ -3347,7 +3280,7 @@ ZDNwkMgr_CheckForChannelInterference:
         LCALL   ?Subroutine7 & 0xFFFF
 ??CrossCallReturnLabel_25:
         CLR     C
-        SUBB    A,R6
+        SUBB    A,R5
         JNC     ??ZDNwkMgr_CheckForChannelInterference_2
 //  740     {
 //  741       energyIncreased = TRUE;
@@ -3422,48 +3355,16 @@ ZDNwkMgr_CheckForChannelInterference:
         MOVX    A,@DPTR
         INC     A
         MOVX    @DPTR,A
-        SJMP    ??ZDNwkMgr_CheckForChannelInterference_4
 //  766   }
 //  767 #if defined ( LCD_SUPPORTED )
 //  768   else
 //  769   {
 //  770     HalLcdWriteString( (char*)NwkMgrStr_4, HAL_LCD_LINE_1 );
-??ZDNwkMgr_CheckForChannelInterference_3:
-        ; Setup parameters for call to function HalLcdWriteString
-        MOV     R1,#0x1
-        MOV     R2,#(NwkMgrStr_4 & 0xff)
-        MOV     R3,#((NwkMgrStr_4 >> 8) & 0xff)
-        LCALL   ??HalLcdWriteString?relay
 //  771     HalLcdWriteStringValueValue( ": ", _NIB.nwkLogicalChannel, 10, channelEnergy, 10, HAL_LCD_LINE_2 );
-        ; Setup parameters for call to function HalLcdWriteStringValueValue
-        MOV     ?V0 + 0,#0x2
-        MOV     R0,#?V0 + 0
-        LCALL   ?PUSH_XSTACK_I_ONE
-        CFI CFA_XSP16 add(XSP16, 13)
-        MOV     ?V0 + 0,#0xa
-        MOV     R0,#?V0 + 0
-        LCALL   ?PUSH_XSTACK_I_ONE
-        CFI CFA_XSP16 add(XSP16, 14)
-        MOV     ?V0 + 0,R6
-        MOV     ?V0 + 1,#0x0
-        MOV     R0,#?V0 + 0
-        LCALL   ?PUSH_XSTACK_I_TWO
-        CFI CFA_XSP16 add(XSP16, 16)
-        MOV     R1,#0xa
-        MOV     DPTR,#(_NIB + 22)
-        MOVX    A,@DPTR
-        MOV     R4,A
-        MOV     R5,#0x0
-        MOV     R2,#(`?<Constant ": ">` & 0xff)
-        MOV     R3,#((`?<Constant ": ">` >> 8) & 0xff)
-        LCALL   ??HalLcdWriteStringValueValue?relay
-        MOV     A,#0x4
-        LCALL   ?DEALLOC_XSTACK8
-        CFI CFA_XSP16 add(XSP16, 12)
 //  772   }
 //  773 #endif
 //  774 }
-??ZDNwkMgr_CheckForChannelInterference_4:
+??ZDNwkMgr_CheckForChannelInterference_3:
         LJMP    ?Subroutine2 & 0xFFFF
         CFI EndBlock cfiBlock47
 
@@ -4734,6 +4635,16 @@ ZDNwkMgr_ProcessDataConfirm:
         CFI EndBlock cfiCond81
         CFI EndBlock cfiPicker82
 
+        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
+        DATA
+__Constant_7fff800:
+        DD 134215680
+
+        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
+        DATA
+__Constant_0:
+        DD 0
+
         RSEG BANK_RELAYS:CODE:REORDER:NOROOT(0)
 ??ZDNwkMgr_Init?relay:
         LCALL   ?BDISPATCH
@@ -4793,21 +4704,6 @@ ZDNwkMgr_ProcessDataConfirm:
         LCALL   ?BDISPATCH
         DATA
         DC24    ZDNwkMgr_ProcessDataConfirm
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA
-`?<Constant ": ">`:
-        DB ": "
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA
-__Constant_7fff800:
-        DD 134215680
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA
-__Constant_0:
-        DD 0
 
         END
 //  953 
@@ -4922,13 +4818,13 @@ __Constant_0:
 // 1062 /*********************************************************************
 // 1063 *********************************************************************/
 // 
-// 1 994 bytes in segment BANKED_CODE
+// 1 936 bytes in segment BANKED_CODE
 //    60 bytes in segment BANK_RELAYS
-//    77 bytes in segment XDATA_ROM_C
+//     8 bytes in segment XDATA_ROM_C
 //    39 bytes in segment XDATA_Z
 // 
-// 2 054 bytes of CODE  memory
-//    69 bytes of CONST memory (+ 8 bytes shared)
+// 1 996 bytes of CODE  memory
+//     0 bytes of CONST memory (+ 8 bytes shared)
 //    39 bytes of XDATA memory
 //
 //Errors: none

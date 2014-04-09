@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V7.60.1.40026 for 8051            08/Apr/2014  22:18:30 /
+// IAR C/C++ Compiler V7.60.1.40026 for 8051            09/Apr/2014  09:37:44 /
 // Copyright (C) 2004-2010 IAR Systems AB.                                    /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -45,12 +45,13 @@
 //                          -DREJOIN_POLL_RATE=440 D:\zigbee\projects\zstack- /
 //                          cc2530-coordinator\Components\hal\target\CC2530EB /
 //                          \hal_uart.c -D ZAPP_P1 -D MT_TASK -D MT_SYS_FUNC  /
-//                          -D MT_ZDO_FUNC -D LCD_SUPPORTED=DEBUG -lC         /
-//                          D:\zigbee\projects\zstack-cc2530-coordinator\Proj /
-//                          ects\zstack\Samples\GenericApp\CC2530DB\Coordinat /
-//                          orEB\List\ -lA D:\zigbee\projects\zstack-cc2530-c /
-//                          oordinator\Projects\zstack\Samples\GenericApp\CC2 /
-//                          530DB\CoordinatorEB\List\ --diag_suppress         /
+//                          -D MT_ZDO_FUNC -D HAL_UART -D HAL_UART=TRUE -D    /
+//                          HAL_DMA=TRUE -D HAL_LCD=FALSE -D HAL_KEY=FALSE    /
+//                          -lC D:\zigbee\projects\zstack-cc2530-coordinator\ /
+//                          Projects\zstack\Samples\GenericApp\CC2530DB\Coord /
+//                          inatorEB\List\ -lA D:\zigbee\projects\zstack-cc25 /
+//                          30-coordinator\Projects\zstack\Samples\GenericApp /
+//                          \CC2530DB\CoordinatorEB\List\ --diag_suppress     /
 //                          Pe001,Pa010 -o D:\zigbee\projects\zstack-cc2530-c /
 //                          oordinator\Projects\zstack\Samples\GenericApp\CC2 /
 //                          530DB\CoordinatorEB\Obj\ -e --require_prototypes  /
@@ -700,11 +701,11 @@ HalUARTInitDMA:
         LJMP    ?Subroutine0 & 0xFFFF
         CFI EndBlock cfiBlock0
         REQUIRE U0UCR
+        REQUIRE U0CSR
         REQUIRE PERCFG
         REQUIRE ADCCFG
         REQUIRE P0SEL
         REQUIRE P2DIR
-        REQUIRE U0CSR
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
 // static __banked_func __xdata_reentrant void HalUARTOpenDMA(halUARTCfg_t *)
@@ -844,12 +845,12 @@ HalUARTOpenDMA:
         REQUIRE U0BAUD
         REQUIRE U0UCR
         REQUIRE U0GCR
-        REQUIRE P0SEL
-        REQUIRE P0DIR
         REQUIRE DMAIRQ
         REQUIRE DMAARM
         REQUIRE _A_P0
         REQUIRE U0CSR
+        REQUIRE P0SEL
+        REQUIRE P0DIR
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
 // static __banked_func __xdata_reentrant uint16 HalUARTReadDMA(unsigned char *, uint16)

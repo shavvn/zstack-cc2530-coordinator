@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V7.60.1.40026 for 8051             08/Apr/2014  21:42:52 #
+# IAR C/C++ Compiler V7.60.1.40026 for 8051             09/Apr/2014  09:37:44 #
 # Copyright (C) 2004-2010 IAR Systems AB.                                     #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -45,15 +45,16 @@
 #                          -DREJOIN_POLL_RATE=440 D:\zigbee\projects\zstack-c #
 #                          c2530-coordinator\Components\hal\target\CC2530EB\h #
 #                          al_sleep.c -D ZAPP_P1 -D MT_TASK -D MT_SYS_FUNC    #
-#                          -D MT_ZDO_FUNC -D LCD_SUPPORTED=DEBUG -lC          #
-#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
-#                          cts\zstack\Samples\GenericApp\CC2530DB\Coordinator #
-#                          EB\List\ -lA D:\zigbee\projects\zstack-cc2530-coor #
-#                          dinator\Projects\zstack\Samples\GenericApp\CC2530D #
-#                          B\CoordinatorEB\List\ --diag_suppress Pe001,Pa010  #
-#                          -o D:\zigbee\projects\zstack-cc2530-coordinator\Pr #
-#                          ojects\zstack\Samples\GenericApp\CC2530DB\Coordina #
-#                          torEB\Obj\ -e --require_prototypes                 #
+#                          -D MT_ZDO_FUNC -D HAL_UART -D HAL_UART=TRUE -D     #
+#                          HAL_DMA=TRUE -D HAL_LCD=FALSE -D HAL_KEY=FALSE     #
+#                          -lC D:\zigbee\projects\zstack-cc2530-coordinator\P #
+#                          rojects\zstack\Samples\GenericApp\CC2530DB\Coordin #
+#                          atorEB\List\ -lA D:\zigbee\projects\zstack-cc2530- #
+#                          coordinator\Projects\zstack\Samples\GenericApp\CC2 #
+#                          530DB\CoordinatorEB\List\ --diag_suppress          #
+#                          Pe001,Pa010 -o D:\zigbee\projects\zstack-cc2530-co #
+#                          ordinator\Projects\zstack\Samples\GenericApp\CC253 #
+#                          0DB\CoordinatorEB\Obj\ -e --require_prototypes     #
 #                          --no_code_motion --debug --core=plain --dptr=16,1  #
 #                          --data_model=large --code_model=banked             #
 #                          --calling_convention=xdata_reentrant               #
@@ -611,8 +612,6 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\hal\target\CC2530EB\hal_
     312          #if ((defined HAL_KEY) && (HAL_KEY == TRUE))
     313                /* get peripherals ready for sleep */
     314                HalKeyEnterSleep();
-   \   0000B9                ; Setup parameters for call to function HalKeyEnterSleep
-   \   0000B9   12....       LCALL   ??HalKeyEnterSleep?relay
     315          #endif
     316          
     317          #ifdef HAL_SLEEP_DEBUG_LED
@@ -620,51 +619,51 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\hal\target\CC2530EB\hal_
     319          #else
     320                /* use this to turn LEDs off during sleep */
     321                HalLedEnterSleep();
-   \   0000BC                ; Setup parameters for call to function HalLedEnterSleep
-   \   0000BC   12....       LCALL   ??HalLedEnterSleep?relay
+   \   0000B9                ; Setup parameters for call to function HalLedEnterSleep
+   \   0000B9   12....       LCALL   ??HalLedEnterSleep?relay
     322          #endif
     323          
     324                /* enable sleep timer interrupt */
     325                if (timeout != 0)
-   \   0000BF   90....       MOV     DPTR,#__Constant_0
-   \   0000C2   78..         MOV     R0,#?V0 + 0
-   \   0000C4   12....       LCALL   ?L_EQ_X
-   \   0000C7   6028         JZ      ??halSleep_6
+   \   0000BC   90....       MOV     DPTR,#__Constant_0
+   \   0000BF   78..         MOV     R0,#?V0 + 0
+   \   0000C1   12....       LCALL   ?L_EQ_X
+   \   0000C4   6028         JZ      ??halSleep_6
     326                {
     327                  if (timeout > HAL_SLEEP_MS_TO_320US( MAX_SLEEP_TIME ))
-   \   0000C9   90....       MOV     DPTR,#__Constant_185197
-   \   0000CC   78..         MOV     R0,#?V0 + 4
-   \   0000CE   12....       LCALL   ?L_MOV_X
-   \   0000D1   78..         MOV     R0,#?V0 + 4
-   \   0000D3   79..         MOV     R1,#?V0 + 0
-   \   0000D5   12....       LCALL   ?UL_GT
-   \   0000D8   4008         JC      ??halSleep_7
+   \   0000C6   90....       MOV     DPTR,#__Constant_185197
+   \   0000C9   78..         MOV     R0,#?V0 + 4
+   \   0000CB   12....       LCALL   ?L_MOV_X
+   \   0000CE   78..         MOV     R0,#?V0 + 4
+   \   0000D0   79..         MOV     R1,#?V0 + 0
+   \   0000D2   12....       LCALL   ?UL_GT
+   \   0000D5   4008         JC      ??halSleep_7
     328                  {
     329                    timeout -= HAL_SLEEP_MS_TO_320US( MAX_SLEEP_TIME );
     330                    halSleepSetTimer(HAL_SLEEP_MS_TO_320US( MAX_SLEEP_TIME ));
-   \   0000DA                ; Setup parameters for call to function halSleepSetTimer
-   \   0000DA   90....       MOV     DPTR,#__Constant_185196
-   \   0000DD   78..         MOV     R0,#?V0 + 0
-   \   0000DF   12....       LCALL   ?L_MOV_X
+   \   0000D7                ; Setup parameters for call to function halSleepSetTimer
+   \   0000D7   90....       MOV     DPTR,#__Constant_185196
+   \   0000DA   78..         MOV     R0,#?V0 + 0
+   \   0000DC   12....       LCALL   ?L_MOV_X
     331                  }
     332                  else
     333                  {
     334                    /* set sleep timer */
     335                    halSleepSetTimer(timeout);
    \                     ??halSleep_7:
-   \   0000E2                ; Setup parameters for call to function halSleepSetTimer
-   \   0000E2   AA..         MOV     R2,?V0 + 0
-   \   0000E4   AB..         MOV     R3,?V0 + 1
-   \   0000E6   AC..         MOV     R4,?V0 + 2
-   \   0000E8   AD..         MOV     R5,?V0 + 3
-   \   0000EA   12....       LCALL   ??halSleepSetTimer?relay
+   \   0000DF                ; Setup parameters for call to function halSleepSetTimer
+   \   0000DF   AA..         MOV     R2,?V0 + 0
+   \   0000E1   AB..         MOV     R3,?V0 + 1
+   \   0000E3   AC..         MOV     R4,?V0 + 2
+   \   0000E5   AD..         MOV     R5,?V0 + 3
+   \   0000E7   12....       LCALL   ??halSleepSetTimer?relay
     336                  }
     337          
     338                  /* set up sleep timer interrupt */
     339                  HAL_SLEEP_TIMER_CLEAR_INT();
-   \   0000ED   C2C7         CLR     0xc0.7
+   \   0000EA   C2C7         CLR     0xc0.7
     340                  HAL_SLEEP_TIMER_ENABLE_INT();
-   \   0000EF   D2AD         SETB    0xa8.5
+   \   0000EC   D2AD         SETB    0xa8.5
     341                }
     342          
     343          #ifdef HAL_SLEEP_DEBUG_LED
@@ -681,34 +680,34 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\hal\target\CC2530EB\hal_
     354                /* Prep CC2530 power mode */
     355                HAL_SLEEP_PREP_POWER_MODE(halPwrMgtMode);
    \                     ??halSleep_6:
-   \   0000F1   53BEFC       ANL     0xbe,#0xfc
-   \   0000F4   E5BE         MOV     A,0xbe
-   \   0000F6   90....       MOV     DPTR,#halPwrMgtMode
-   \   0000F9   E0           MOVX    A,@DPTR
-   \   0000FA   45BE         ORL     A,0xbe
-   \   0000FC   F5BE         MOV     0xbe,A
+   \   0000EE   53BEFC       ANL     0xbe,#0xfc
+   \   0000F1   E5BE         MOV     A,0xbe
+   \   0000F3   90....       MOV     DPTR,#halPwrMgtMode
+   \   0000F6   E0           MOVX    A,@DPTR
+   \   0000F7   45BE         ORL     A,0xbe
+   \   0000F9   F5BE         MOV     0xbe,A
    \                     ??halSleep_8:
-   \   0000FE   E5AD         MOV     A,0xad
-   \   000100   A2E0         MOV     C,0xE0 /* A   */.0
-   \   000102   50FA         JNC     ??halSleep_8
-   \   000104   75..01       MOV     halSleepPconValue,#0x1
+   \   0000FB   E5AD         MOV     A,0xad
+   \   0000FD   A2E0         MOV     C,0xE0 /* A   */.0
+   \   0000FF   50FA         JNC     ??halSleep_8
+   \   000101   75..01       MOV     halSleepPconValue,#0x1
     356          
     357                /* save interrupt enable registers and disable all interrupts */
     358                HAL_SLEEP_IE_BACKUP_AND_DISABLE(ien0, ien1, ien2);
-   \   000107   E5A8         MOV     A,0xa8
-   \   000109   FE           MOV     R6,A
-   \   00010A   E5B8         MOV     A,0xb8
-   \   00010C   FF           MOV     R7,A
-   \   00010D   E59A         MOV     A,0x9a
-   \   00010F   F5..         MOV     ?V0 + 0,A
-   \   000111   53A820       ANL     0xa8,#0x20
-   \   000114   E5A8         MOV     A,0xa8
-   \   000116   53B820       ANL     0xb8,#0x20
-   \   000119   E5B8         MOV     A,0xb8
-   \   00011B   539A12       ANL     0x9a,#0x12
-   \   00011E   E59A         MOV     A,0x9a
+   \   000104   E5A8         MOV     A,0xa8
+   \   000106   FE           MOV     R6,A
+   \   000107   E5B8         MOV     A,0xb8
+   \   000109   FF           MOV     R7,A
+   \   00010A   E59A         MOV     A,0x9a
+   \   00010C   F5..         MOV     ?V0 + 0,A
+   \   00010E   53A820       ANL     0xa8,#0x20
+   \   000111   E5A8         MOV     A,0xa8
+   \   000113   53B820       ANL     0xb8,#0x20
+   \   000116   E5B8         MOV     A,0xb8
+   \   000118   539A12       ANL     0x9a,#0x12
+   \   00011B   E59A         MOV     A,0x9a
     359                HAL_ENABLE_INTERRUPTS();
-   \   000120   D2AF         SETB    0xa8.7
+   \   00011D   D2AF         SETB    0xa8.7
     360          
     361                /* set CC2530 power mode, interrupt is disabled after this function
     362                 * Note that an ISR (that could wake up from power mode) which runs
@@ -717,46 +716,44 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\hal\target\CC2530EB\hal_
     365                 * power mode shall not be entered in such a case. 
     366                 */
     367                HAL_SLEEP_SET_POWER_MODE();
-   \   000122                ; Setup parameters for call to function halSetSleepMode
-   \   000122   12....       LCALL   ??halSetSleepMode?relay
+   \   00011F                ; Setup parameters for call to function halSetSleepMode
+   \   00011F   12....       LCALL   ??halSetSleepMode?relay
     368          
     369                /* Disable interrupt immediately */
     370                HAL_DISABLE_INTERRUPTS();
-   \   000125   C2AF         CLR     0xa8.7
+   \   000122   C2AF         CLR     0xa8.7
     371          
     372                /* restore interrupt enable registers */
     373                HAL_SLEEP_IE_RESTORE(ien0, ien1, ien2);
-   \   000127   8EA8         MOV     0xa8,R6
-   \   000129   8FB8         MOV     0xb8,R7
-   \   00012B   85..9A       MOV     0x9a,?V0 + 0
+   \   000124   8EA8         MOV     0xa8,R6
+   \   000126   8FB8         MOV     0xb8,R7
+   \   000128   85..9A       MOV     0x9a,?V0 + 0
     374          
     375                /* disable sleep timer interrupt */
     376                HAL_SLEEP_TIMER_DISABLE_INT();
-   \   00012E   C2AD         CLR     0xa8.5
+   \   00012B   C2AD         CLR     0xa8.5
     377          
     378          #ifdef HAL_SLEEP_DEBUG_LED
     379                HAL_TURN_ON_LED3();
     380          #else
     381                /* use this to turn LEDs back on after sleep */
     382                HalLedExitSleep();
-   \   000130                ; Setup parameters for call to function HalLedExitSleep
-   \   000130   12....       LCALL   ??HalLedExitSleep?relay
+   \   00012D                ; Setup parameters for call to function HalLedExitSleep
+   \   00012D   12....       LCALL   ??HalLedExitSleep?relay
     383          #endif
     384          
     385          #if ((defined HAL_KEY) && (HAL_KEY == TRUE))
     386                /* handle peripherals */
     387                (void)HalKeyExitSleep();
-   \   000133                ; Setup parameters for call to function HalKeyExitSleep
-   \   000133   12....       LCALL   ??HalKeyExitSleep?relay
     388          #endif
     389          
     390                /* power on the MAC; blocks until completion */
     391                MAC_PwrOnReq();
-   \   000136                ; Setup parameters for call to function MAC_PwrOnReq
-   \   000136   12....       LCALL   ??MAC_PwrOnReq?relay
+   \   000130                ; Setup parameters for call to function MAC_PwrOnReq
+   \   000130   12....       LCALL   ??MAC_PwrOnReq?relay
     392          
     393                HAL_ENABLE_INTERRUPTS();
-   \   000139   D2AF         SETB    0xa8.7
+   \   000133   D2AF         SETB    0xa8.7
     394          
     395                /* For CC2530, T2 interrupt won’t be generated when the current count is greater than
     396                 * the comparator. The interrupt is only generated when the current count is equal to
@@ -767,24 +764,24 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\hal\target\CC2530EB\hal_
     401                 * drives the chip in sleep and SYNC start is used.
     402                 */
     403                macMcuTimer2OverflowWorkaround();
-   \   00013B                ; Setup parameters for call to function macMcuTimer2OverflowWorkaround
-   \   00013B   12....       LCALL   ??macMcuTimer2OverflowWorkaround?relay
-   \   00013E   8026         SJMP    ??halSleep_9
+   \   000135                ; Setup parameters for call to function macMcuTimer2OverflowWorkaround
+   \   000135   12....       LCALL   ??macMcuTimer2OverflowWorkaround?relay
+   \   000138   8026         SJMP    ??halSleep_9
     404              }
     405              else
     406              {
     407                /* Sleep request is not granted. Check PCON value to see why the sleep is not granted. */
     408                if (halSleepPconValue == 0)
    \                     ??halSleep_5:
-   \   000140   E5..         MOV     A,halSleepPconValue
-   \   000142   7017         JNZ     ??halSleep_10
+   \   00013A   E5..         MOV     A,halSleepPconValue
+   \   00013C   7017         JNZ     ??halSleep_10
     409                {
     410                  /* An interrupt may have changed the sleep decision. Do not sleep at all. Turn on 
     411                   * the interrupt, exit normally, and the next sleep will be allowed.
     412                   */
     413                  HAL_ENABLE_INTERRUPTS();
-   \   000144   D2AF         SETB    0xa8.7
-   \   000146   801E         SJMP    ??halSleep_9
+   \   00013E   D2AF         SETB    0xa8.7
+   \   000140   801E         SJMP    ??halSleep_9
     414                }
     415                else
     416                {
@@ -797,38 +794,38 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\hal\target\CC2530EB\hal_
     423            }
     424            else if (timeout > PM_MIN_IDLE_TIME)
    \                     ??halSleep_3:
-   \   000148   90....       MOV     DPTR,#__Constant_4
-   \   00014B   78..         MOV     R0,#?V0 + 4
-   \   00014D   12....       LCALL   ?L_MOV_X
-   \   000150   78..         MOV     R0,#?V0 + 4
-   \   000152   79..         MOV     R1,#?V0 + 0
-   \   000154   12....       LCALL   ?UL_GT
-   \   000157   400D         JC      ??halSleep_9
+   \   000142   90....       MOV     DPTR,#__Constant_4
+   \   000145   78..         MOV     R0,#?V0 + 4
+   \   000147   12....       LCALL   ?L_MOV_X
+   \   00014A   78..         MOV     R0,#?V0 + 4
+   \   00014C   79..         MOV     R1,#?V0 + 0
+   \   00014E   12....       LCALL   ?UL_GT
+   \   000151   400D         JC      ??halSleep_9
     425            {
     426              /* Timeout is too close to enter power mode. Try idle mode. */
     427              HAL_DISABLE_INTERRUPTS();
-   \   000159   C2AF         CLR     0xa8.7
+   \   000153   C2AF         CLR     0xa8.7
     428          
     429              /* Interrupt will be enabled in halSleepEnterIdleMode(). */
     430              halSleepEnterIdleMode(timeout);
-   \   00015B                ; Setup parameters for call to function halSleepEnterIdleMode
+   \   000155                ; Setup parameters for call to function halSleepEnterIdleMode
    \                     ??halSleep_10:
-   \   00015B   AA..         MOV     R2,?V0 + 0
-   \   00015D   AB..         MOV     R3,?V0 + 1
-   \   00015F   AC..         MOV     R4,?V0 + 2
-   \   000161   AD..         MOV     R5,?V0 + 3
-   \   000163   12....       LCALL   ??halSleepEnterIdleMode?relay
+   \   000155   AA..         MOV     R2,?V0 + 0
+   \   000157   AB..         MOV     R3,?V0 + 1
+   \   000159   AC..         MOV     R4,?V0 + 2
+   \   00015B   AD..         MOV     R5,?V0 + 3
+   \   00015D   12....       LCALL   ??halSleepEnterIdleMode?relay
     431            }
     432          }
    \                     ??halSleep_9:
-   \   000166                REQUIRE ?Subroutine0
-   \   000166                REQUIRE _A_IEN0
-   \   000166                REQUIRE STLOAD
-   \   000166                REQUIRE _A_IEN1
-   \   000166                REQUIRE SLEEPCMD
-   \   000166                REQUIRE _A_IRCON
-   \   000166                REQUIRE IEN2
-   \   000166                ; // Fall through to label ?Subroutine0
+   \   000160                REQUIRE ?Subroutine0
+   \   000160                REQUIRE _A_IEN0
+   \   000160                REQUIRE STLOAD
+   \   000160                REQUIRE _A_IEN1
+   \   000160                REQUIRE SLEEPCMD
+   \   000160                REQUIRE _A_IRCON
+   \   000160                REQUIRE IEN2
+   \   000160                ; // Fall through to label ?Subroutine0
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
    \                     ?Subroutine0:
@@ -1227,13 +1224,11 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\hal\target\CC2530EB\hal_
        -> MAC_PwrNextTimeout            0      0     32
        -> halAssertHandler              0      0     32
        -> MAC_PwrOffReq                 0      0     32
-       -> HalKeyEnterSleep              0      0     32
        -> HalLedEnterSleep              0      0     32
        -> halSleepSetTimer              0      0     32
        -> halSleepSetTimer              0      0     32
        -> halSetSleepMode               0      0     32
        -> HalLedExitSleep               0      0     32
-       -> HalKeyExitSleep               0      0     32
        -> MAC_PwrOnReq                  0      0     32
        -> macMcuTimer2OverflowWorkaround
                                         0      0     32
@@ -1263,7 +1258,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\hal\target\CC2530EB\hal_
      halSleepPconValue                       1
      halPwrMgtMode                           1
      halSetSleepMode                         7
-     halSleep                              358
+     halSleep                              352
      ?Subroutine0                            5
      halSleepSetTimer                      132
      halSleepEnterIdleMode                  79
@@ -1289,7 +1284,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\hal\target\CC2530EB\hal_
      ??halRestoreSleepLevel?relay            6
 
  
- 588 bytes in segment BANKED_CODE
+ 582 bytes in segment BANKED_CODE
   36 bytes in segment BANK_RELAYS
    1 byte  in segment DATA_I
    1 byte  in segment DATA_ID
@@ -1300,7 +1295,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\hal\target\CC2530EB\hal_
   36 bytes in segment XDATA_ROM_C
    1 byte  in segment XDATA_Z
  
- 657 bytes of CODE  memory (+  3 bytes shared)
+ 651 bytes of CODE  memory (+  3 bytes shared)
    0 bytes of CONST memory (+ 36 bytes shared)
    1 byte  of DATA  memory (+ 10 bytes shared)
    1 byte  of XDATA memory

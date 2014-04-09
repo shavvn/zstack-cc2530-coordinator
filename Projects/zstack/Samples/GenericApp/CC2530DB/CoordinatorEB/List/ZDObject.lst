@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V7.60.1.40026 for 8051             08/Apr/2014  21:42:50 #
+# IAR C/C++ Compiler V7.60.1.40026 for 8051             09/Apr/2014  09:37:40 #
 # Copyright (C) 2004-2010 IAR Systems AB.                                     #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -45,15 +45,16 @@
 #                          -DREJOIN_POLL_RATE=440 D:\zigbee\projects\zstack-c #
 #                          c2530-coordinator\Components\stack\zdo\ZDObject.c  #
 #                          -D ZAPP_P1 -D MT_TASK -D MT_SYS_FUNC -D            #
-#                          MT_ZDO_FUNC -D LCD_SUPPORTED=DEBUG -lC             #
-#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
-#                          cts\zstack\Samples\GenericApp\CC2530DB\Coordinator #
-#                          EB\List\ -lA D:\zigbee\projects\zstack-cc2530-coor #
-#                          dinator\Projects\zstack\Samples\GenericApp\CC2530D #
-#                          B\CoordinatorEB\List\ --diag_suppress Pe001,Pa010  #
-#                          -o D:\zigbee\projects\zstack-cc2530-coordinator\Pr #
-#                          ojects\zstack\Samples\GenericApp\CC2530DB\Coordina #
-#                          torEB\Obj\ -e --require_prototypes                 #
+#                          MT_ZDO_FUNC -D HAL_UART -D HAL_UART=TRUE -D        #
+#                          HAL_DMA=TRUE -D HAL_LCD=FALSE -D HAL_KEY=FALSE     #
+#                          -lC D:\zigbee\projects\zstack-cc2530-coordinator\P #
+#                          rojects\zstack\Samples\GenericApp\CC2530DB\Coordin #
+#                          atorEB\List\ -lA D:\zigbee\projects\zstack-cc2530- #
+#                          coordinator\Projects\zstack\Samples\GenericApp\CC2 #
+#                          530DB\CoordinatorEB\List\ --diag_suppress          #
+#                          Pe001,Pa010 -o D:\zigbee\projects\zstack-cc2530-co #
+#                          ordinator\Projects\zstack\Samples\GenericApp\CC253 #
+#                          0DB\CoordinatorEB\Obj\ -e --require_prototypes     #
 #                          --no_code_motion --debug --core=plain --dptr=16,1  #
 #                          --data_model=large --code_model=banked             #
 #                          --calling_convention=xdata_reentrant               #
@@ -495,12 +496,12 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDObject.c
     296          
     297            if ( ZG_BUILD_COORDINATOR_TYPE && logicalType == NODETYPE_COORDINATOR )
    \   00000B   EF           MOV     A,R7
-   \   00000C   7044         JNZ     ??ZDO_StartDevice_0
+   \   00000C   705A         JNZ     ??ZDO_StartDevice_0
     298            {
     299              if ( startMode == MODE_HARD )
    \   00000E   7402         MOV     A,#0x2
    \   000010   65..         XRL     A,?V0 + 0
-   \   000012   7051         JNZ     ??ZDO_StartDevice_1
+   \   000012   703D         JNZ     ??ZDO_StartDevice_1
     300              {
     301                devState = DEV_COORD_STARTING;
    \   000014   7408         MOV     A,#0x8
@@ -535,13 +536,27 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDObject.c
    \   000047   12....       LCALL   ??NLME_NetworkFormationRequest?relay
    \   00004A   7407         MOV     A,#0x7
    \   00004C   12....       LCALL   ?DEALLOC_XSTACK8
-   \                     ??ZDO_StartDevice_2:
-   \   00004F   E9           MOV     A,R1
+   \   00004F   8014         SJMP    ??ZDO_StartDevice_2
     306              else if ( startMode == MODE_RESUME )
+   \                     ??ZDO_StartDevice_1:
+   \   000051   7401         MOV     A,#0x1
+   \   000053   65..         XRL     A,?V0 + 0
+   \   000055   7011         JNZ     ??ZDO_StartDevice_0
     307              {
     308                // Just start the coordinator
     309                devState = DEV_COORD_STARTING;
+   \   000057   7408         MOV     A,#0x8
+   \   000059   90....       MOV     DPTR,#devState
+   \   00005C   F0           MOVX    @DPTR,A
     310                ret = NLME_StartRouterRequest( beaconOrder, beaconOrder, false );
+   \   00005D                ; Setup parameters for call to function NLME_StartRouterRequest
+   \   00005D   7B00         MOV     R3,#0x0
+   \   00005F   EE           MOV     A,R6
+   \   000060   FA           MOV     R2,A
+   \   000061   F9           MOV     R1,A
+   \   000062   12....       LCALL   ??NLME_StartRouterRequest?relay
+   \                     ??ZDO_StartDevice_2:
+   \   000065   E9           MOV     A,R1
     311              }
     312              else
     313              {
@@ -621,43 +636,22 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDObject.c
     387            }
     388          
     389            if ( ret != ZSuccess )
-   \   000050   6010         JZ      ??ZDO_StartDevice_3
+   \   000066   6010         JZ      ??ZDO_StartDevice_3
     390              osal_start_timerEx(ZDAppTaskID, ZDO_NETWORK_INIT, NWK_RETRY_DELAY );
    \                     ??ZDO_StartDevice_0:
-   \   000052                ; Setup parameters for call to function osal_start_timerEx
-   \   000052   7CE8         MOV     R4,#-0x18
-   \   000054   7D03         MOV     R5,#0x3
-   \   000056   7A01         MOV     R2,#0x1
-   \   000058   7B00         MOV     R3,#0x0
-   \   00005A   90....       MOV     DPTR,#ZDAppTaskID
-   \   00005D   E0           MOVX    A,@DPTR
-   \   00005E   F9           MOV     R1,A
-   \   00005F   12....       LCALL   ??osal_start_timerEx?relay
+   \   000068                ; Setup parameters for call to function osal_start_timerEx
+   \   000068   7CE8         MOV     R4,#-0x18
+   \   00006A   7D03         MOV     R5,#0x3
+   \   00006C   7A01         MOV     R2,#0x1
+   \   00006E   7B00         MOV     R3,#0x0
+   \   000070   90....       MOV     DPTR,#ZDAppTaskID
+   \   000073   E0           MOVX    A,@DPTR
+   \   000074   F9           MOV     R1,A
+   \   000075   12....       LCALL   ??osal_start_timerEx?relay
     391          }
    \                     ??ZDO_StartDevice_3:
-   \   000062   02....       LJMP    ?Subroutine1 & 0xFFFF
-   \                     ??ZDO_StartDevice_1:
-   \   000065   7401         MOV     A,#0x1
-   \   000067   65..         XRL     A,?V0 + 0
-   \   000069   7010         JNZ     ??ZDO_StartDevice_4
-   \   00006B   7408         MOV     A,#0x8
-   \   00006D   90....       MOV     DPTR,#devState
-   \   000070   F0           MOVX    @DPTR,A
-   \   000071                ; Setup parameters for call to function NLME_StartRouterRequest
-   \   000071   7B00         MOV     R3,#0x0
-   \   000073   EE           MOV     A,R6
-   \   000074   FA           MOV     R2,A
-   \   000075   F9           MOV     R1,A
-   \   000076   12....       LCALL   ??NLME_StartRouterRequest?relay
-   \   000079   80D4         SJMP    ??ZDO_StartDevice_2
-   \                     ??ZDO_StartDevice_4:
-   \   00007B                ; Setup parameters for call to function HalLcdWriteScreen
-   \   00007B   7C..         MOV     R4,#(`?<Constant "MODE unknown">` & 0xff)
-   \   00007D   7D..         MOV     R5,#((`?<Constant "MODE unknown">` >> 8) & 0xff)
-   \   00007F   7A..         MOV     R2,#(`?<Constant "StartDevice ERR">` & 0xff)
-   \   000081   7B..         MOV     R3,#((`?<Constant "StartDevice ERR">` >> 8) & 0xff)
-   \   000083   12....       LCALL   ??HalLcdWriteScreen?relay
-   \   000086   80CA         SJMP    ??ZDO_StartDevice_0
+   \   000078                REQUIRE ?Subroutine1
+   \   000078                ; // Fall through to label ?Subroutine1
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
    \                     ?Subroutine1:
@@ -1941,8 +1935,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDObject.c
    \   000034   9E           SUBB    A,R6
    \   000035   40D4         JC      ??ZDO_ConvertOTAClusters_1
     766            return ( inBuf );
-   \   000037                REQUIRE ?Subroutine1
-   \   000037                ; // Fall through to label ?Subroutine1
+   \   000037   02....       LJMP    ?Subroutine1 & 0xFFFF
     767          }
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
@@ -2631,12 +2624,18 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDObject.c
    \   00033A   85..82       MOV     DPL,?XSP + 0
    \   00033D   85..83       MOV     DPH,?XSP + 1
    \   000340   E0           MOVX    A,@DPTR
-   \   000341   6039         JZ      ??ZDO_ProcessMatchDescReq_28
+   \   000341   6030         JZ      ??ZDO_ProcessMatchDescReq_28
     909            {
     910              if ( ZSuccess == ZDP_MatchDescRsp( inMsg->TransSeq, &(inMsg->srcAddr), ZDP_SUCCESS,
     911                        ZDAppNwkAddr.addr.shortAddr, epCnt, (uint8 *)ZDOBuildBuf, inMsg->SecurityUse ) )
    \   000343                ; Setup parameters for call to function ZDP_EPRsp
    \   000343   12....       LCALL   ?Subroutine96 & 0xFFFF
+    912              {
+    913          #if defined( LCD_SUPPORTED )
+    914                HalLcdWriteScreen( "Match Desc Req", "Rsp Sent" );
+    915          #endif
+    916              }
+    917            }
    \                     ??CrossCallReturnLabel_389:
    \   000346   12....       LCALL   ?PUSH_XSTACK_I_ONE
    \   000349   75....       MOV     ?V0 + 0,#(ZDOBuildBuf & 0xff)
@@ -2656,69 +2655,49 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDObject.c
    \   00036D   12....       LCALL   ?Subroutine91 & 0xFFFF
    \                     ??CrossCallReturnLabel_152:
    \   000370   12....       LCALL   ?DEALLOC_XSTACK8
-   \   000373   E9           MOV     A,R1
-   \   000374   7011         JNZ     ??ZDO_ProcessMatchDescReq_29
-    912              {
-    913          #if defined( LCD_SUPPORTED )
-    914                HalLcdWriteScreen( "Match Desc Req", "Rsp Sent" );
-   \   000376                ; Setup parameters for call to function HalLcdWriteScreen
-   \   000376   7C..         MOV     R4,#(`?<Constant "Rsp Sent">` & 0xff)
-   \   000378   7D..         MOV     R5,#((`?<Constant "Rsp Sent">` >> 8) & 0xff)
-   \   00037A   8004         SJMP    ??ZDO_ProcessMatchDescReq_30
-    915          #endif
-    916              }
-    917            }
     918            else
     919            {
     920          #if defined( LCD_SUPPORTED )
     921              HalLcdWriteScreen( "Match Desc Req", "Non Matched" );
-   \                     ??ZDO_ProcessMatchDescReq_28:
-   \   00037C                ; Setup parameters for call to function HalLcdWriteScreen
-   \   00037C   7C..         MOV     R4,#(`?<Constant "Non Matched">` & 0xff)
-   \   00037E   7D..         MOV     R5,#((`?<Constant "Non Matched">` >> 8) & 0xff)
-   \                     ??ZDO_ProcessMatchDescReq_30:
-   \   000380   7A..         MOV     R2,#(`?<Constant "Match Desc Req">` & 0xff)
-   \   000382   7B..         MOV     R3,#((`?<Constant "Match Desc Req">` >> 8) & 0xff)
-   \   000384   12....       LCALL   ??HalLcdWriteScreen?relay
     922          #endif
     923            }
     924          
     925            if ( inClusters != NULL )
+   \                     ??ZDO_ProcessMatchDescReq_28:
+   \   000373   7401         MOV     A,#0x1
+   \   000375   12....       LCALL   ?XSTACK_DISP0_8
+   \   000378   E0           MOVX    A,@DPTR
+   \   000379   7002         JNZ     ??ZDO_ProcessMatchDescReq_29
+   \   00037B   A3           INC     DPTR
+   \   00037C   E0           MOVX    A,@DPTR
    \                     ??ZDO_ProcessMatchDescReq_29:
-   \   000387   7401         MOV     A,#0x1
-   \   000389   12....       LCALL   ?XSTACK_DISP0_8
-   \   00038C   E0           MOVX    A,@DPTR
-   \   00038D   7002         JNZ     ??ZDO_ProcessMatchDescReq_31
-   \   00038F   A3           INC     DPTR
-   \   000390   E0           MOVX    A,@DPTR
-   \                     ??ZDO_ProcessMatchDescReq_31:
-   \   000391   6008         JZ      ??CrossCallReturnLabel_417
+   \   00037D   6008         JZ      ??CrossCallReturnLabel_417
     926            {
     927              osal_mem_free( inClusters );
-   \   000393                ; Setup parameters for call to function osal_mem_free
-   \   000393   7401         MOV     A,#0x1
-   \   000395   12....       LCALL   ?XSTACK_DISP0_8
-   \   000398   12....       LCALL   ??Subroutine237_0 & 0xFFFF
+   \   00037F                ; Setup parameters for call to function osal_mem_free
+   \   00037F   7401         MOV     A,#0x1
+   \   000381   12....       LCALL   ?XSTACK_DISP0_8
+   \   000384   12....       LCALL   ??Subroutine237_0 & 0xFFFF
     928            }
     929            
     930            if ( outClusters != NULL )
    \                     ??CrossCallReturnLabel_417:
-   \   00039B   E5..         MOV     A,?V0 + 14
-   \   00039D   7002         JNZ     ??ZDO_ProcessMatchDescReq_32
-   \   00039F   E5..         MOV     A,?V0 + 15
-   \                     ??ZDO_ProcessMatchDescReq_32:
-   \   0003A1   6007         JZ      ??ZDO_ProcessMatchDescReq_2
+   \   000387   E5..         MOV     A,?V0 + 14
+   \   000389   7002         JNZ     ??ZDO_ProcessMatchDescReq_30
+   \   00038B   E5..         MOV     A,?V0 + 15
+   \                     ??ZDO_ProcessMatchDescReq_30:
+   \   00038D   6007         JZ      ??ZDO_ProcessMatchDescReq_2
     931            {
     932              osal_mem_free( outClusters );
-   \   0003A3                ; Setup parameters for call to function osal_mem_free
-   \   0003A3   AA..         MOV     R2,?V0 + 14
-   \   0003A5   AB..         MOV     R3,?V0 + 15
-   \   0003A7   12....       LCALL   ??osal_mem_free?relay
+   \   00038F                ; Setup parameters for call to function osal_mem_free
+   \   00038F   AA..         MOV     R2,?V0 + 14
+   \   000391   AB..         MOV     R3,?V0 + 15
+   \   000393   12....       LCALL   ??osal_mem_free?relay
    \                     ??ZDO_ProcessMatchDescReq_2:
-   \   0003AA   7403         MOV     A,#0x3
-   \   0003AC   12....       LCALL   ?DEALLOC_XSTACK8
-   \   0003AF   7F10         MOV     R7,#0x10
-   \   0003B1   02....       LJMP    ?BANKED_LEAVE_XDATA
+   \   000396   7403         MOV     A,#0x3
+   \   000398   12....       LCALL   ?DEALLOC_XSTACK8
+   \   00039B   7F10         MOV     R7,#0x10
+   \   00039D   02....       LJMP    ?BANKED_LEAVE_XDATA
     933            }
     934          }
 
@@ -3561,31 +3540,31 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDObject.c
    \   000024   08           INC     R0
    \   000025   12....       LCALL   ??Subroutine235_0 & 0xFFFF
    \                     ??CrossCallReturnLabel_390:
-   \   000028   85..82       MOV     DPL,?XSP + 0
-   \   00002B   85..83       MOV     DPH,?XSP + 1
-   \   00002E   F0           MOVX    @DPTR,A
-   \   00002F   90....       MOV     DPTR,#ZDO_EDBind
-   \   000032   E0           MOVX    A,@DPTR
-   \   000033   2401         ADD     A,#0x1
-   \   000035   FC           MOV     R4,A
-   \   000036   A3           INC     DPTR
-   \   000037   E0           MOVX    A,@DPTR
-   \   000038   3400         ADDC    A,#0x0
-   \   00003A   FD           MOV     R5,A
-   \   00003B   90....       MOV     DPTR,#ZDO_EDBind
-   \   00003E   12....       LCALL   ??Subroutine226_0 & 0xFFFF
+   \   000028   C0E0         PUSH    A
+   \   00002A   7401         MOV     A,#0x1
+   \   00002C   12....       LCALL   ?XSTACK_DISP0_8
+   \   00002F   D0E0         POP     A
+   \   000031   F0           MOVX    @DPTR,A
+   \   000032   90....       MOV     DPTR,#ZDO_EDBind
+   \   000035   E0           MOVX    A,@DPTR
+   \   000036   2401         ADD     A,#0x1
+   \   000038   FC           MOV     R4,A
+   \   000039   A3           INC     DPTR
+   \   00003A   E0           MOVX    A,@DPTR
+   \   00003B   3400         ADDC    A,#0x0
+   \   00003D   FD           MOV     R5,A
+   \   00003E   90....       MOV     DPTR,#ZDO_EDBind
+   \   000041   12....       LCALL   ??Subroutine226_0 & 0xFFFF
    \                     ??CrossCallReturnLabel_365:
-   \   000041   C0E0         PUSH    A
-   \   000043   7401         MOV     A,#0x1
-   \   000045   12....       LCALL   ?XSTACK_DISP0_8
-   \   000048   D0E0         POP     A
+   \   000044   85..82       MOV     DPL,?XSP + 0
+   \   000047   85..83       MOV     DPH,?XSP + 1
    \   00004A   F0           MOVX    @DPTR,A
    \   00004B                ; Setup parameters for call to function ZDP_SendData
    \   00004B   EA           MOV     A,R2
    \   00004C   F5..         MOV     ?V0 + 0,A
    \   00004E   78..         MOV     R0,#?V0 + 0
    \   000050   12....       LCALL   ?PUSH_XSTACK_I_ONE
-   \   000053   7401         MOV     A,#0x1
+   \   000053   7402         MOV     A,#0x2
    \   000055   12....       LCALL   ?XSTACK_DISP0_8
    \   000058   8582..       MOV     ?V0 + 0,DPL
    \   00005B   8583..       MOV     ?V0 + 1,DPH
@@ -3596,82 +3575,62 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDObject.c
    \   000069   78..         MOV     R0,#?V0 + 0
    \   00006B   12....       LCALL   ?PUSH_XSTACK_I_TWO
    \   00006E   7901         MOV     R1,#0x1
-   \   000070   7406         MOV     A,#0x6
+   \   000070   7405         MOV     A,#0x5
    \   000072   12....       LCALL   ?XSTACK_DISP0_8
    \   000075   AA82         MOV     R2,DPL
    \   000077   AB83         MOV     R3,DPH
    \   000079   12....       LCALL   ?Subroutine192 & 0xFFFF
    \                     ??CrossCallReturnLabel_284:
    \   00007C   12....       LCALL   ?DEALLOC_XSTACK8
-   \   00007F                ; Setup parameters for call to function HalLcdWriteString
-   \   00007F   7901         MOV     R1,#0x1
-   \   000081   7A..         MOV     R2,#(`?<Constant "End Device Bind">` & 0xff)
-   \   000083   7B..         MOV     R3,#((`?<Constant "End Device Bind">` >> 8) & 0xff)
-   \   000085   12....       LCALL   ??HalLcdWriteString?relay
-   \   000088   85..82       MOV     DPL,?XSP + 0
-   \   00008B   85..83       MOV     DPH,?XSP + 1
-   \   00008E   E0           MOVX    A,@DPTR
-   \   00008F   7902         MOV     R1,#0x2
-   \   000091   7006         JNZ     ??ZDO_EndDeviceTimeoutCB_2
-   \   000093                ; Setup parameters for call to function HalLcdWriteString
-   \   000093   7A..         MOV     R2,#(`?<Constant "Success Sent">` & 0xff)
-   \   000095   7B..         MOV     R3,#((`?<Constant "Success Sent">` >> 8) & 0xff)
-   \   000097   8004         SJMP    ??ZDO_EndDeviceTimeoutCB_3
-   \                     ??ZDO_EndDeviceTimeoutCB_2:
-   \   000099                ; Setup parameters for call to function HalLcdWriteString
-   \   000099   7A..         MOV     R2,#(`?<Constant "Timeout">` & 0xff)
-   \   00009B   7B..         MOV     R3,#((`?<Constant "Timeout">` >> 8) & 0xff)
-   \                     ??ZDO_EndDeviceTimeoutCB_3:
-   \   00009D   12....       LCALL   ??HalLcdWriteString?relay
    1095          
    1096              ZDO_RemoveEndDeviceBind();
-   \   0000A0   90....       MOV     DPTR,#ZDO_EDBind
-   \   0000A3   E0           MOVX    A,@DPTR
+   \   00007F   90....       MOV     DPTR,#ZDO_EDBind
+   \   000082   E0           MOVX    A,@DPTR
+   \   000083   7002         JNZ     ??ZDO_EndDeviceTimeoutCB_2
+   \   000085   A3           INC     DPTR
+   \   000086   E0           MOVX    A,@DPTR
+   \                     ??ZDO_EndDeviceTimeoutCB_2:
+   \   000087   6031         JZ      ??ZDO_EndDeviceTimeoutCB_1
+   \   000089   90....       MOV     DPTR,#ZDO_EDBind
+   \   00008C   E0           MOVX    A,@DPTR
+   \   00008D   2410         ADD     A,#0x10
+   \   00008F   12....       LCALL   ??Subroutine234_0 & 0xFFFF
+   1097            }
+   \                     ??CrossCallReturnLabel_392:
+   \   000092   7002         JNZ     ??ZDO_EndDeviceTimeoutCB_3
+   \   000094   A3           INC     DPTR
+   \   000095   E0           MOVX    A,@DPTR
+   \                     ??ZDO_EndDeviceTimeoutCB_3:
+   \   000096   6003         JZ      ??CrossCallReturnLabel_423
+   \   000098                ; Setup parameters for call to function osal_mem_free
+   \   000098   12....       LCALL   ?Subroutine60 & 0xFFFF
+   \                     ??CrossCallReturnLabel_423:
+   \   00009B   90....       MOV     DPTR,#ZDO_EDBind
+   \   00009E   E0           MOVX    A,@DPTR
+   \   00009F   2413         ADD     A,#0x13
+   \   0000A1   12....       LCALL   ??Subroutine234_0 & 0xFFFF
+   \                     ??CrossCallReturnLabel_393:
    \   0000A4   7002         JNZ     ??ZDO_EndDeviceTimeoutCB_4
    \   0000A6   A3           INC     DPTR
    \   0000A7   E0           MOVX    A,@DPTR
    \                     ??ZDO_EndDeviceTimeoutCB_4:
-   \   0000A8   6031         JZ      ??ZDO_EndDeviceTimeoutCB_1
-   \   0000AA   90....       MOV     DPTR,#ZDO_EDBind
-   \   0000AD   E0           MOVX    A,@DPTR
-   \   0000AE   2410         ADD     A,#0x10
-   \   0000B0   12....       LCALL   ??Subroutine234_0 & 0xFFFF
-   1097            }
-   \                     ??CrossCallReturnLabel_392:
-   \   0000B3   7002         JNZ     ??ZDO_EndDeviceTimeoutCB_5
-   \   0000B5   A3           INC     DPTR
-   \   0000B6   E0           MOVX    A,@DPTR
-   \                     ??ZDO_EndDeviceTimeoutCB_5:
-   \   0000B7   6003         JZ      ??CrossCallReturnLabel_423
-   \   0000B9                ; Setup parameters for call to function osal_mem_free
-   \   0000B9   12....       LCALL   ?Subroutine60 & 0xFFFF
-   \                     ??CrossCallReturnLabel_423:
-   \   0000BC   90....       MOV     DPTR,#ZDO_EDBind
-   \   0000BF   E0           MOVX    A,@DPTR
-   \   0000C0   2413         ADD     A,#0x13
-   \   0000C2   12....       LCALL   ??Subroutine234_0 & 0xFFFF
-   \                     ??CrossCallReturnLabel_393:
-   \   0000C5   7002         JNZ     ??ZDO_EndDeviceTimeoutCB_6
-   \   0000C7   A3           INC     DPTR
-   \   0000C8   E0           MOVX    A,@DPTR
-   \                     ??ZDO_EndDeviceTimeoutCB_6:
-   \   0000C9   6003         JZ      ??CrossCallReturnLabel_424
-   \   0000CB                ; Setup parameters for call to function osal_mem_free
-   \   0000CB   12....       LCALL   ?Subroutine60 & 0xFFFF
+   \   0000A8   6003         JZ      ??CrossCallReturnLabel_424
+   \   0000AA                ; Setup parameters for call to function osal_mem_free
+   \   0000AA   12....       LCALL   ?Subroutine60 & 0xFFFF
    \                     ??CrossCallReturnLabel_424:
-   \   0000CE                ; Setup parameters for call to function osal_mem_free
-   \   0000CE   90....       MOV     DPTR,#ZDO_EDBind
-   \   0000D1   12....       LCALL   ??Subroutine237_0 & 0xFFFF
+   \   0000AD                ; Setup parameters for call to function osal_mem_free
+   \   0000AD   90....       MOV     DPTR,#ZDO_EDBind
+   \   0000B0   12....       LCALL   ??Subroutine237_0 & 0xFFFF
    \                     ??CrossCallReturnLabel_422:
-   \   0000D4   90....       MOV     DPTR,#ZDO_EDBind
-   \   0000D7   E4           CLR     A
-   \   0000D8   F0           MOVX    @DPTR,A
-   \   0000D9   A3           INC     DPTR
-   \   0000DA   F0           MOVX    @DPTR,A
+   \   0000B3   90....       MOV     DPTR,#ZDO_EDBind
+   \   0000B6   E4           CLR     A
+   \   0000B7   F0           MOVX    @DPTR,A
+   \   0000B8   A3           INC     DPTR
+   \   0000B9   F0           MOVX    @DPTR,A
    1098          #endif  // REFLECTOR
    1099          }
    \                     ??ZDO_EndDeviceTimeoutCB_1:
-   \   0000DB   02....       LJMP    ?Subroutine4 & 0xFFFF
+   \   0000BA   02....       LJMP    ?Subroutine4 & 0xFFFF
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
    \                     ??Subroutine234_0:
@@ -11671,6 +11630,10 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDObject.c
    \                     ??ZDO_ParseMgmtNwkUpdateReq_3:
    \   00006C   02....       LJMP    ?Subroutine7 & 0xFFFF
 
+   \                                 In  segment XDATA_ROM_C, align 1
+   \                     __Constant_0:
+   \   000000   00000000     DD 0
+
    \                                 In  segment BANK_RELAYS, align 1
    \                     ??ZDO_Init?relay:
    \   000000   12....       LCALL   ?BDISPATCH
@@ -11915,62 +11878,6 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDObject.c
    \                     ??ZDO_ParseMgmtNwkUpdateReq?relay:
    \   000000   12....       LCALL   ?BDISPATCH
    \   000003   ......       DC24    ZDO_ParseMgmtNwkUpdateReq
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "StartDevice ERR">`:
-   \   000000   53746172     DB "StartDevice ERR"
-   \            74446576
-   \            69636520
-   \            45525200
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "MODE unknown">`:
-   \   000000   4D4F4445     DB "MODE unknown"
-   \            20756E6B
-   \            6E6F776E
-   \            00      
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "End Device Bind">`:
-   \   000000   456E6420     DB "End Device Bind"
-   \            44657669
-   \            63652042
-   \            696E6400
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "Success Sent">`:
-   \   000000   53756363     DB "Success Sent"
-   \            65737320
-   \            53656E74
-   \            00      
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "Timeout">`:
-   \   000000   54696D65     DB "Timeout"
-   \            6F757400
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "Match Desc Req">`:
-   \   000000   4D617463     DB "Match Desc Req"
-   \            68204465
-   \            73632052
-   \            657100  
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "Rsp Sent">`:
-   \   000000   52737020     DB "Rsp Sent"
-   \            53656E74
-   \            00      
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "Non Matched">`:
-   \   000000   4E6F6E20     DB "Non Matched"
-   \            4D617463
-   \            68656400
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     __Constant_0:
-   \   000000   00000000     DD 0
    3150          
    3151          /*********************************************************************
    3152          *********************************************************************/
@@ -12009,9 +11916,6 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDObject.c
        -> ZDMatchSendState              4      0      0
      ZDO_EndDeviceTimeoutCB             1      0     17
        -> ZDP_SendData                  0      0     34
-       -> HalLcdWriteString             0      0     24
-       -> HalLcdWriteString             0      0     24
-       -> HalLcdWriteString             0      0     24
        -> osal_mem_free                 0      0     24
        -> osal_mem_free                 0      0     24
        -> osal_mem_free                 0      0     24
@@ -12138,8 +12042,6 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDObject.c
        -> osal_memcpy                   0      0     60
        -> osal_memcpy                   0      0     60
        -> ZDP_EPRsp                     0      0     68
-       -> HalLcdWriteScreen             0      0     54
-       -> HalLcdWriteScreen             0      0     54
        -> osal_mem_free                 0      0     54
        -> osal_mem_free                 0      0     54
      ZDO_ProcessMgmtBindReq             0      0     29
@@ -12215,9 +12117,8 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDObject.c
      ZDO_StartDevice                    0      0     18
        -> NLME_NetworkFormationRequest
                                         0      0     36
-       -> osal_start_timerEx            0      0     22
        -> NLME_StartRouterRequest       0      0     22
-       -> HalLcdWriteScreen             0      0     22
+       -> osal_start_timerEx            0      0     22
      ZDO_UpdateAddrManager              3      0     13
        -> AddrMgrExtAddrSet             4      0     26
        -> AddrMgrEntryUpdate            4      0     26
@@ -12240,7 +12141,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDObject.c
      apsChannelMask                             4
      ZDO_Init                                  33
      ?Subroutine0                               7
-     ZDO_StartDevice                          136
+     ZDO_StartDevice                          120
      ?Subroutine1                               5
      ??Subroutine217_0                          4
      ?Subroutine165                             6
@@ -12294,9 +12195,9 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDObject.c
      ??Subroutine251_0                          3
      ??Subroutine252_0                          4
      ?Subroutine5                               5
-     ZDO_ConvertOTAClusters                    55
+     ZDO_ConvertOTAClusters                    58
      ?Subroutine139                            10
-     ZDO_ProcessMatchDescReq                  948
+     ZDO_ProcessMatchDescReq                  928
      ?Subroutine91                             28
      ?Subroutine105                             6
      ??Subroutine218_0                          1
@@ -12342,7 +12243,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDObject.c
      ?Subroutine120                             4
      ?Subroutine92                              5
      ?Subroutine114                             4
-     ZDO_EndDeviceTimeoutCB                   222
+     ZDO_EndDeviceTimeoutCB                   189
      ??Subroutine234_0                          1
      ??Subroutine235_0                          4
      ?Subroutine85                              7
@@ -12562,6 +12463,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDObject.c
      ZDO_ParseMgmtNwkUpdateNotify             188
      ?Subroutine42                              8
      ZDO_ParseMgmtNwkUpdateReq                111
+     __Constant_0                               4
      ??ZDO_Init?relay                           6
      ??ZDO_StartDevice?relay                    6
      ??ZDO_UpdateNwkStatus?relay                6
@@ -12611,24 +12513,15 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Components\stack\zdo\ZDObject.c
      ??ZDO_ParseDeviceAnnce?relay               6
      ??ZDO_ParseMgmtNwkUpdateNotify?relay       6
      ??ZDO_ParseMgmtNwkUpdateReq?relay          6
-     ?<Constant "StartDevice ERR">             16
-     ?<Constant "MODE unknown">                13
-     ?<Constant "End Device Bind">             16
-     ?<Constant "Success Sent">                13
-     ?<Constant "Timeout">                      8
-     ?<Constant "Match Desc Req">              15
-     ?<Constant "Rsp Sent">                     9
-     ?<Constant "Non Matched">                 12
-     __Constant_0                               4
 
  
- 11 444 bytes in segment BANKED_CODE
+ 11 378 bytes in segment BANKED_CODE
     294 bytes in segment BANK_RELAYS
-    106 bytes in segment XDATA_ROM_C
+      4 bytes in segment XDATA_ROM_C
      60 bytes in segment XDATA_Z
  
- 11 738 bytes of CODE  memory
-    102 bytes of CONST memory (+ 4 bytes shared)
+ 11 672 bytes of CODE  memory
+      0 bytes of CONST memory (+ 4 bytes shared)
      60 bytes of XDATA memory
 
 Errors: none

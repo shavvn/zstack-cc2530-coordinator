@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V7.60.1.40026 for 8051             08/Apr/2014  21:42:45 #
+# IAR C/C++ Compiler V7.60.1.40026 for 8051             09/Apr/2014  09:37:30 #
 # Copyright (C) 2004-2010 IAR Systems AB.                                     #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -45,7 +45,8 @@
 #                          -DREJOIN_POLL_RATE=440 D:\zigbee\projects\zstack-c #
 #                          c2530-coordinator\Components\mt\MT_NWK.c -D        #
 #                          ZAPP_P1 -D MT_TASK -D MT_SYS_FUNC -D MT_ZDO_FUNC   #
-#                          -D LCD_SUPPORTED=DEBUG -lC                         #
+#                          -D HAL_UART -D HAL_UART=TRUE -D HAL_DMA=TRUE -D    #
+#                          HAL_LCD=FALSE -D HAL_KEY=FALSE -lC                 #
 #                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
 #                          cts\zstack\Samples\GenericApp\CC2530DB\Coordinator #
 #                          EB\List\ -lA D:\zigbee\projects\zstack-cc2530-coor #

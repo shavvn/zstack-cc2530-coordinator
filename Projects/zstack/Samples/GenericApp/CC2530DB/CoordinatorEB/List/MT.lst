@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V7.60.1.40026 for 8051             08/Apr/2014  22:18:29 #
+# IAR C/C++ Compiler V7.60.1.40026 for 8051             09/Apr/2014  09:37:31 #
 # Copyright (C) 2004-2010 IAR Systems AB.                                     #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -45,16 +45,17 @@
 #                          -DREJOIN_POLL_RATE=440 D:\zigbee\projects\zstack-c #
 #                          c2530-coordinator\Components\mt\MT.c -D ZAPP_P1    #
 #                          -D MT_TASK -D MT_SYS_FUNC -D MT_ZDO_FUNC -D        #
-#                          LCD_SUPPORTED=DEBUG -lC D:\zigbee\projects\zstack- #
-#                          cc2530-coordinator\Projects\zstack\Samples\Generic #
-#                          App\CC2530DB\CoordinatorEB\List\ -lA               #
+#                          HAL_UART -D HAL_UART=TRUE -D HAL_DMA=TRUE -D       #
+#                          HAL_LCD=FALSE -D HAL_KEY=FALSE -lC                 #
 #                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
 #                          cts\zstack\Samples\GenericApp\CC2530DB\Coordinator #
-#                          EB\List\ --diag_suppress Pe001,Pa010 -o            #
-#                          D:\zigbee\projects\zstack-cc2530-coordinator\Proje #
-#                          cts\zstack\Samples\GenericApp\CC2530DB\Coordinator #
-#                          EB\Obj\ -e --require_prototypes --no_code_motion   #
-#                          --debug --core=plain --dptr=16,1                   #
+#                          EB\List\ -lA D:\zigbee\projects\zstack-cc2530-coor #
+#                          dinator\Projects\zstack\Samples\GenericApp\CC2530D #
+#                          B\CoordinatorEB\List\ --diag_suppress Pe001,Pa010  #
+#                          -o D:\zigbee\projects\zstack-cc2530-coordinator\Pr #
+#                          ojects\zstack\Samples\GenericApp\CC2530DB\Coordina #
+#                          torEB\Obj\ -e --require_prototypes                 #
+#                          --no_code_motion --debug --core=plain --dptr=16,1  #
 #                          --data_model=large --code_model=banked             #
 #                          --calling_convention=xdata_reentrant               #
 #                          --place_constants=data_rom --nr_virtual_regs 16    #
