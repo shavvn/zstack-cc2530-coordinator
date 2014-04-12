@@ -92,6 +92,12 @@ unsigned char end_device_1_extAddr[8] = {0x94, 0x85, 0xCB, 0x02, 0x00, 0x4B, 0x1
 /*********************************************************************
  * TYPEDEFS
  */
+ typedef struct
+ {
+   unsigned char endPoint;
+   unsigned char extAddr[8];
+   unsigned char compressed_addr;
+ } EndDeviceInfo_t; //saved the end device information
 
 /*********************************************************************
  * GLOBAL VARIABLES
@@ -121,6 +127,8 @@ const SimpleDescriptionFormat_t GenericApp_SimpleDesc =
 // in the structure here and make it a "const" (in code space).  The
 // way it's defined in this sample app it is define in RAM.
 endPointDesc_t GenericApp_epDesc;
+
+EndDeviceInfo_t EndDeviceInfos[16]; //init space for 16 devices
 
 /*********************************************************************
  * EXTERNAL VARIABLES
@@ -191,10 +199,10 @@ void GenericApp_Init( byte task_id )
 
   // If the hardware is application specific - add it here.
   // If the hardware is other parts of the device add it in main().
-  //printf("%#x\n",NLME_GetExtAddr());
-  GenericApp_DstAddr.addrMode = (afAddrMode_t)Addr64Bit;
+  /*GenericApp_DstAddr.addrMode = (afAddrMode_t)Addr64Bit;
   GenericApp_DstAddr.endPoint = 0x01;
-  osal_memcpy(GenericApp_DstAddr.addr.extAddr, end_device_1_extAddr, 8);
+  osal_memcpy(GenericApp_DstAddr.addr.extAddr, end_device_1_extAddr, 8);*/
+  
 
   // Fill out the endpoint description.
   GenericApp_epDesc.endPoint = GENERICAPP_ENDPOINT;
@@ -215,10 +223,8 @@ void GenericApp_Init( byte task_id )
 #endif
   ZDO_RegisterForZDOMsg( GenericApp_TaskID, Device_annce);
   HalUARTWrite(0,"Init!\r\n",10);
-  //MT_UartAppFlowControl(MT_UART_ZAPP_RX_READY);
   //ZDO_RegisterForZDOMsg( GenericApp_TaskID, End_Device_Bind_rsp );
   //ZDO_RegisterForZDOMsg( GenericApp_TaskID, Match_Desc_rsp );
-  //printf("\r\n GenericApp init complete!\r\n");
 }
 
 /*********************************************************************
@@ -485,13 +491,14 @@ void GenericApp_HandleKeys( byte shift, byte keys )
  */
 void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
 {
-  unsigned char ext_addr[8];
   switch ( pkt->clusterId )
   {
     case GENERICAPP_CLUSTERID:
       {// "the" message
-       (void)APSME_LookupExtAddr(pkt->srcAddr.addr.shortAddr, ext_addr);
-       if (osal_memcmp(ext_addr, end_device_1_extAddr, 8)) {
+       (void)APSME_LookupExtAddr(pkt->srcAddr.addr.shortAddr, EndDeviceInfos[0].extAddr);
+       EndDeviceInfos[0].endPoint = pkt->srcAddr.endPoint;
+       if (osal_memcmp(EndDeviceInfos[0].extAddr, end_device_1_extAddr, 8)) {
+         HalUARTWrite(0, "Confirm!\r\n", 12); 
        }
        HalUARTWrite(0, pkt->cmd.Data, 5);//osal_strlen(pkt->cmd.Data)
        break;
@@ -501,11 +508,8 @@ void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
 
 /*********************************************************************
  * @fn      GenericApp_SendTheMessage
- *
  * @brief   Send "the" message.
- *
  * @param   none
- *
  * @return  none
  */
 void GenericApp_SendTheMessage( void )
@@ -513,13 +517,16 @@ void GenericApp_SendTheMessage( void )
   char theMessageData[] = "Coor say:";
   //unsigned char short_addr[2];
   //printf("\r\nHello world sent\r\n"); 
-
+  GenericApp_DstAddr.addrMode = (afAddrMode_t)Addr64Bit;
+  GenericApp_DstAddr.endPoint = EndDeviceInfos[0].endPoint;
+  osal_memcpy(GenericApp_DstAddr.addr.extAddr, EndDeviceInfos[0].extAddr, 8);
+  
   if ( AF_DataRequest( &GenericApp_DstAddr, &GenericApp_epDesc,
                        GENERICAPP_CLUSTERID,
                        (byte)osal_strlen( theMessageData ) + 1,
                        (byte *)&theMessageData,
                        &GenericApp_TransID,
-                       AF_DISCV_ROUTE, AF_DEFAULT_RADIUS ) == afStatus_SUCCESS )
+                       AF_DISCV_ROUTE, AF_DEFAULT_RADIUS ) == afStatus_SUCCESS )                     
   {
     // Successfully requested to be sent.
     //osal_buffer_uint16(short_addr, GenericApp_DstAddr.addr.shortAddr);
