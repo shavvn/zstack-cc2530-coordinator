@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V7.60.1.40026 for 8051            12/Apr/2014  13:13:00 /
+// IAR C/C++ Compiler V7.60.1.40026 for 8051            12/Apr/2014  14:42:50 /
 // Copyright (C) 2004-2010 IAR Systems AB.                                    /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -974,13 +974,13 @@ main:
         MOV     R3,#0x0
         LJMP    ?BRET
         CFI EndBlock cfiBlock0
+        REQUIRE _A_P0
         REQUIRE P0INP
         REQUIRE _A_P1
         REQUIRE SLEEPSTA
         REQUIRE CLKCONSTA
         REQUIRE SLEEPCMD
         REQUIRE CLKCONCMD
-        REQUIRE _A_P0
         REQUIRE P0DIR
         REQUIRE P1DIR
 //  144 } // main()

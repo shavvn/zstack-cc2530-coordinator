@@ -102,7 +102,9 @@ unsigned char end_device_1_extAddr[8] = {0x94, 0x85, 0xCB, 0x02, 0x00, 0x4B, 0x1
 /*********************************************************************
  * GLOBAL VARIABLES
  */
-
+unsigned char device_count = 0;
+ 
+ 
 // This list should be filled with Application specific Cluster IDs.
 const cId_t GenericApp_ClusterList[GENERICAPP_MAX_CLUSTERS] =
 {
@@ -301,10 +303,6 @@ UINT16 GenericApp_ProcessEvent( byte task_id, UINT16 events )
                               GENERICAPP_SEND_MSG_TIMEOUT );
           }
           break;
-        case SPI_INCOMING_ZAPP_DATA:
-          HalUARTWrite(0, "SPICOM", 7);
-          GenericApp_SerialMSGCB();
-          break;
         default:
           break;
       }
@@ -491,15 +489,29 @@ void GenericApp_HandleKeys( byte shift, byte keys )
  */
 void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
 {
+  unsigned char temp_extAddr[8];
+  unsigned char i = 0;
+  unsigned char existed = 0;
   switch ( pkt->clusterId )
   {
     case GENERICAPP_CLUSTERID:
       {// "the" message
-       (void)APSME_LookupExtAddr(pkt->srcAddr.addr.shortAddr, EndDeviceInfos[0].extAddr);
-       EndDeviceInfos[0].endPoint = pkt->srcAddr.endPoint;
-       if (osal_memcmp(EndDeviceInfos[0].extAddr, end_device_1_extAddr, 8)) {
-         HalUARTWrite(0, "Confirm!\r\n", 12); 
-       }
+        (void)APSME_LookupExtAddr(pkt->srcAddr.addr.shortAddr, temp_extAddr);
+        for (i = 0; i < device_count+1; i++) {
+          if (osal_memcmp(EndDeviceInfos[i].extAddr, temp_extAddr, 8)) { //if existed, break;
+            existed = 1;
+            HalUARTWrite(0, "Existed!\r\n",12);
+            break;
+          }
+        }
+        if (!existed) {
+          HalUARTWrite(0, "New Device!\r\n",15);
+          osal_memcpy(EndDeviceInfos[device_count].extAddr, temp_extAddr, 8);
+          EndDeviceInfos[device_count].endPoint = pkt->srcAddr.endPoint;
+          EndDeviceInfos[device_count].compressed_addr = GENERICAPP_ENDPOINT | EndDeviceInfos[device_count].endPoint;
+          device_count++;
+        }
+        if (device_count == 254) { device_count = 0;}
        HalUARTWrite(0, pkt->cmd.Data, 5);//osal_strlen(pkt->cmd.Data)
        break;
       }
@@ -515,8 +527,7 @@ void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
 void GenericApp_SendTheMessage( void )
 {
   char theMessageData[] = "Coor say:";
-  //unsigned char short_addr[2];
-  //printf("\r\nHello world sent\r\n"); 
+  HalUARTWrite(0, "Sending\r\n", 11);
   GenericApp_DstAddr.addrMode = (afAddrMode_t)Addr64Bit;
   GenericApp_DstAddr.endPoint = EndDeviceInfos[0].endPoint;
   osal_memcpy(GenericApp_DstAddr.addr.extAddr, EndDeviceInfos[0].extAddr, 8);
