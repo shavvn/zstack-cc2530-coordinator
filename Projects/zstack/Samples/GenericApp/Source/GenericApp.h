@@ -57,7 +57,7 @@ extern "C"
 // These constants are only for example and should be changed to the
 // device's needs
 //#define NV_RESTORE
-#define GENERICAPP_ENDPOINT           10
+#define GENERICAPP_ENDPOINT           0x20 //coordinator: 0x20, 0x40, 0x80
 
 #define GENERICAPP_PROFID             0x0F04
 #define GENERICAPP_DEVICEID           0x0001

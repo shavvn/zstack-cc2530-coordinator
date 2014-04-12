@@ -181,13 +181,7 @@ void GenericApp_Init( byte task_id )
   GenericApp_NwkState = DEV_INIT;
   GenericApp_TransID = 0;
   
-  //HalUARTInit();
-  /*
-  uartConfig.configured = TRUE;
-  uartConfig.baudRate = HAL_UART_BR_115200;
-  uartConfig.flowControl = FALSE;
-  uartConfig.callBackFunc = MT_UartProcessZAppData;
-  HalUARTOpen(0,&uartConfig);*/
+  // Device hardware initialization can be added here or in main() (Zmain.c).
   uartConfig.configured           = TRUE;              // 2x30 don't care - see uart driver.
   uartConfig.baudRate             = HAL_UART_BR_115200;
   uartConfig.flowControl          = FALSE;
@@ -195,12 +189,11 @@ void GenericApp_Init( byte task_id )
   uartConfig.callBackFunc         = MT_UartProcessZAppData;
   HalUARTOpen (0, &uartConfig);
 
-  // Device hardware initialization can be added here or in main() (Zmain.c).
   // If the hardware is application specific - add it here.
   // If the hardware is other parts of the device add it in main().
   //printf("%#x\n",NLME_GetExtAddr());
   GenericApp_DstAddr.addrMode = (afAddrMode_t)Addr64Bit;
-  GenericApp_DstAddr.endPoint = 11;
+  GenericApp_DstAddr.endPoint = 0x01;
   osal_memcpy(GenericApp_DstAddr.addr.extAddr, end_device_1_extAddr, 8);
 
   // Fill out the endpoint description.
@@ -352,11 +345,8 @@ UINT16 GenericApp_ProcessEvent( byte task_id, UINT16 events )
 
 /*********************************************************************
  * @fn      GenericApp_ProcessZDOMsgs()
- *
  * @brief   Process response messages
- *
  * @param   none
- *
  * @return  none
  */
 void GenericApp_ProcessZDOMsgs( zdoIncomingMsg_t *inMsg )
@@ -487,34 +477,24 @@ void GenericApp_HandleKeys( byte shift, byte keys )
 
 /*********************************************************************
  * @fn      GenericApp_MessageMSGCB
- *
  * @brief   Data message processor callback.  This function processes
  *          any incoming data - probably from other devices.  So, based
  *          on cluster ID, perform the intended action.
- *
  * @param   none
- *
  * @return  none
  */
 void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
 {
   unsigned char ext_addr[8];
-  //printf("\r\nMsg Received!\r\n");
   switch ( pkt->clusterId )
   {
     case GENERICAPP_CLUSTERID:
       {// "the" message
-      (void)APSME_LookupExtAddr(pkt->srcAddr.addr.shortAddr, ext_addr);
-      if (osal_memcmp(ext_addr, end_device_1_extAddr, 8)) {
-        //printf("This is from end device 1\r\n");
-      }
-      HalUARTWrite(0, pkt->cmd.Data, osal_strlen(pkt->cmd.Data)+1);
-#if defined( LCD_SUPPORTED )
-      HalLcdWriteScreen( (char*)pkt->cmd.Data, "rcvd" );
-#elif defined( WIN32 )
-      WPRINTSTR( pkt->cmd.Data );
-#endif
-      break;
+       (void)APSME_LookupExtAddr(pkt->srcAddr.addr.shortAddr, ext_addr);
+       if (osal_memcmp(ext_addr, end_device_1_extAddr, 8)) {
+       }
+       HalUARTWrite(0, pkt->cmd.Data, 5);//osal_strlen(pkt->cmd.Data)
+       break;
       }
   }
 }
@@ -530,7 +510,7 @@ void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
  */
 void GenericApp_SendTheMessage( void )
 {
-  char theMessageData[] = "Hell World";
+  char theMessageData[] = "Coor say:";
   //unsigned char short_addr[2];
   //printf("\r\nHello world sent\r\n"); 
 
@@ -554,6 +534,11 @@ void GenericApp_SendTheMessage( void )
   }
 }
 
+
+//@fn: GenericApp_SerialMSGCB
+//@breif: process data received by UART, used to execute cmds from slave machine
+//@param: none
+//@return: none
 void GenericApp_SerialMSGCB(void)
 {
   unsigned char buf [8] = "";

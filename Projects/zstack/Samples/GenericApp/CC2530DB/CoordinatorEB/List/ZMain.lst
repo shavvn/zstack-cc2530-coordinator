@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V7.60.1.40026 for 8051             09/Apr/2014  09:37:29 #
+# IAR C/C++ Compiler V7.60.1.40026 for 8051             12/Apr/2014  13:13:00 #
 # Copyright (C) 2004-2010 IAR Systems AB.                                     #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -407,13 +407,13 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\ZMain\TI2530DB\ZMai
    \   00007D   7A00         MOV     R2,#0x0
    \   00007F   7B00         MOV     R3,#0x0
    \   000081   02....       LJMP    ?BRET
-   \   000084                REQUIRE _A_P0
    \   000084                REQUIRE P0INP
    \   000084                REQUIRE _A_P1
    \   000084                REQUIRE SLEEPSTA
    \   000084                REQUIRE CLKCONSTA
    \   000084                REQUIRE SLEEPCMD
    \   000084                REQUIRE CLKCONCMD
+   \   000084                REQUIRE _A_P0
    \   000084                REQUIRE P0DIR
    \   000084                REQUIRE P1DIR
     144          } // main()
