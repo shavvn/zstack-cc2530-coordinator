@@ -159,7 +159,7 @@ afAddrType_t GenericApp_DstAddr;
 void GenericApp_ProcessZDOMsgs( zdoIncomingMsg_t *inMsg );
 void GenericApp_HandleKeys( byte shift, byte keys );
 void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pckt );
-void GenericApp_SendTheMessage( void );
+void GenericApp_SendTheMessage( unsigned char dest_endID, unsigned int temp_set);
 void GenericApp_SerialMSGCB(void);
 
 /*********************************************************************
@@ -220,9 +220,6 @@ void GenericApp_Init( byte task_id )
   RegisterForKeys( GenericApp_TaskID );
   
   // Update the display
-#if defined ( LCD_SUPPORTED )
-    HalLcdWriteString( "GenericApp", HAL_LCD_LINE_1 );
-#endif
   ZDO_RegisterForZDOMsg( GenericApp_TaskID, Device_annce);
   HalUARTWrite(0,"Init!\r\n",10);
   //ZDO_RegisterForZDOMsg( GenericApp_TaskID, End_Device_Bind_rsp );
@@ -298,9 +295,9 @@ UINT16 GenericApp_ProcessEvent( byte task_id, UINT16 events )
               || (GenericApp_NwkState == DEV_END_DEVICE) )
           {
             // Start sending "the" message in a regular interval.
-            osal_start_timerEx( GenericApp_TaskID,
+            /*osal_start_timerEx( GenericApp_TaskID,
                                 GENERICAPP_SEND_MSG_EVT,
-                              GENERICAPP_SEND_MSG_TIMEOUT );
+                              GENERICAPP_SEND_MSG_TIMEOUT );*/
           }
           break;
         default:
@@ -323,12 +320,12 @@ UINT16 GenericApp_ProcessEvent( byte task_id, UINT16 events )
   if ( events & GENERICAPP_SEND_MSG_EVT )
   {
     // Send "the" message
-    GenericApp_SendTheMessage();
+    //GenericApp_SendTheMessage();
 
     // Setup to send message again
-    osal_start_timerEx( GenericApp_TaskID,
+   /* osal_start_timerEx( GenericApp_TaskID,
                         GENERICAPP_SEND_MSG_EVT,
-                      GENERICAPP_SEND_MSG_TIMEOUT );
+                      GENERICAPP_SEND_MSG_TIMEOUT );*/
 
     // return unprocessed events
     return (events ^ GENERICAPP_SEND_MSG_EVT);
@@ -524,13 +521,13 @@ void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
  * @param   none
  * @return  none
  */
-void GenericApp_SendTheMessage( void )
+void GenericApp_SendTheMessage( unsigned char dest_endID, unsigned int temp_set)
 {
   char theMessageData[] = "Coor say:";
-  HalUARTWrite(0, "Sending\r\n", 11);
+  //HalUARTWrite(0, "Sending\r\n", 11);
   GenericApp_DstAddr.addrMode = (afAddrMode_t)Addr64Bit;
-  GenericApp_DstAddr.endPoint = EndDeviceInfos[0].endPoint;
-  osal_memcpy(GenericApp_DstAddr.addr.extAddr, EndDeviceInfos[0].extAddr, 8);
+  GenericApp_DstAddr.endPoint = EndDeviceInfos[dest_endID].endPoint;
+  osal_memcpy(GenericApp_DstAddr.addr.extAddr, EndDeviceInfos[dest_endID].extAddr, 8);
   
   if ( AF_DataRequest( &GenericApp_DstAddr, &GenericApp_epDesc,
                        GENERICAPP_CLUSTERID,
@@ -540,10 +537,7 @@ void GenericApp_SendTheMessage( void )
                        AF_DISCV_ROUTE, AF_DEFAULT_RADIUS ) == afStatus_SUCCESS )                     
   {
     // Successfully requested to be sent.
-    //osal_buffer_uint16(short_addr, GenericApp_DstAddr.addr.shortAddr);
-   // printf("\r\nMsg Sent Successfully!\r\n");
-   // printf("short address:");
-   // printf("%04x", GenericApp_DstAddr.addr.shortAddr);
+    HalUARTWrite(0, "Sent\r\n", 8);
   }
   else
   {
@@ -559,13 +553,32 @@ void GenericApp_SendTheMessage( void )
 //@return: none
 void GenericApp_SerialMSGCB(void)
 {
-  unsigned char buf [8] = "";
+  unsigned char dest_endID = 0; //this number is the index of EndDeviceInfos
+  unsigned char buf [5] = "";
  // printf("UART received!");
-  HalUARTRead(0, buf, 8);
-  if ( buf[0] != 0x00) {
-    HalUARTWrite(0, buf, 8);
-    //HalUARTWrite(0, "Hell\r\n", 8);
-    //MT_UartAppFlowControl(MT_UART_ZAPP_RX_READY);
+  HalUARTRead(0, buf, 5);
+  if ( (buf[0] & GENERICAPP_ENDPOINT) && (buf[1] == 0xCC)) {  //make sure cmd send to this device
+    dest_endID = buf[0] & 0x1F; //get destnation endPoint from uart message
+    HalUARTWrite(0, buf, 5);
+    switch (buf[2]) {
+      case 0x01:  { //cmd:get temp now!
+          GenericApp_SendTheMessage(dest_endID, 0);
+          HalUARTWrite(0, "Yeah!\r\n", 9);
+        break;
+      }
+      case 0x02: {  //TODO: cmd:set alert temp value
+        break;
+      }
+      case 0x03: {  //TODO: cmd:set danger temp value
+        break;
+      }
+      case 0xF0: {  //TODO: cmd low power mode
+        break;
+      }
+      //add other cmds here
+      default:
+        break;
+    }
   }
 }
 
