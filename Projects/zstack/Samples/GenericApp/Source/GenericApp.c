@@ -86,9 +86,7 @@
 /*********************************************************************
  * CONSTANTS
  */
-unsigned char end_device_1_extAddr[8] = {0x94, 0x85, 0xCB, 0x02, 0x00, 0x4B, 0x12, 0x00};
-//unsigned char end_device_2_extAddr[8] = {};
-//unsigned char end_device_2_extAddr[8] = {};
+ 
 /*********************************************************************
  * TYPEDEFS
  */
@@ -201,9 +199,6 @@ void GenericApp_Init( byte task_id )
 
   // If the hardware is application specific - add it here.
   // If the hardware is other parts of the device add it in main().
-  /*GenericApp_DstAddr.addrMode = (afAddrMode_t)Addr64Bit;
-  GenericApp_DstAddr.endPoint = 0x01;
-  osal_memcpy(GenericApp_DstAddr.addr.extAddr, end_device_1_extAddr, 8);*/
   
 
   // Fill out the endpoint description.
@@ -220,7 +215,7 @@ void GenericApp_Init( byte task_id )
   RegisterForKeys( GenericApp_TaskID );
   
   // Update the display
-  ZDO_RegisterForZDOMsg( GenericApp_TaskID, Device_annce);
+  //ZDO_RegisterForZDOMsg( GenericApp_TaskID, Device_annce);
   HalUARTWrite(0,"Init!\r\n",10);
   //ZDO_RegisterForZDOMsg( GenericApp_TaskID, End_Device_Bind_rsp );
   //ZDO_RegisterForZDOMsg( GenericApp_TaskID, Match_Desc_rsp );
@@ -280,7 +275,6 @@ UINT16 GenericApp_ProcessEvent( byte task_id, UINT16 events )
           if ( sentStatus != ZSuccess )
           {
             // The data wasn't delivered -- Do something
-            //printf("\r\nData not sent\r\n");
           }
           break;
 
@@ -321,12 +315,6 @@ UINT16 GenericApp_ProcessEvent( byte task_id, UINT16 events )
   {
     // Send "the" message
     //GenericApp_SendTheMessage();
-
-    // Setup to send message again
-   /* osal_start_timerEx( GenericApp_TaskID,
-                        GENERICAPP_SEND_MSG_EVT,
-                      GENERICAPP_SEND_MSG_TIMEOUT );*/
-
     // return unprocessed events
     return (events ^ GENERICAPP_SEND_MSG_EVT);
   }
