@@ -146,7 +146,6 @@ byte GenericApp_TaskID;   // Task ID for internal task/event processing
                           // GenericApp_Init() is called.
 devStates_t GenericApp_NwkState;
 
-
 byte GenericApp_TransID;  // This is the unique message ID (counter)
 
 afAddrType_t GenericApp_DstAddr;
@@ -157,7 +156,7 @@ afAddrType_t GenericApp_DstAddr;
 void GenericApp_ProcessZDOMsgs( zdoIncomingMsg_t *inMsg );
 void GenericApp_HandleKeys( byte shift, byte keys );
 void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pckt );
-void GenericApp_SendTheMessage( unsigned char dest_endID, unsigned int temp_set);
+void GenericApp_SendTheMessage( unsigned char dest_endID, unsigned char cmd, unsigned int temp_set);
 void GenericApp_SerialMSGCB(void);
 
 /*********************************************************************
@@ -482,21 +481,21 @@ void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
     case GENERICAPP_CLUSTERID:
       {// "the" message
         (void)APSME_LookupExtAddr(pkt->srcAddr.addr.shortAddr, temp_extAddr);
-        for (i = 0; i < device_count+1; i++) {
+        for (i = 0; i < device_count+1; i++) {  // to see whether the device ever connected
           if (osal_memcmp(EndDeviceInfos[i].extAddr, temp_extAddr, 8)) { //if existed, break;
             existed = 1;
             HalUARTWrite(0, "Existed!\r\n",12);
             break;
           }
         }
-        if (!existed) {
+        if (!existed) {  //not connected before, register
           HalUARTWrite(0, "New Device!\r\n",15);
           osal_memcpy(EndDeviceInfos[device_count].extAddr, temp_extAddr, 8);
           EndDeviceInfos[device_count].endPoint = pkt->srcAddr.endPoint;
           EndDeviceInfos[device_count].compressed_addr = GENERICAPP_ENDPOINT | EndDeviceInfos[device_count].endPoint;
           device_count++;
         }
-        if (device_count == 254) { device_count = 0;}
+        if (device_count == 254) { device_count = 0;}  //in case to overflow
        HalUARTWrite(0, pkt->cmd.Data, 5);//osal_strlen(pkt->cmd.Data)
        break;
       }
@@ -509,18 +508,22 @@ void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
  * @param   none
  * @return  none
  */
-void GenericApp_SendTheMessage( unsigned char dest_endID, unsigned int temp_set)
+void GenericApp_SendTheMessage( unsigned char dest_endID, unsigned char cmd, unsigned int data)
 {
-  char theMessageData[] = "Coor say:";
-  //HalUARTWrite(0, "Sending\r\n", 11);
+  unsigned char theMessageData[5] = "";
+  theMessageData[0] = EndDeviceInfos[dest_endID].compressed_addr;
+  theMessageData[1] = 0xCC;
+  theMessageData[2] = cmd;
+  osal_buffer_uint16(&theMessageData[3], data);
+  //set the destination below
   GenericApp_DstAddr.addrMode = (afAddrMode_t)Addr64Bit;
   GenericApp_DstAddr.endPoint = EndDeviceInfos[dest_endID].endPoint;
   osal_memcpy(GenericApp_DstAddr.addr.extAddr, EndDeviceInfos[dest_endID].extAddr, 8);
   
   if ( AF_DataRequest( &GenericApp_DstAddr, &GenericApp_epDesc,
                        GENERICAPP_CLUSTERID,
-                       (byte)osal_strlen( theMessageData ) + 1,
-                       (byte *)&theMessageData,
+                       6,//send one more char or the last char might be missing
+                       theMessageData,
                        &GenericApp_TransID,
                        AF_DISCV_ROUTE, AF_DEFAULT_RADIUS ) == afStatus_SUCCESS )                     
   {
@@ -530,7 +533,7 @@ void GenericApp_SendTheMessage( unsigned char dest_endID, unsigned int temp_set)
   else
   {
     // Error occurred in request to send.
-  //  printf("\r\nMsg Not Sent!\r\n");
+    
   }
 }
 
@@ -542,30 +545,22 @@ void GenericApp_SendTheMessage( unsigned char dest_endID, unsigned int temp_set)
 void GenericApp_SerialMSGCB(void)
 {
   unsigned char dest_endID = 0; //this number is the index of EndDeviceInfos
-  unsigned char buf [5] = "";
+  unsigned int data = 0;
+  unsigned char buf [6] = "";
  // printf("UART received!");
   HalUARTRead(0, buf, 5);
   if ( (buf[0] & GENERICAPP_ENDPOINT) && (buf[1] == 0xCC)) {  //make sure cmd send to this device
     dest_endID = buf[0] & 0x1F; //get destnation endPoint from uart message
+    data = osal_build_uint16(&buf[3]);
     HalUARTWrite(0, buf, 5);
-    switch (buf[2]) {
-      case 0x01:  { //cmd:get temp now!
-          GenericApp_SendTheMessage(dest_endID, 0);
-          HalUARTWrite(0, "Yeah!\r\n", 9);
+    if (buf[2]&0x80) {  //cmd for coordinator
+      switch (buf[2]) {
+        //add cmds here, e.g. case: 0x81...
+        default:
         break;
       }
-      case 0x02: {  //TODO: cmd:set alert temp value
-        break;
-      }
-      case 0x03: {  //TODO: cmd:set danger temp value
-        break;
-      }
-      case 0xF0: {  //TODO: cmd low power mode
-        break;
-      }
-      //add other cmds here
-      default:
-        break;
+    } else { //cmd for end device, send it
+      GenericApp_SendTheMessage(dest_endID, buf[2], data);
     }
   }
 }
