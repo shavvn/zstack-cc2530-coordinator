@@ -500,8 +500,9 @@ void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
           device_count++;
         }
         if (device_count == 254) { device_count = 0;}  //in case to overflow
-       HalUARTWrite(0, pkt->cmd.Data, 5);//osal_strlen(pkt->cmd.Data)
-       break;
+        //TO DO: process data received, send it to slave machine
+        HalUARTWrite(0, pkt->cmd.Data, 5);//osal_strlen(pkt->cmd.Data)
+        break;
       }
   }
 }
