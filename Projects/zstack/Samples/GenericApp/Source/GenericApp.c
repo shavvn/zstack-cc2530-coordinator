@@ -276,6 +276,9 @@ UINT16 GenericApp_ProcessEvent( byte task_id, UINT16 events )
             // The data wasn't delivered -- Do something
             HalUARTWrite(0, "Lost\r\n", 8);
           }
+          else {
+            HalUARTWrite(0, "sent\r\n", 8);
+          }
           break;
 
         case AF_INCOMING_MSG_CMD:
