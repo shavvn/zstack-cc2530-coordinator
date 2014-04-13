@@ -274,6 +274,7 @@ UINT16 GenericApp_ProcessEvent( byte task_id, UINT16 events )
           if ( sentStatus != ZSuccess )
           {
             // The data wasn't delivered -- Do something
+            HalUARTWrite(0, "Lost\r\n", 8);
           }
           break;
 

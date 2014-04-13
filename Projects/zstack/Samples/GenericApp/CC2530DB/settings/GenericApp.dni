@@ -1,8 +1,7 @@
 [DebugChecksum]
-Checksum=-159981385
+Checksum=-1027809263
 [DisAssemblyWindow]
-NumStates=_ 1
-State 1=_ 1
+NumStates=_ 0
 [InstructionProfiling]
 Enabled=_ 0
 [CodeCoverage]
@@ -19,12 +18,6 @@ UseTrigger=1
 TriggerName=main
 LimitSize=0
 ByteLimit=50
-[Breakpoints]
-Bp0=_ "STD_CODE" "{$PROJ_DIR$\..\..\..\..\..\Components\mt\MT_TASK.c}.196.7@1" 1 0 0 0 "" 0 ""
-Count=1
-[ChipconEmu]
-Stop timers on halt=0
-Leave target running=1
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -32,6 +25,12 @@ Category=_ 0
 [TermIOLog]
 LoggingEnabled=_ 0
 LogFile=_ ""
+[Breakpoints]
+Bp0=_ "STD_CODE" "{$PROJ_DIR$\..\..\..\..\..\Components\mt\MT_TASK.c}.196.7@1" 1 0 0 0 "" 0 ""
+Count=1
+[ChipconEmu]
+Stop timers on halt=0
+Leave target running=1
 [Aliases]
 A0=_ "E:\Dropbox\grad_proj\ZStack-CC2530-2.4.0-1.4.0\Components\hal\target\CC2530EB\hal_uart.c" "D:\zigbee\projects\zstack-cc2530-coordinator\Components\hal\target\CC2530EB\hal_uart.c"
 A1=_ "E:\Program\MCU\zigbee\CC2530\ZStack-CC2530-2.4.0-1.4.0-1\ZStack-CC2530-2.4.0-1.4.0\Components\hal\target\CC2530EB\_hal_uart_dma.c" ""
