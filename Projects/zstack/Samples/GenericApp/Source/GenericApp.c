@@ -557,7 +557,7 @@ void GenericApp_SerialMSGCB(void)
   if ( (buf[1] & GENERICAPP_ENDPOINT) && (buf[0] == 0xCC) && (buf[5] == 0x33)) {  //make sure cmd send to this device
     dest_endID = buf[0] & 0x1F; //get destnation endPoint from uart message
     data = osal_build_uint16(&buf[3]);
-    HalUARTWrite(0, buf, 5);
+    HalUARTWrite(0, buf, 6);
     if (buf[2]&0x80) {  //cmd for coordinator
       switch (buf[2]) {
         //add cmds here, e.g. case: 0x81...
