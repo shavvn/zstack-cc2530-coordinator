@@ -515,11 +515,12 @@ void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
  */
 void GenericApp_SendTheMessage( unsigned char dest_endID, unsigned char cmd, unsigned int data)
 {
-  unsigned char theMessageData[5] = "";
-  theMessageData[0] = EndDeviceInfos[dest_endID].compressed_addr;
-  theMessageData[1] = 0xCC;
+  unsigned char theMessageData[6] = "";
+  theMessageData[0] = 0xCC;  //beginning check byte
+  theMessageData[1] = EndDeviceInfos[dest_endID].compressed_addr;
   theMessageData[2] = cmd;
   osal_buffer_uint16(&theMessageData[3], data);
+  theMessageData[5] = 0x33;  //end check byte
   //set the destination below
   GenericApp_DstAddr.addrMode = (afAddrMode_t)Addr64Bit;
   GenericApp_DstAddr.endPoint = EndDeviceInfos[dest_endID].endPoint;
@@ -527,18 +528,17 @@ void GenericApp_SendTheMessage( unsigned char dest_endID, unsigned char cmd, uns
   
   if ( AF_DataRequest( &GenericApp_DstAddr, &GenericApp_epDesc,
                        GENERICAPP_CLUSTERID,
-                       6,//send one more char or the last char might be missing
+                       7,//send one more char or the last char might be missing
                        theMessageData,
                        &GenericApp_TransID,
                        AF_DISCV_ROUTE, AF_DEFAULT_RADIUS ) == afStatus_SUCCESS )                     
   {
     // Successfully requested to be sent.
-    HalUARTWrite(0, "Sent\r\n", 8);
+    //HalUARTWrite(0, "Sent\r\n", 8);
   }
   else
   {
     // Error occurred in request to send.
-    
   }
 }
 
@@ -551,10 +551,10 @@ void GenericApp_SerialMSGCB(void)
 {
   unsigned char dest_endID = 0; //this number is the index of EndDeviceInfos
   unsigned int data = 0;
-  unsigned char buf [6] = "";
+  unsigned char buf [7] = "";
  // printf("UART received!");
-  HalUARTRead(0, buf, 5);
-  if ( (buf[0] & GENERICAPP_ENDPOINT) && (buf[1] == 0xCC)) {  //make sure cmd send to this device
+  HalUARTRead(0, buf, 6);
+  if ( (buf[1] & GENERICAPP_ENDPOINT) && (buf[0] == 0xCC) && (buf[5] == 0x33)) {  //make sure cmd send to this device
     dest_endID = buf[0] & 0x1F; //get destnation endPoint from uart message
     data = osal_build_uint16(&buf[3]);
     HalUARTWrite(0, buf, 5);
