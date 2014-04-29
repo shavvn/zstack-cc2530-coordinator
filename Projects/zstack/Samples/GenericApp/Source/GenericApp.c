@@ -37,25 +37,7 @@
   contact Texas Instruments Incorporated at www.TI.com. 
 **************************************************************************************************/
 
-/*********************************************************************
-  This application isn't intended to do anything useful, it is
-  intended to be a simple example of an application's structure.
 
-  This application sends "Hello World" to another "Generic"
-  application every 15 seconds.  The application will also
-  receive "Hello World" packets.
-
-  The "Hello World" messages are sent/received as MSG type message.
-
-  This applications doesn't have a profile, so it handles everything
-  directly - itself.
-
-  Key control:
-    SW1:
-    SW2:  initiates end device binding
-    SW3:
-    SW4:  initiates a match description request
-*********************************************************************/
 
 /*********************************************************************
  * INCLUDES
@@ -154,10 +136,10 @@ afAddrType_t GenericApp_DstAddr;
  * LOCAL FUNCTIONS
  */
 void GenericApp_ProcessZDOMsgs( zdoIncomingMsg_t *inMsg );
-void GenericApp_HandleKeys( byte shift, byte keys );
 void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pckt );
 void GenericApp_SendTheMessage( unsigned char dest_endID, unsigned char cmd, unsigned int temp_set);
 void GenericApp_SerialMSGCB(void);
+void str_reverse(char *str, int length);
 
 /*********************************************************************
  * NETWORK LAYER CALLBACKS
@@ -213,11 +195,7 @@ void GenericApp_Init( byte task_id )
   // Register for all key events - This app will handle all key events
   RegisterForKeys( GenericApp_TaskID );
   
-  // Update the display
-  //ZDO_RegisterForZDOMsg( GenericApp_TaskID, Device_annce);
-  HalUARTWrite(0,"Init!\r\n",10);
-  //ZDO_RegisterForZDOMsg( GenericApp_TaskID, End_Device_Bind_rsp );
-  //ZDO_RegisterForZDOMsg( GenericApp_TaskID, Match_Desc_rsp );
+  //HalUARTWrite(0,"Init!\r\n",10);
 }
 
 /*********************************************************************
@@ -254,10 +232,6 @@ UINT16 GenericApp_ProcessEvent( byte task_id, UINT16 events )
         case ZDO_CB_MSG:
           GenericApp_ProcessZDOMsgs( (zdoIncomingMsg_t *)MSGpkt );
           break;
-          
-        case KEY_CHANGE:
-          GenericApp_HandleKeys( ((keyChange_t *)MSGpkt)->state, ((keyChange_t *)MSGpkt)->keys );
-          break;
 
         case AF_DATA_CONFIRM_CMD:
           // This message is received as a confirmation of a data packet sent.
@@ -274,10 +248,10 @@ UINT16 GenericApp_ProcessEvent( byte task_id, UINT16 events )
           if ( sentStatus != ZSuccess )
           {
             // The data wasn't delivered -- Do something
-            HalUARTWrite(0, "Lost\r\n", 8);
+            //HalUARTWrite(0, "Lost\r\n", 8);
           }
           else {
-            HalUARTWrite(0, "sent\r\n", 8);
+            //HalUARTWrite(0, "sent\r\n", 8);
           }
           break;
 
@@ -291,7 +265,7 @@ UINT16 GenericApp_ProcessEvent( byte task_id, UINT16 events )
               || (GenericApp_NwkState == DEV_ROUTER)
               || (GenericApp_NwkState == DEV_END_DEVICE) )
           {
-            // Start sending "the" message in a regular interval.
+            // The coordinator won't send message automatically
             /*osal_start_timerEx( GenericApp_TaskID,
                                 GENERICAPP_SEND_MSG_EVT,
                               GENERICAPP_SEND_MSG_TIMEOUT );*/
@@ -334,7 +308,7 @@ UINT16 GenericApp_ProcessEvent( byte task_id, UINT16 events )
 /*********************************************************************
  * Event Generation Functions
  */
-
+ 
 /*********************************************************************
  * @fn      GenericApp_ProcessZDOMsgs()
  * @brief   Process response messages
@@ -345,28 +319,6 @@ void GenericApp_ProcessZDOMsgs( zdoIncomingMsg_t *inMsg )
 {
   switch ( inMsg->clusterID )
   {
-    case Device_annce:
-      {
-        ZDO_DeviceAnnce_t msg;
-        ZDO_ParseDeviceAnnce(inMsg, &msg);  //parse incoming message
-        //GenericApp_DstAddr.addr.shortAddr = msg.nwkAddr;
-        //osal_memcpy(GenericApp_DstAddr.addr.extAddr, msg.extAddr, 8);
-      }
-    case End_Device_Bind_rsp:
-      if ( ZDO_ParseBindRsp( inMsg ) == ZSuccess )
-      {
-        // Light LED
-        HalLedSet( HAL_LED_4, HAL_LED_MODE_ON );
-      }
-#if defined(BLINK_LEDS)
-      else
-      {
-        // Flash LED to show failure
-        HalLedSet ( HAL_LED_4, HAL_LED_MODE_FLASH );
-      }
-#endif
-      break;
-
     case Match_Desc_rsp:
       {
         ZDO_ActiveEndpointRsp_t *pRsp = ZDO_ParseEPListRsp( inMsg );
@@ -378,7 +330,6 @@ void GenericApp_ProcessZDOMsgs( zdoIncomingMsg_t *inMsg )
             GenericApp_DstAddr.addr.shortAddr = pRsp->nwkAddr;
             // Take the first endpoint, Can be changed to search through endpoints
             GenericApp_DstAddr.endPoint = pRsp->epList[0];
-
             // Light LED
             HalLedSet( HAL_LED_4, HAL_LED_MODE_ON );
           }
@@ -389,79 +340,6 @@ void GenericApp_ProcessZDOMsgs( zdoIncomingMsg_t *inMsg )
   }
 }
 
-/*********************************************************************
- * @fn      GenericApp_HandleKeys
- *
- * @brief   Handles all key events for this device.
- *
- * @param   shift - true if in shift/alt.
- * @param   keys - bit field for key events. Valid entries:
- *                 HAL_KEY_SW_4
- *                 HAL_KEY_SW_3
- *                 HAL_KEY_SW_2
- *                 HAL_KEY_SW_1
- *
- * @return  none
- */
-void GenericApp_HandleKeys( byte shift, byte keys )
-{
-  zAddrType_t dstAddr;
-  
-  // Shift is used to make each button/switch dual purpose.
-  if ( shift )
-  {
-    if ( keys & HAL_KEY_SW_1 )
-    {
-    }
-    if ( keys & HAL_KEY_SW_2 )
-    {
-    }
-    if ( keys & HAL_KEY_SW_3 )
-    {
-    }
-    if ( keys & HAL_KEY_SW_4 )
-    {
-    }
-  }
-  else
-  {
-    if ( keys & HAL_KEY_SW_1 )
-    {
-    }
-
-    if ( keys & HAL_KEY_SW_2 )
-    {
-      HalLedSet ( HAL_LED_4, HAL_LED_MODE_OFF );
-
-      // Initiate an End Device Bind Request for the mandatory endpoint
-      dstAddr.addrMode = Addr16Bit;
-      dstAddr.addr.shortAddr = 0x0000; // Coordinator
-      ZDP_EndDeviceBindReq( &dstAddr, NLME_GetShortAddr(), 
-                            GenericApp_epDesc.endPoint,
-                            GENERICAPP_PROFID,
-                            GENERICAPP_MAX_CLUSTERS, (cId_t *)GenericApp_ClusterList,
-                            GENERICAPP_MAX_CLUSTERS, (cId_t *)GenericApp_ClusterList,
-                            FALSE );
-    }
-
-    if ( keys & HAL_KEY_SW_3 )
-    {
-    }
-
-    if ( keys & HAL_KEY_SW_4 )
-    {
-      HalLedSet ( HAL_LED_4, HAL_LED_MODE_OFF );
-      // Initiate a Match Description Request (Service Discovery)
-      dstAddr.addrMode = AddrBroadcast;
-      dstAddr.addr.shortAddr = NWK_BROADCAST_SHORTADDR;
-      ZDP_MatchDescReq( &dstAddr, NWK_BROADCAST_SHORTADDR,
-                        GENERICAPP_PROFID,
-                        GENERICAPP_MAX_CLUSTERS, (cId_t *)GenericApp_ClusterList,
-                        GENERICAPP_MAX_CLUSTERS, (cId_t *)GenericApp_ClusterList,
-                        FALSE );
-    }
-  }
-}
 
 /*********************************************************************
  * LOCAL FUNCTIONS
@@ -480,6 +358,7 @@ void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
   unsigned char temp_extAddr[8];
   unsigned char i = 0;
   unsigned char existed = 0;
+  unsigned char buffer[6] = "";
   switch ( pkt->clusterId )
   {
     case GENERICAPP_CLUSTERID:
@@ -488,20 +367,23 @@ void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
         for (i = 0; i < device_count+1; i++) {  // to see whether the device ever connected
           if (osal_memcmp(EndDeviceInfos[i].extAddr, temp_extAddr, 8)) { //if existed, break;
             existed = 1;
-            HalUARTWrite(0, "Existed!\r\n",12);
+            //HalUARTWrite(0, "Existed!\r\n",12);
             break;
           }
         }
         if (!existed) {  //not connected before, register
-          HalUARTWrite(0, "New Device!\r\n",15);
+          //HalUARTWrite(0, "New Device!\r\n",15);
           osal_memcpy(EndDeviceInfos[device_count].extAddr, temp_extAddr, 8);
           EndDeviceInfos[device_count].endPoint = pkt->srcAddr.endPoint;
           EndDeviceInfos[device_count].compressed_addr = GENERICAPP_ENDPOINT | EndDeviceInfos[device_count].endPoint;
           device_count++;
         }
-        if (device_count == 254) { device_count = 0;}  //in case to overflow
+        if (device_count == 16) { device_count = 0;}  //in case to overflow
         //TO DO: process data received, send it to slave machine
-        HalUARTWrite(0, pkt->cmd.Data, 5);//osal_strlen(pkt->cmd.Data)
+        osal_memcpy(&buffer[0], pkt->cmd.Data, 6);
+        str_reverse((char*)&buffer[3], 1);
+        //HalUARTWrite(0, pkt->cmd.Data, 5);//osal_strlen(pkt->cmd.Data)
+        HalUARTWrite(0, &buffer[0], 6);
         break;
       }
   }
@@ -567,6 +449,23 @@ void GenericApp_SerialMSGCB(void)
     } else { //cmd for end device, send it
       GenericApp_SendTheMessage(dest_endID, buf[2], data);
     }
+  }
+}
+
+//@fn rt_str_reverse
+//@brief message received is reversed, so we need to reverse again using this function
+//@para *str the first byte in a string that needs reversed
+//@para length the total length that needs to be reversed, 0 included
+//e.g a[] = {1,2,3,4}, then rt_str_reverse(&a[0], 3) result in {4, 3, 2, 1}
+void str_reverse(char *str, int length) {
+  char temp, *end_ptr;
+  end_ptr = str + length;
+  while(end_ptr>str) {
+    temp = *str;
+    *str = *end_ptr;
+    *end_ptr = temp;
+    str++;
+    end_ptr--;
   }
 }
 
