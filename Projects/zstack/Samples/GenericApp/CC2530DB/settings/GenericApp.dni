@@ -1,5 +1,5 @@
 [DebugChecksum]
-Checksum=614078268
+Checksum=322814746
 [DisAssemblyWindow]
 NumStates=_ 1
 State 1=_ 1
@@ -21,7 +21,9 @@ LimitSize=0
 ByteLimit=50
 [Breakpoints]
 Bp0=_ "STD_CODE" "{$PROJ_DIR$\..\..\..\..\..\Components\mt\MT_TASK.c}.196.7@1" 1 0 0 0 "" 0 ""
-Count=1
+Bp1=_ "STD_CODE" "{$PROJ_DIR$\..\Source\GenericApp.c}.400.17@1" 1 0 0 0 "" 0 ""
+Bp2=_ "STD_CODE" "{$PROJ_DIR$\..\Source\GenericApp.c}.441.5@1" 1 0 0 0 "" 0 ""
+Count=3
 [ChipconEmu]
 Stop timers on halt=0
 Leave target running=1
