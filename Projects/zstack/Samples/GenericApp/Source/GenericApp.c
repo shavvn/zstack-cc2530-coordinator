@@ -358,7 +358,7 @@ void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
   unsigned char temp_extAddr[8];
   unsigned char i = 0;
   unsigned char existed = 0;
-  unsigned char buffer[6] = "";
+  unsigned char buffer[8] = "";
   switch ( pkt->clusterId )
   {
     case GENERICAPP_CLUSTERID:
@@ -380,10 +380,9 @@ void GenericApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
         }
         if (device_count == 16) { device_count = 0;}  //in case to overflow
         //TO DO: process data received, send it to slave machine
-        osal_memcpy(&buffer[0], pkt->cmd.Data, 6);
+        osal_memcpy(&buffer[0], pkt->cmd.Data, 8);
         str_reverse((char*)&buffer[3], 1);
-        //HalUARTWrite(0, pkt->cmd.Data, 5);//osal_strlen(pkt->cmd.Data)
-        HalUARTWrite(0, &buffer[0], 6);
+        HalUARTWrite(0, &buffer[0], 8);
         break;
       }
   }

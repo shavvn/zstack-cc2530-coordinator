@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V7.60.1.40026 for 8051             29/Apr/2014  21:31:46 #
+# IAR C/C++ Compiler V7.60.1.40026 for 8051             04/May/2014  16:23:43 #
 # Copyright (C) 2004-2010 IAR Systems AB.                                     #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -817,8 +817,8 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
    \   000000   74F1         MOV     A,#-0xf
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
    \   000005                ; Saved register size: 15
-   \   000005                ; Auto size: 14
-   \   000005   74F2         MOV     A,#-0xe
+   \   000005                ; Auto size: 16
+   \   000005   74F0         MOV     A,#-0x10
    \   000007   12....       LCALL   ?ALLOC_XSTACK8
    \   00000A   EA           MOV     A,R2
    \   00000B   FE           MOV     R6,A
@@ -827,14 +827,14 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
     358            unsigned char temp_extAddr[8];
     359            unsigned char i = 0;
     360            unsigned char existed = 0;
-    361            unsigned char buffer[6] = "";
+    361            unsigned char buffer[8] = "";
    \   00000E   85..82       MOV     DPL,?XSP + 0
    \   000011   85..83       MOV     DPH,?XSP + 1
    \   000014   AC82         MOV     R4,DPL
    \   000016   AD83         MOV     R5,DPH
    \   000018   7583..       MOV     DPH,#((`?<Constant "">` >> 8) & 0xff)
    \   00001B   7582..       MOV     DPL,#(`?<Constant "">` & 0xff)
-   \   00001E   7406         MOV     A,#0x6
+   \   00001E   7408         MOV     A,#0x8
    \   000020   12....       LCALL   ?MOVE_LONG8_XDATA_XDATA
     362            switch ( pkt->clusterId )
    \   000023   8E82         MOV     DPL,R6
@@ -856,7 +856,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
     365                {// "the" message
     366                  (void)APSME_LookupExtAddr(pkt->srcAddr.addr.shortAddr, temp_extAddr);
    \   000037                ; Setup parameters for call to function APSME_LookupExtAddr
-   \   000037   7406         MOV     A,#0x6
+   \   000037   7408         MOV     A,#0x8
    \   000039   12....       LCALL   ?XSTACK_DISP0_8
    \   00003C   AC82         MOV     R4,DPL
    \   00003E   AD83         MOV     R5,DPH
@@ -930,7 +930,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
    \   0000A6   C3           CLR     C
    \   0000A7   65D0         XRL     A,PSW
    \   0000A9   33           RLC     A
-   \   0000AA   7406         MOV     A,#0x6
+   \   0000AA   7408         MOV     A,#0x8
    \   0000AC   40A9         JC      ??GenericApp_MessageMSGCB_3
     374                  if (!existed) {  //not connected before, register
     375                    //HalUARTWrite(0, "New Device!\r\n",15);
@@ -1006,7 +1006,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
    \   000118   E4           CLR     A
    \   000119   F0           MOVX    @DPTR,A
     382                  //TO DO: process data received, send it to slave machine
-    383                  osal_memcpy(&buffer[0], pkt->cmd.Data, 6);
+    383                  osal_memcpy(&buffer[0], pkt->cmd.Data, 8);
    \                     ??GenericApp_MessageMSGCB_5:
    \   00011A                ; Setup parameters for call to function osal_memcpy
    \   00011A   EE           MOV     A,R6
@@ -1023,7 +1023,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
    \   00012B   75..00       MOV     ?V0 + 2,#0x0
    \   00012E   78..         MOV     R0,#?V0 + 0
    \   000130   12....       LCALL   ?PUSH_XSTACK_I_THREE
-   \   000133   7C06         MOV     R4,#0x6
+   \   000133   7C08         MOV     R4,#0x8
    \   000135   7D00         MOV     R5,#0x0
    \   000137   7403         MOV     A,#0x3
    \   000139   12....       LCALL   ?XSTACK_DISP0_8
@@ -1041,10 +1041,9 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
    \   000151   AA82         MOV     R2,DPL
    \   000153   AB83         MOV     R3,DPH
    \   000155   12....       LCALL   ??str_reverse?relay
-    385                  //HalUARTWrite(0, pkt->cmd.Data, 5);//osal_strlen(pkt->cmd.Data)
-    386                  HalUARTWrite(0, &buffer[0], 6);
+    385                  HalUARTWrite(0, &buffer[0], 8);
    \   000158                ; Setup parameters for call to function HalUARTWrite
-   \   000158   7C06         MOV     R4,#0x6
+   \   000158   7C08         MOV     R4,#0x8
    \   00015A   7D00         MOV     R5,#0x0
    \   00015C   85..82       MOV     DPL,?XSP + 0
    \   00015F   85..83       MOV     DPH,?XSP + 1
@@ -1052,27 +1051,27 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
    \   000164   AB83         MOV     R3,DPH
    \   000166   7900         MOV     R1,#0x0
    \   000168   12....       LCALL   ??HalUARTWrite?relay
-    387                  break;
-    388                }
-    389            }
-    390          }
+    386                  break;
+    387                }
+    388            }
+    389          }
    \                     ??GenericApp_MessageMSGCB_1:
-   \   00016B   740E         MOV     A,#0xe
+   \   00016B   7410         MOV     A,#0x10
    \   00016D   12....       LCALL   ?DEALLOC_XSTACK8
    \   000170   7F07         MOV     R7,#0x7
    \   000172   02....       LJMP    ?BANKED_LEAVE_XDATA
-    391          
-    392          /*********************************************************************
-    393           * @fn      GenericApp_SendTheMessage
-    394           * @brief   Send "the" message.
-    395           * @param   none
-    396           * @return  none
-    397           */
+    390          
+    391          /*********************************************************************
+    392           * @fn      GenericApp_SendTheMessage
+    393           * @brief   Send "the" message.
+    394           * @param   none
+    395           * @return  none
+    396           */
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-    398          void GenericApp_SendTheMessage( unsigned char dest_endID, unsigned char cmd, unsigned int data)
+    397          void GenericApp_SendTheMessage( unsigned char dest_endID, unsigned char cmd, unsigned int data)
    \                     GenericApp_SendTheMessage:
-    399          {
+    398          {
    \   000000   74F5         MOV     A,#-0xb
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
    \   000005                ; Saved register size: 11
@@ -1087,7 +1086,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
    \   00000F   F8           MOV     R0,A
    \   000010   ED           MOV     A,R5
    \   000011   F9           MOV     R1,A
-    400            unsigned char theMessageData[6] = "";
+    399            unsigned char theMessageData[6] = "";
    \   000012   85..82       MOV     DPL,?XSP + 0
    \   000015   85..83       MOV     DPH,?XSP + 1
    \   000018   AC82         MOV     R4,DPL
@@ -1096,12 +1095,12 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
    \   00001F   7582..       MOV     DPL,#(`?<Constant "">_1` & 0xff)
    \   000022   7406         MOV     A,#0x6
    \   000024   12....       LCALL   ?MOVE_LONG8_XDATA_XDATA
-    401            theMessageData[0] = 0xCC;  //beginning check byte
+    400            theMessageData[0] = 0xCC;  //beginning check byte
    \   000027   74CC         MOV     A,#-0x34
    \   000029   85..82       MOV     DPL,?XSP + 0
    \   00002C   85..83       MOV     DPH,?XSP + 1
    \   00002F   F0           MOVX    @DPTR,A
-    402            theMessageData[1] = EndDeviceInfos[dest_endID].compressed_addr;
+    401            theMessageData[1] = EndDeviceInfos[dest_endID].compressed_addr;
    \   000030   EE           MOV     A,R6
    \   000031   75F00A       MOV     B,#0xa
    \   000034   A4           MUL     AB
@@ -1127,12 +1126,12 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
    \   000052   12....       LCALL   ?XSTACK_DISP0_8
    \   000055   D0E0         POP     A
    \   000057   F0           MOVX    @DPTR,A
-    403            theMessageData[2] = cmd;
+    402            theMessageData[2] = cmd;
    \   000058   7402         MOV     A,#0x2
    \   00005A   12....       LCALL   ?XSTACK_DISP0_8
    \   00005D   EF           MOV     A,R7
    \   00005E   F0           MOVX    @DPTR,A
-    404            osal_buffer_uint16(&theMessageData[3], data);
+    403            osal_buffer_uint16(&theMessageData[3], data);
    \   00005F                ; Setup parameters for call to function osal_buffer_uint16
    \   00005F   E8           MOV     A,R0
    \   000060   FC           MOV     R4,A
@@ -1143,23 +1142,23 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
    \   000068   AA82         MOV     R2,DPL
    \   00006A   AB83         MOV     R3,DPH
    \   00006C   12....       LCALL   ??osal_buffer_uint16?relay
-    405            theMessageData[5] = 0x33;  //end check byte
+    404            theMessageData[5] = 0x33;  //end check byte
    \   00006F   7405         MOV     A,#0x5
    \   000071   12....       LCALL   ?XSTACK_DISP0_8
    \   000074   7433         MOV     A,#0x33
    \   000076   F0           MOVX    @DPTR,A
-    406            //set the destination below
-    407            GenericApp_DstAddr.addrMode = (afAddrMode_t)Addr64Bit;
+    405            //set the destination below
+    406            GenericApp_DstAddr.addrMode = (afAddrMode_t)Addr64Bit;
    \   000077   7403         MOV     A,#0x3
    \   000079   90....       MOV     DPTR,#(GenericApp_DstAddr + 8)
    \   00007C   F0           MOVX    @DPTR,A
-    408            GenericApp_DstAddr.endPoint = EndDeviceInfos[dest_endID].endPoint;
+    407            GenericApp_DstAddr.endPoint = EndDeviceInfos[dest_endID].endPoint;
    \   00007D   85..82       MOV     DPL,?V0 + 0
    \   000080   85..83       MOV     DPH,?V0 + 1
    \   000083   E0           MOVX    A,@DPTR
    \   000084   90....       MOV     DPTR,#(GenericApp_DstAddr + 9)
    \   000087   F0           MOVX    @DPTR,A
-    409            osal_memcpy(GenericApp_DstAddr.addr.extAddr, EndDeviceInfos[dest_endID].extAddr, 8);
+    408            osal_memcpy(GenericApp_DstAddr.addr.extAddr, EndDeviceInfos[dest_endID].extAddr, 8);
    \   000088                ; Setup parameters for call to function osal_memcpy
    \   000088   85..82       MOV     DPL,?V0 + 0
    \   00008B   85..83       MOV     DPH,?V0 + 1
@@ -1178,13 +1177,13 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
    \   0000A7   12....       LCALL   ??osal_memcpy?relay
    \   0000AA   7403         MOV     A,#0x3
    \   0000AC   12....       LCALL   ?DEALLOC_XSTACK8
-    410            
-    411            if ( AF_DataRequest( &GenericApp_DstAddr, &GenericApp_epDesc,
-    412                                 GENERICAPP_CLUSTERID,
-    413                                 7,//send one more char or the last char might be missing
-    414                                 theMessageData,
-    415                                 &GenericApp_TransID,
-    416                                 AF_DISCV_ROUTE, AF_DEFAULT_RADIUS ) == afStatus_SUCCESS )                     
+    409            
+    410            if ( AF_DataRequest( &GenericApp_DstAddr, &GenericApp_epDesc,
+    411                                 GENERICAPP_CLUSTERID,
+    412                                 7,//send one more char or the last char might be missing
+    413                                 theMessageData,
+    414                                 &GenericApp_TransID,
+    415                                 AF_DISCV_ROUTE, AF_DEFAULT_RADIUS ) == afStatus_SUCCESS )                     
    \   0000AF                ; Setup parameters for call to function AF_DataRequest
    \   0000AF   75..1E       MOV     ?V0 + 0,#0x1e
    \   0000B2   78..         MOV     R0,#?V0 + 0
@@ -1214,39 +1213,39 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
    \   0000EF   12....       LCALL   ??AF_DataRequest?relay
    \   0000F2   7409         MOV     A,#0x9
    \   0000F4   12....       LCALL   ?DEALLOC_XSTACK8
-    417            {
-    418              // Successfully requested to be sent.
-    419              //HalUARTWrite(0, "Sent\r\n", 8);
-    420            }
-    421            else
-    422            {
-    423              // Error occurred in request to send.
-    424            }
-    425          }
+    416            {
+    417              // Successfully requested to be sent.
+    418              //HalUARTWrite(0, "Sent\r\n", 8);
+    419            }
+    420            else
+    421            {
+    422              // Error occurred in request to send.
+    423            }
+    424          }
    \   0000F7   7406         MOV     A,#0x6
    \   0000F9   12....       LCALL   ?DEALLOC_XSTACK8
    \   0000FC   7F03         MOV     R7,#0x3
    \   0000FE   02....       LJMP    ?BANKED_LEAVE_XDATA
+    425          
     426          
-    427          
-    428          //@fn: GenericApp_SerialMSGCB
-    429          //@breif: process data received by UART, used to execute cmds from slave machine
-    430          //@param: none
-    431          //@return: none
+    427          //@fn: GenericApp_SerialMSGCB
+    428          //@breif: process data received by UART, used to execute cmds from slave machine
+    429          //@param: none
+    430          //@return: none
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-    432          void GenericApp_SerialMSGCB(void)
+    431          void GenericApp_SerialMSGCB(void)
    \                     GenericApp_SerialMSGCB:
-    433          {
+    432          {
    \   000000   74F4         MOV     A,#-0xc
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
    \   000005                ; Saved register size: 12
    \   000005                ; Auto size: 7
    \   000005   74F9         MOV     A,#-0x7
    \   000007   12....       LCALL   ?ALLOC_XSTACK8
-    434            unsigned char dest_endID = 0; //this number is the index of EndDeviceInfos
-    435            unsigned int data = 0;
-    436            unsigned char buf [7] = "";
+    433            unsigned char dest_endID = 0; //this number is the index of EndDeviceInfos
+    434            unsigned int data = 0;
+    435            unsigned char buf [7] = "";
    \   00000A   85..82       MOV     DPL,?XSP + 0
    \   00000D   85..83       MOV     DPH,?XSP + 1
    \   000010   AC82         MOV     R4,DPL
@@ -1255,8 +1254,8 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
    \   000017   7582..       MOV     DPL,#(`?<Constant "">_2` & 0xff)
    \   00001A   7407         MOV     A,#0x7
    \   00001C   12....       LCALL   ?MOVE_LONG8_XDATA_XDATA
-    437           // printf("UART received!");
-    438            HalUARTRead(0, buf, 6);
+    436           // printf("UART received!");
+    437            HalUARTRead(0, buf, 6);
    \   00001F                ; Setup parameters for call to function HalUARTRead
    \   00001F   7C06         MOV     R4,#0x6
    \   000021   FD           MOV     R5,A
@@ -1266,7 +1265,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
    \   00002A   AB83         MOV     R3,DPH
    \   00002C   F9           MOV     R1,A
    \   00002D   12....       LCALL   ??HalUARTRead?relay
-    439            if ( (buf[1] & GENERICAPP_ENDPOINT) && (buf[0] == 0xCC) && (buf[5] == 0x33)) {  //make sure cmd send to this device
+    438            if ( (buf[1] & GENERICAPP_ENDPOINT) && (buf[0] == 0xCC) && (buf[5] == 0x33)) {  //make sure cmd send to this device
    \   000030   7401         MOV     A,#0x1
    \   000032   12....       LCALL   ?XSTACK_DISP0_8
    \   000035   E0           MOVX    A,@DPTR
@@ -1282,13 +1281,13 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
    \   00004A   E0           MOVX    A,@DPTR
    \   00004B   6433         XRL     A,#0x33
    \   00004D   7041         JNZ     ??GenericApp_SerialMSGCB_0
-    440              dest_endID = buf[1] & 0x1F; //get destnation endPoint from uart message
+    439              dest_endID = buf[1] & 0x1F; //get destnation endPoint from uart message
    \   00004F   7401         MOV     A,#0x1
    \   000051   12....       LCALL   ?XSTACK_DISP0_8
    \   000054   E0           MOVX    A,@DPTR
    \   000055   541F         ANL     A,#0x1f
    \   000057   F5..         MOV     ?V0 + 0,A
-    441              data = osal_build_uint16(&buf[3]);
+    440              data = osal_build_uint16(&buf[3]);
    \   000059                ; Setup parameters for call to function osal_build_uint16
    \   000059   7403         MOV     A,#0x3
    \   00005B   12....       LCALL   ?XSTACK_DISP0_8
@@ -1297,7 +1296,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
    \   000062   12....       LCALL   ??osal_build_uint16?relay
    \   000065   8A..         MOV     ?V0 + 2,R2
    \   000067   8B..         MOV     ?V0 + 3,R3
-    442              HalUARTWrite(0, buf, 6);
+    441              HalUARTWrite(0, buf, 6);
    \   000069                ; Setup parameters for call to function HalUARTWrite
    \   000069   7C06         MOV     R4,#0x6
    \   00006B   7D00         MOV     R5,#0x0
@@ -1307,80 +1306,80 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
    \   000075   AB83         MOV     R3,DPH
    \   000077   7900         MOV     R1,#0x0
    \   000079   12....       LCALL   ??HalUARTWrite?relay
-    443              if (buf[2]&0x80) {  //cmd for coordinator
+    442              if (buf[2]&0x80) {  //cmd for coordinator
    \   00007C   7402         MOV     A,#0x2
    \   00007E   12....       LCALL   ?XSTACK_DISP0_8
    \   000081   E0           MOVX    A,@DPTR
    \   000082   A2E7         MOV     C,0xE0 /* A   */.7
    \   000084   400A         JC      ??GenericApp_SerialMSGCB_0
-    444                switch (buf[2]) {
-    445                  //add cmds here, e.g. case: 0x81...
-    446                  default:
-    447                  break;
-    448                }
-    449              } else { //cmd for end device, send it
-    450                GenericApp_SendTheMessage(dest_endID, buf[2], data);
+    443                switch (buf[2]) {
+    444                  //add cmds here, e.g. case: 0x81...
+    445                  default:
+    446                  break;
+    447                }
+    448              } else { //cmd for end device, send it
+    449                GenericApp_SendTheMessage(dest_endID, buf[2], data);
    \   000086                ; Setup parameters for call to function GenericApp_SendTheMessage
    \   000086   AC..         MOV     R4,?V0 + 2
    \   000088   AD..         MOV     R5,?V0 + 3
    \   00008A   FA           MOV     R2,A
    \   00008B   A9..         MOV     R1,?V0 + 0
    \   00008D   12....       LCALL   ??GenericApp_SendTheMessage?relay
-    451              }
-    452            }
-    453          }
+    450              }
+    451            }
+    452          }
    \                     ??GenericApp_SerialMSGCB_0:
    \   000090   7407         MOV     A,#0x7
    \   000092   12....       LCALL   ?DEALLOC_XSTACK8
    \   000095   02....       LJMP    ?Subroutine0 & 0xFFFF
-    454          
-    455          //@fn rt_str_reverse
-    456          //@brief message received is reversed, so we need to reverse again using this function
-    457          //@para *str the first byte in a string that needs reversed
-    458          //@para length the total length that needs to be reversed, 0 included
-    459          //e.g a[] = {1,2,3,4}, then rt_str_reverse(&a[0], 3) result in {4, 3, 2, 1}
+    453          
+    454          //@fn rt_str_reverse
+    455          //@brief message received is reversed, so we need to reverse again using this function
+    456          //@para *str the first byte in a string that needs reversed
+    457          //@para length the total length that needs to be reversed, 0 included
+    458          //e.g a[] = {1,2,3,4}, then rt_str_reverse(&a[0], 3) result in {4, 3, 2, 1}
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-    460          void str_reverse(char *str, int length) {
+    459          void str_reverse(char *str, int length) {
    \                     str_reverse:
    \   000000   C082         PUSH    DPL
    \   000002   C083         PUSH    DPH
    \   000004                ; Saved register size: 2
    \   000004                ; Auto size: 0
-    461            char temp, *end_ptr;
-    462            end_ptr = str + length;
+    460            char temp, *end_ptr;
+    461            end_ptr = str + length;
    \   000004   EA           MOV     A,R2
    \   000005   2C           ADD     A,R4
    \   000006   F8           MOV     R0,A
    \   000007   EB           MOV     A,R3
    \   000008   3D           ADDC    A,R5
    \   000009   8026         SJMP    ??str_reverse_0
-    463            while(end_ptr>str) {
-    464              temp = *str;
+    462            while(end_ptr>str) {
+    463              temp = *str;
    \                     ??str_reverse_1:
    \   00000B   8A82         MOV     DPL,R2
    \   00000D   8B83         MOV     DPH,R3
    \   00000F   E0           MOVX    A,@DPTR
    \   000010   FC           MOV     R4,A
-    465              *str = *end_ptr;
+    464              *str = *end_ptr;
    \   000011   8882         MOV     DPL,R0
    \   000013   8983         MOV     DPH,R1
    \   000015   E0           MOVX    A,@DPTR
    \   000016   8A82         MOV     DPL,R2
    \   000018   8B83         MOV     DPH,R3
    \   00001A   F0           MOVX    @DPTR,A
-    466              *end_ptr = temp;
+    465              *end_ptr = temp;
    \   00001B   EC           MOV     A,R4
    \   00001C   8882         MOV     DPL,R0
    \   00001E   8983         MOV     DPH,R1
    \   000020   F0           MOVX    @DPTR,A
-    467              str++;
+    466              str++;
    \   000021   8A82         MOV     DPL,R2
    \   000023   8B83         MOV     DPH,R3
    \   000025   A3           INC     DPTR
    \   000026   AA82         MOV     R2,DPL
    \   000028   AB83         MOV     R3,DPH
-    468              end_ptr--;
+    467              end_ptr--;
    \   00002A   E8           MOV     A,R0
    \   00002B   24FF         ADD     A,#-0x1
    \   00002D   18           DEC     R0
@@ -1388,14 +1387,14 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
    \   00002F   34FF         ADDC    A,#-0x1
    \                     ??str_reverse_0:
    \   000031   F9           MOV     R1,A
-    469            }
+    468            }
    \   000032   C3           CLR     C
    \   000033   EA           MOV     A,R2
    \   000034   98           SUBB    A,R0
    \   000035   EB           MOV     A,R3
    \   000036   99           SUBB    A,R1
    \   000037   40D2         JC      ??str_reverse_1
-    470          }
+    469          }
    \   000039   D083         POP     DPH
    \   00003B   D082         POP     DPL
    \   00003D   02....       LJMP    ?BRET
@@ -1438,8 +1437,8 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
    \                                 In  segment XDATA_ROM_C, align 1
    \                     `?<Constant "">`:
    \   000000   00           DB ""
-   \   000001   00000000     DB 0, 0, 0, 0, 0
-   \            00      
+   \   000001   00000000     DB 0, 0, 0, 0, 0, 0, 0
+   \            000000  
 
    \                                 In  segment XDATA_ROM_C, align 1
    \                     `?<Constant "">_1`:
@@ -1452,9 +1451,9 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
    \   000000   00           DB ""
    \   000001   00000000     DB 0, 0, 0, 0, 0, 0
    \            0000    
-    471          
-    472          /*********************************************************************
-    473          *********************************************************************/
+    470          
+    471          /*********************************************************************
+    472          *********************************************************************/
 
    Maximum stack usage in bytes:
 
@@ -1464,13 +1463,13 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
        -> HalUARTOpen                   0      0     76
        -> afRegister                    0      0     76
        -> RegisterForKeys               0      0     76
-     GenericApp_MessageMSGCB            2      0     44
-       -> APSME_LookupExtAddr           0      0     58
-       -> osal_memcmp                   0      0     64
-       -> osal_memcpy                   0      0     64
-       -> osal_memcpy                   0      0     64
-       -> str_reverse                   0      0     58
-       -> HalUARTWrite                  0      0     58
+     GenericApp_MessageMSGCB            2      0     46
+       -> APSME_LookupExtAddr           0      0     62
+       -> osal_memcmp                   0      0     68
+       -> osal_memcpy                   0      0     68
+       -> osal_memcpy                   0      0     68
+       -> str_reverse                   0      0     62
+       -> HalUARTWrite                  0      0     62
      GenericApp_ProcessEvent            0      0     12
        -> osal_msg_receive              0      0     24
        -> GenericApp_ProcessZDOMsgs     0      0     24
@@ -1491,7 +1490,7 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
        -> osal_build_uint16             0      0     38
        -> HalUARTWrite                  0      0     38
        -> GenericApp_SendTheMessage     0      0     38
-     str_reverse                        3      0     29
+     str_reverse                        3      0     31
 
 
    Segment part sizes:
@@ -1522,18 +1521,18 @@ D:\zigbee\projects\zstack-cc2530-coordinator\Projects\zstack\Samples\GenericApp\
      ??GenericApp_SendTheMessage?relay    6
      ??GenericApp_SerialMSGCB?relay       6
      ??str_reverse?relay                  6
-     ?<Constant "">                       6
+     ?<Constant "">                       8
      ?<Constant "">_1                     6
      ?<Constant "">_2                     7
 
  
  1 237 bytes in segment BANKED_CODE
     42 bytes in segment BANK_RELAYS
-    33 bytes in segment XDATA_ROM_C
+    35 bytes in segment XDATA_ROM_C
    182 bytes in segment XDATA_Z
  
  1 279 bytes of CODE  memory
-    33 bytes of CONST memory
+    35 bytes of CONST memory
    182 bytes of XDATA memory
 
 Errors: none

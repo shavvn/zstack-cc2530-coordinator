@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V7.60.1.40026 for 8051            29/Apr/2014  21:31:46 /
+// IAR C/C++ Compiler V7.60.1.40026 for 8051            04/May/2014  16:23:43 /
 // Copyright (C) 2004-2010 IAR Systems AB.                                    /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -199,7 +199,7 @@
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         LOCFRAME ISTACK, 2, STACK
-        LOCFRAME XSTACK, 32, STACK
+        LOCFRAME XSTACK, 34, STACK
         PUBLIC GenericApp_NwkState
         PUBLIC GenericApp_ProcessEvent
         FUNCTION GenericApp_ProcessEvent,0a1203H
@@ -232,7 +232,7 @@
         PUBLIC device_count
         PUBLIC str_reverse
         FUNCTION str_reverse,0203H
-        ARGFRAME XSTACK, 29, STACK
+        ARGFRAME XSTACK, 31, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         LOCFRAME ISTACK, 3, STACK
@@ -434,28 +434,28 @@ str_reverse         SYMBOL "str_reverse"
         FUNCTION APSME_LookupExtAddr,0202H
         ARGFRAME ISTACK, 0, STACK
         ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 29, STACK
+        ARGFRAME XSTACK, 31, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         EXTERN osal_memcmp
         FUNCTION osal_memcmp,0202H
         ARGFRAME ISTACK, 0, STACK
         ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 32, STACK
+        ARGFRAME XSTACK, 34, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         EXTERN osal_memcpy
         FUNCTION osal_memcpy,0202H
         ARGFRAME ISTACK, 0, STACK
         ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 32, STACK
+        ARGFRAME XSTACK, 34, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         EXTERN HalUARTWrite
         FUNCTION HalUARTWrite,0202H
         ARGFRAME ISTACK, 0, STACK
         ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 29, STACK
+        ARGFRAME XSTACK, 31, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         EXTERN osal_buffer_uint16
@@ -1405,67 +1405,67 @@ GenericApp_MessageMSGCB:
         FUNCALL GenericApp_MessageMSGCB, APSME_LookupExtAddr
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 29, STACK
+        LOCFRAME XSTACK, 31, STACK
         LOCFRAME IOVERLAY, 0, STATIC
         LOCFRAME DOVERLAY, 0, STATIC
         ARGFRAME ISTACK, 0, STACK
         ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 29, STACK
+        ARGFRAME XSTACK, 31, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         FUNCALL GenericApp_MessageMSGCB, osal_memcmp
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 32, STACK
+        LOCFRAME XSTACK, 34, STACK
         LOCFRAME IOVERLAY, 0, STATIC
         LOCFRAME DOVERLAY, 0, STATIC
         ARGFRAME ISTACK, 0, STACK
         ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 32, STACK
+        ARGFRAME XSTACK, 34, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         FUNCALL GenericApp_MessageMSGCB, osal_memcpy
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 32, STACK
+        LOCFRAME XSTACK, 34, STACK
         LOCFRAME IOVERLAY, 0, STATIC
         LOCFRAME DOVERLAY, 0, STATIC
         ARGFRAME ISTACK, 0, STACK
         ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 32, STACK
+        ARGFRAME XSTACK, 34, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         FUNCALL GenericApp_MessageMSGCB, osal_memcpy
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 32, STACK
+        LOCFRAME XSTACK, 34, STACK
         LOCFRAME IOVERLAY, 0, STATIC
         LOCFRAME DOVERLAY, 0, STATIC
         ARGFRAME ISTACK, 0, STACK
         ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 32, STACK
+        ARGFRAME XSTACK, 34, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         FUNCALL GenericApp_MessageMSGCB, str_reverse
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 29, STACK
+        LOCFRAME XSTACK, 31, STACK
         LOCFRAME IOVERLAY, 0, STATIC
         LOCFRAME DOVERLAY, 0, STATIC
         ARGFRAME ISTACK, 0, STACK
         ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 29, STACK
+        ARGFRAME XSTACK, 31, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         FUNCALL GenericApp_MessageMSGCB, HalUARTWrite
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 29, STACK
+        LOCFRAME XSTACK, 31, STACK
         LOCFRAME IOVERLAY, 0, STATIC
         LOCFRAME DOVERLAY, 0, STATIC
         ARGFRAME ISTACK, 0, STACK
         ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 29, STACK
+        ARGFRAME XSTACK, 31, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         MOV     A,#-0xf
@@ -1488,10 +1488,10 @@ GenericApp_MessageMSGCB:
         CFI CFA_SP SP+0
         CFI CFA_XSP16 add(XSP16, 15)
         ; Saved register size: 15
-        ; Auto size: 14
-        MOV     A,#-0xe
+        ; Auto size: 16
+        MOV     A,#-0x10
         LCALL   ?ALLOC_XSTACK8
-        CFI CFA_XSP16 add(XSP16, 29)
+        CFI CFA_XSP16 add(XSP16, 31)
         MOV     A,R2
         MOV     R6,A
         MOV     A,R3
@@ -1499,14 +1499,14 @@ GenericApp_MessageMSGCB:
 //  358   unsigned char temp_extAddr[8];
 //  359   unsigned char i = 0;
 //  360   unsigned char existed = 0;
-//  361   unsigned char buffer[6] = "";
+//  361   unsigned char buffer[8] = "";
         MOV     DPL,?XSP + 0
         MOV     DPH,?XSP + 1
         MOV     R4,DPL
         MOV     R5,DPH
         MOV     DPH,#((`?<Constant "">` >> 8) & 0xff)
         MOV     DPL,#(`?<Constant "">` & 0xff)
-        MOV     A,#0x6
+        MOV     A,#0x8
         LCALL   ?MOVE_LONG8_XDATA_XDATA
 //  362   switch ( pkt->clusterId )
         MOV     DPL,R6
@@ -1528,7 +1528,7 @@ GenericApp_MessageMSGCB:
 //  365       {// "the" message
 //  366         (void)APSME_LookupExtAddr(pkt->srcAddr.addr.shortAddr, temp_extAddr);
         ; Setup parameters for call to function APSME_LookupExtAddr
-        MOV     A,#0x6
+        MOV     A,#0x8
         LCALL   ?XSTACK_DISP0_8
         MOV     R4,DPL
         MOV     R5,DPH
@@ -1560,7 +1560,7 @@ GenericApp_MessageMSGCB:
         MOV     ?V0 + 6,#0x0
         MOV     R0,#?V0 + 4
         LCALL   ?PUSH_XSTACK_I_THREE
-        CFI CFA_XSP16 add(XSP16, 32)
+        CFI CFA_XSP16 add(XSP16, 34)
         MOV     R4,#0x8
         MOV     R5,#0x0
         MOV     A,?V0 + 0
@@ -1576,7 +1576,7 @@ GenericApp_MessageMSGCB:
         LCALL   ??osal_memcmp?relay
         MOV     A,#0x3
         LCALL   ?DEALLOC_XSTACK8
-        CFI CFA_XSP16 add(XSP16, 29)
+        CFI CFA_XSP16 add(XSP16, 31)
         MOV     A,R1
         JZ      $+5
         LJMP    ??GenericApp_MessageMSGCB_4 & 0xFFFF
@@ -1604,7 +1604,7 @@ GenericApp_MessageMSGCB:
         CLR     C
         XRL     A,PSW
         RLC     A
-        MOV     A,#0x6
+        MOV     A,#0x8
         JC      ??GenericApp_MessageMSGCB_3
 //  374         if (!existed) {  //not connected before, register
 //  375           //HalUARTWrite(0, "New Device!\r\n",15);
@@ -1618,7 +1618,7 @@ GenericApp_MessageMSGCB:
         MOV     ?V0 + 2,#0x0
         MOV     R0,#?V0 + 0
         LCALL   ?PUSH_XSTACK_I_THREE
-        CFI CFA_XSP16 add(XSP16, 32)
+        CFI CFA_XSP16 add(XSP16, 34)
         MOV     R4,#0x8
         MOV     R5,#0x0
         MOV     DPTR,#device_count
@@ -1633,7 +1633,7 @@ GenericApp_MessageMSGCB:
         LCALL   ??osal_memcpy?relay
         MOV     A,#0x3
         LCALL   ?DEALLOC_XSTACK8
-        CFI CFA_XSP16 add(XSP16, 29)
+        CFI CFA_XSP16 add(XSP16, 31)
 //  377           EndDeviceInfos[device_count].endPoint = pkt->srcAddr.endPoint;
         MOV     A,R6
         ADD     A,#0xf
@@ -1682,7 +1682,7 @@ GenericApp_MessageMSGCB:
         CLR     A
         MOVX    @DPTR,A
 //  382         //TO DO: process data received, send it to slave machine
-//  383         osal_memcpy(&buffer[0], pkt->cmd.Data, 6);
+//  383         osal_memcpy(&buffer[0], pkt->cmd.Data, 8);
 ??GenericApp_MessageMSGCB_5:
         ; Setup parameters for call to function osal_memcpy
         MOV     A,R6
@@ -1699,8 +1699,8 @@ GenericApp_MessageMSGCB:
         MOV     ?V0 + 2,#0x0
         MOV     R0,#?V0 + 0
         LCALL   ?PUSH_XSTACK_I_THREE
-        CFI CFA_XSP16 add(XSP16, 32)
-        MOV     R4,#0x6
+        CFI CFA_XSP16 add(XSP16, 34)
+        MOV     R4,#0x8
         MOV     R5,#0x0
         MOV     A,#0x3
         LCALL   ?XSTACK_DISP0_8
@@ -1709,7 +1709,7 @@ GenericApp_MessageMSGCB:
         LCALL   ??osal_memcpy?relay
         MOV     A,#0x3
         LCALL   ?DEALLOC_XSTACK8
-        CFI CFA_XSP16 add(XSP16, 29)
+        CFI CFA_XSP16 add(XSP16, 31)
 //  384         str_reverse((char*)&buffer[3], 1);
         ; Setup parameters for call to function str_reverse
         MOV     R4,#0x1
@@ -1719,10 +1719,9 @@ GenericApp_MessageMSGCB:
         MOV     R2,DPL
         MOV     R3,DPH
         LCALL   ??str_reverse?relay
-//  385         //HalUARTWrite(0, pkt->cmd.Data, 5);//osal_strlen(pkt->cmd.Data)
-//  386         HalUARTWrite(0, &buffer[0], 6);
+//  385         HalUARTWrite(0, &buffer[0], 8);
         ; Setup parameters for call to function HalUARTWrite
-        MOV     R4,#0x6
+        MOV     R4,#0x8
         MOV     R5,#0x0
         MOV     DPL,?XSP + 0
         MOV     DPH,?XSP + 1
@@ -1730,31 +1729,31 @@ GenericApp_MessageMSGCB:
         MOV     R3,DPH
         MOV     R1,#0x0
         LCALL   ??HalUARTWrite?relay
-//  387         break;
-//  388       }
-//  389   }
-//  390 }
+//  386         break;
+//  387       }
+//  388   }
+//  389 }
 ??GenericApp_MessageMSGCB_1:
-        MOV     A,#0xe
+        MOV     A,#0x10
         LCALL   ?DEALLOC_XSTACK8
         CFI CFA_XSP16 add(XSP16, 15)
         MOV     R7,#0x7
         LJMP    ?BANKED_LEAVE_XDATA
         CFI EndBlock cfiBlock4
-//  391 
-//  392 /*********************************************************************
-//  393  * @fn      GenericApp_SendTheMessage
-//  394  * @brief   Send "the" message.
-//  395  * @param   none
-//  396  * @return  none
-//  397  */
+//  390 
+//  391 /*********************************************************************
+//  392  * @fn      GenericApp_SendTheMessage
+//  393  * @brief   Send "the" message.
+//  394  * @param   none
+//  395  * @return  none
+//  396  */
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
-//  398 void GenericApp_SendTheMessage( unsigned char dest_endID, unsigned char cmd, unsigned int data)
+//  397 void GenericApp_SendTheMessage( unsigned char dest_endID, unsigned char cmd, unsigned int data)
 GenericApp_SendTheMessage:
         CFI Block cfiBlock5 Using cfiCommon0
         CFI Function GenericApp_SendTheMessage
-//  399 {
+//  398 {
         FUNCALL GenericApp_SendTheMessage, osal_buffer_uint16
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
@@ -1816,7 +1815,7 @@ GenericApp_SendTheMessage:
         MOV     R0,A
         MOV     A,R5
         MOV     R1,A
-//  400   unsigned char theMessageData[6] = "";
+//  399   unsigned char theMessageData[6] = "";
         MOV     DPL,?XSP + 0
         MOV     DPH,?XSP + 1
         MOV     R4,DPL
@@ -1825,12 +1824,12 @@ GenericApp_SendTheMessage:
         MOV     DPL,#(`?<Constant "">_1` & 0xff)
         MOV     A,#0x6
         LCALL   ?MOVE_LONG8_XDATA_XDATA
-//  401   theMessageData[0] = 0xCC;  //beginning check byte
+//  400   theMessageData[0] = 0xCC;  //beginning check byte
         MOV     A,#-0x34
         MOV     DPL,?XSP + 0
         MOV     DPH,?XSP + 1
         MOVX    @DPTR,A
-//  402   theMessageData[1] = EndDeviceInfos[dest_endID].compressed_addr;
+//  401   theMessageData[1] = EndDeviceInfos[dest_endID].compressed_addr;
         MOV     A,R6
         MOV     B,#0xa
         MUL     AB
@@ -1858,12 +1857,12 @@ GenericApp_SendTheMessage:
         POP     A
         CFI CFA_SP SP+0
         MOVX    @DPTR,A
-//  403   theMessageData[2] = cmd;
+//  402   theMessageData[2] = cmd;
         MOV     A,#0x2
         LCALL   ?XSTACK_DISP0_8
         MOV     A,R7
         MOVX    @DPTR,A
-//  404   osal_buffer_uint16(&theMessageData[3], data);
+//  403   osal_buffer_uint16(&theMessageData[3], data);
         ; Setup parameters for call to function osal_buffer_uint16
         MOV     A,R0
         MOV     R4,A
@@ -1874,23 +1873,23 @@ GenericApp_SendTheMessage:
         MOV     R2,DPL
         MOV     R3,DPH
         LCALL   ??osal_buffer_uint16?relay
-//  405   theMessageData[5] = 0x33;  //end check byte
+//  404   theMessageData[5] = 0x33;  //end check byte
         MOV     A,#0x5
         LCALL   ?XSTACK_DISP0_8
         MOV     A,#0x33
         MOVX    @DPTR,A
-//  406   //set the destination below
-//  407   GenericApp_DstAddr.addrMode = (afAddrMode_t)Addr64Bit;
+//  405   //set the destination below
+//  406   GenericApp_DstAddr.addrMode = (afAddrMode_t)Addr64Bit;
         MOV     A,#0x3
         MOV     DPTR,#(GenericApp_DstAddr + 8)
         MOVX    @DPTR,A
-//  408   GenericApp_DstAddr.endPoint = EndDeviceInfos[dest_endID].endPoint;
+//  407   GenericApp_DstAddr.endPoint = EndDeviceInfos[dest_endID].endPoint;
         MOV     DPL,?V0 + 0
         MOV     DPH,?V0 + 1
         MOVX    A,@DPTR
         MOV     DPTR,#(GenericApp_DstAddr + 9)
         MOVX    @DPTR,A
-//  409   osal_memcpy(GenericApp_DstAddr.addr.extAddr, EndDeviceInfos[dest_endID].extAddr, 8);
+//  408   osal_memcpy(GenericApp_DstAddr.addr.extAddr, EndDeviceInfos[dest_endID].extAddr, 8);
         ; Setup parameters for call to function osal_memcpy
         MOV     DPL,?V0 + 0
         MOV     DPH,?V0 + 1
@@ -1911,13 +1910,13 @@ GenericApp_SendTheMessage:
         MOV     A,#0x3
         LCALL   ?DEALLOC_XSTACK8
         CFI CFA_XSP16 add(XSP16, 17)
-//  410   
-//  411   if ( AF_DataRequest( &GenericApp_DstAddr, &GenericApp_epDesc,
-//  412                        GENERICAPP_CLUSTERID,
-//  413                        7,//send one more char or the last char might be missing
-//  414                        theMessageData,
-//  415                        &GenericApp_TransID,
-//  416                        AF_DISCV_ROUTE, AF_DEFAULT_RADIUS ) == afStatus_SUCCESS )                     
+//  409   
+//  410   if ( AF_DataRequest( &GenericApp_DstAddr, &GenericApp_epDesc,
+//  411                        GENERICAPP_CLUSTERID,
+//  412                        7,//send one more char or the last char might be missing
+//  413                        theMessageData,
+//  414                        &GenericApp_TransID,
+//  415                        AF_DISCV_ROUTE, AF_DEFAULT_RADIUS ) == afStatus_SUCCESS )                     
         ; Setup parameters for call to function AF_DataRequest
         MOV     ?V0 + 0,#0x1e
         MOV     R0,#?V0 + 0
@@ -1953,34 +1952,34 @@ GenericApp_SendTheMessage:
         MOV     A,#0x9
         LCALL   ?DEALLOC_XSTACK8
         CFI CFA_XSP16 add(XSP16, 17)
-//  417   {
-//  418     // Successfully requested to be sent.
-//  419     //HalUARTWrite(0, "Sent\r\n", 8);
-//  420   }
-//  421   else
-//  422   {
-//  423     // Error occurred in request to send.
-//  424   }
-//  425 }
+//  416   {
+//  417     // Successfully requested to be sent.
+//  418     //HalUARTWrite(0, "Sent\r\n", 8);
+//  419   }
+//  420   else
+//  421   {
+//  422     // Error occurred in request to send.
+//  423   }
+//  424 }
         MOV     A,#0x6
         LCALL   ?DEALLOC_XSTACK8
         CFI CFA_XSP16 add(XSP16, 11)
         MOV     R7,#0x3
         LJMP    ?BANKED_LEAVE_XDATA
         CFI EndBlock cfiBlock5
+//  425 
 //  426 
-//  427 
-//  428 //@fn: GenericApp_SerialMSGCB
-//  429 //@breif: process data received by UART, used to execute cmds from slave machine
-//  430 //@param: none
-//  431 //@return: none
+//  427 //@fn: GenericApp_SerialMSGCB
+//  428 //@breif: process data received by UART, used to execute cmds from slave machine
+//  429 //@param: none
+//  430 //@return: none
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
-//  432 void GenericApp_SerialMSGCB(void)
+//  431 void GenericApp_SerialMSGCB(void)
 GenericApp_SerialMSGCB:
         CFI Block cfiBlock6 Using cfiCommon0
         CFI Function GenericApp_SerialMSGCB
-//  433 {
+//  432 {
         FUNCALL GenericApp_SerialMSGCB, HalUARTRead
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
@@ -2046,9 +2045,9 @@ GenericApp_SerialMSGCB:
         MOV     A,#-0x7
         LCALL   ?ALLOC_XSTACK8
         CFI CFA_XSP16 add(XSP16, 19)
-//  434   unsigned char dest_endID = 0; //this number is the index of EndDeviceInfos
-//  435   unsigned int data = 0;
-//  436   unsigned char buf [7] = "";
+//  433   unsigned char dest_endID = 0; //this number is the index of EndDeviceInfos
+//  434   unsigned int data = 0;
+//  435   unsigned char buf [7] = "";
         MOV     DPL,?XSP + 0
         MOV     DPH,?XSP + 1
         MOV     R4,DPL
@@ -2057,8 +2056,8 @@ GenericApp_SerialMSGCB:
         MOV     DPL,#(`?<Constant "">_2` & 0xff)
         MOV     A,#0x7
         LCALL   ?MOVE_LONG8_XDATA_XDATA
-//  437  // printf("UART received!");
-//  438   HalUARTRead(0, buf, 6);
+//  436  // printf("UART received!");
+//  437   HalUARTRead(0, buf, 6);
         ; Setup parameters for call to function HalUARTRead
         MOV     R4,#0x6
         MOV     R5,A
@@ -2068,7 +2067,7 @@ GenericApp_SerialMSGCB:
         MOV     R3,DPH
         MOV     R1,A
         LCALL   ??HalUARTRead?relay
-//  439   if ( (buf[1] & GENERICAPP_ENDPOINT) && (buf[0] == 0xCC) && (buf[5] == 0x33)) {  //make sure cmd send to this device
+//  438   if ( (buf[1] & GENERICAPP_ENDPOINT) && (buf[0] == 0xCC) && (buf[5] == 0x33)) {  //make sure cmd send to this device
         MOV     A,#0x1
         LCALL   ?XSTACK_DISP0_8
         MOVX    A,@DPTR
@@ -2084,13 +2083,13 @@ GenericApp_SerialMSGCB:
         MOVX    A,@DPTR
         XRL     A,#0x33
         JNZ     ??GenericApp_SerialMSGCB_0
-//  440     dest_endID = buf[1] & 0x1F; //get destnation endPoint from uart message
+//  439     dest_endID = buf[1] & 0x1F; //get destnation endPoint from uart message
         MOV     A,#0x1
         LCALL   ?XSTACK_DISP0_8
         MOVX    A,@DPTR
         ANL     A,#0x1f
         MOV     ?V0 + 0,A
-//  441     data = osal_build_uint16(&buf[3]);
+//  440     data = osal_build_uint16(&buf[3]);
         ; Setup parameters for call to function osal_build_uint16
         MOV     A,#0x3
         LCALL   ?XSTACK_DISP0_8
@@ -2099,7 +2098,7 @@ GenericApp_SerialMSGCB:
         LCALL   ??osal_build_uint16?relay
         MOV     ?V0 + 2,R2
         MOV     ?V0 + 3,R3
-//  442     HalUARTWrite(0, buf, 6);
+//  441     HalUARTWrite(0, buf, 6);
         ; Setup parameters for call to function HalUARTWrite
         MOV     R4,#0x6
         MOV     R5,#0x0
@@ -2109,43 +2108,43 @@ GenericApp_SerialMSGCB:
         MOV     R3,DPH
         MOV     R1,#0x0
         LCALL   ??HalUARTWrite?relay
-//  443     if (buf[2]&0x80) {  //cmd for coordinator
+//  442     if (buf[2]&0x80) {  //cmd for coordinator
         MOV     A,#0x2
         LCALL   ?XSTACK_DISP0_8
         MOVX    A,@DPTR
         MOV     C,0xE0 /* A   */.7
         JC      ??GenericApp_SerialMSGCB_0
-//  444       switch (buf[2]) {
-//  445         //add cmds here, e.g. case: 0x81...
-//  446         default:
-//  447         break;
-//  448       }
-//  449     } else { //cmd for end device, send it
-//  450       GenericApp_SendTheMessage(dest_endID, buf[2], data);
+//  443       switch (buf[2]) {
+//  444         //add cmds here, e.g. case: 0x81...
+//  445         default:
+//  446         break;
+//  447       }
+//  448     } else { //cmd for end device, send it
+//  449       GenericApp_SendTheMessage(dest_endID, buf[2], data);
         ; Setup parameters for call to function GenericApp_SendTheMessage
         MOV     R4,?V0 + 2
         MOV     R5,?V0 + 3
         MOV     R2,A
         MOV     R1,?V0 + 0
         LCALL   ??GenericApp_SendTheMessage?relay
-//  451     }
-//  452   }
-//  453 }
+//  450     }
+//  451   }
+//  452 }
 ??GenericApp_SerialMSGCB_0:
         MOV     A,#0x7
         LCALL   ?DEALLOC_XSTACK8
         CFI CFA_XSP16 add(XSP16, 12)
         LJMP    ?Subroutine0 & 0xFFFF
         CFI EndBlock cfiBlock6
-//  454 
-//  455 //@fn rt_str_reverse
-//  456 //@brief message received is reversed, so we need to reverse again using this function
-//  457 //@para *str the first byte in a string that needs reversed
-//  458 //@para length the total length that needs to be reversed, 0 included
-//  459 //e.g a[] = {1,2,3,4}, then rt_str_reverse(&a[0], 3) result in {4, 3, 2, 1}
+//  453 
+//  454 //@fn rt_str_reverse
+//  455 //@brief message received is reversed, so we need to reverse again using this function
+//  456 //@para *str the first byte in a string that needs reversed
+//  457 //@para length the total length that needs to be reversed, 0 included
+//  458 //e.g a[] = {1,2,3,4}, then rt_str_reverse(&a[0], 3) result in {4, 3, 2, 1}
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
-//  460 void str_reverse(char *str, int length) {
+//  459 void str_reverse(char *str, int length) {
 str_reverse:
         CFI Block cfiBlock7 Using cfiCommon0
         CFI Function str_reverse
@@ -2157,40 +2156,40 @@ str_reverse:
         CFI CFA_SP SP+-5
         ; Saved register size: 2
         ; Auto size: 0
-//  461   char temp, *end_ptr;
-//  462   end_ptr = str + length;
+//  460   char temp, *end_ptr;
+//  461   end_ptr = str + length;
         MOV     A,R2
         ADD     A,R4
         MOV     R0,A
         MOV     A,R3
         ADDC    A,R5
         SJMP    ??str_reverse_0
-//  463   while(end_ptr>str) {
-//  464     temp = *str;
+//  462   while(end_ptr>str) {
+//  463     temp = *str;
 ??str_reverse_1:
         MOV     DPL,R2
         MOV     DPH,R3
         MOVX    A,@DPTR
         MOV     R4,A
-//  465     *str = *end_ptr;
+//  464     *str = *end_ptr;
         MOV     DPL,R0
         MOV     DPH,R1
         MOVX    A,@DPTR
         MOV     DPL,R2
         MOV     DPH,R3
         MOVX    @DPTR,A
-//  466     *end_ptr = temp;
+//  465     *end_ptr = temp;
         MOV     A,R4
         MOV     DPL,R0
         MOV     DPH,R1
         MOVX    @DPTR,A
-//  467     str++;
+//  466     str++;
         MOV     DPL,R2
         MOV     DPH,R3
         INC     DPTR
         MOV     R2,DPL
         MOV     R3,DPH
-//  468     end_ptr--;
+//  467     end_ptr--;
         MOV     A,R0
         ADD     A,#-0x1
         DEC     R0
@@ -2198,14 +2197,14 @@ str_reverse:
         ADDC    A,#-0x1
 ??str_reverse_0:
         MOV     R1,A
-//  469   }
+//  468   }
         CLR     C
         MOV     A,R2
         SUBB    A,R0
         MOV     A,R3
         SUBB    A,R1
         JC      ??str_reverse_1
-//  470 }
+//  469 }
         POP     DPH
         CFI DPH0 SameValue
         CFI CFA_SP SP+-4
@@ -2261,7 +2260,7 @@ str_reverse:
         DATA
 `?<Constant "">`:
         DB ""
-        DB 0, 0, 0, 0, 0
+        DB 0, 0, 0, 0, 0, 0, 0
 
         RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
         DATA
@@ -2276,17 +2275,17 @@ str_reverse:
         DB 0, 0, 0, 0, 0, 0
 
         END
-//  471 
-//  472 /*********************************************************************
-//  473 *********************************************************************/
+//  470 
+//  471 /*********************************************************************
+//  472 *********************************************************************/
 // 
 // 1 237 bytes in segment BANKED_CODE
 //    42 bytes in segment BANK_RELAYS
-//    33 bytes in segment XDATA_ROM_C
+//    35 bytes in segment XDATA_ROM_C
 //   182 bytes in segment XDATA_Z
 // 
 // 1 279 bytes of CODE  memory
-//    33 bytes of CONST memory
+//    35 bytes of CONST memory
 //   182 bytes of XDATA memory
 //
 //Errors: none
